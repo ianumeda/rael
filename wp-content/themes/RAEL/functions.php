@@ -181,3 +181,87 @@ function get_adjacent_person($direction="prev", $current_personID=null){
    return get_post($people[$current+1]);
  } else return null; 
 }
+
+// hook into the init action and call create_book_taxonomies when it fires
+add_action( 'init', 'create_people_taxonomies', 0 );
+
+// create two taxonomies, genres and writers for the post type "book"
+function create_people_taxonomies() {
+	// Add new taxonomy, make it hierarchical (like categories)
+	$labels = array(
+		'name'              => _x( 'Position', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Position', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Positions' ),
+		'all_items'         => __( 'All Positions' ),
+		'edit_item'         => __( 'Edit Position' ),
+		'update_item'       => __( 'Update Position' ),
+		'add_new_item'      => __( 'Add New Position' ),
+		'new_item_name'     => __( 'New Position Name' ),
+		'menu_name'         => __( 'Position' ),
+	);
+
+	$args = array(
+		'hierarchical'      => false,
+		'labels'            => $labels,
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'query_var'         => true,
+		'rewrite'           => false,
+	);
+
+  register_taxonomy( 'position', array( 'people' ), $args );
+
+	// Add new 'titles'  taxonomy, NOT hierarchical (like tags)
+	$labels = array(
+		'name'                       => _x( 'Titles', 'taxonomy general name' ),
+		'singular_name'              => _x( 'Title', 'taxonomy singular name' ),
+		'search_items'               => __( 'Search Title' ),
+		'all_items'                  => __( 'All Titles' ),
+		'parent_item'                => null,
+		'parent_item_colon'          => null,
+		'edit_item'                  => __( 'Edit Title' ),
+		'update_item'                => __( 'Update Title' ),
+		'add_new_item'               => __( 'Add New Title' ),
+		'new_item_name'              => __( 'New Title Name' ),
+		'separate_items_with_commas' => __( 'Separate titles with commas' ),
+		'add_or_remove_items'        => __( 'Add or remove titles' ),
+		'choose_from_most_used'      => __( 'Choose from the most used titles' ),
+		'not_found'                  => __( 'No titles found.' ),
+		'menu_name'                  => __( 'Titles' ),
+	);
+
+	$args = array(
+		'hierarchical'          => false,
+		'labels'                => $labels,
+		'show_ui'               => true,
+		'show_admin_column'     => true,
+		'query_var'             => true,
+		'rewrite'               => false,
+	);
+
+  register_taxonomy( 'titles', 'people', $args );
+  
+	$labels = array(
+		'name'              => _x( 'Topics', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Topic', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Topics' ),
+		'all_items'         => __( 'All Topics' ),
+		'edit_item'         => __( 'Edit Topic' ),
+		'update_item'       => __( 'Update Topic' ),
+		'add_new_item'      => __( 'Add New Topic' ),
+		'new_item_name'     => __( 'New Topic Name' ),
+		'menu_name'         => __( 'Topic' ),
+	);
+
+	$args = array(
+		'hierarchical'      => false,
+		'labels'            => $labels,
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'query_var'         => true,
+		'rewrite'           => false,
+	);
+
+  register_taxonomy( 'topics', array( 'people' ), $args );
+}
+?>
