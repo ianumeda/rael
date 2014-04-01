@@ -104,7 +104,9 @@ h6 					{ font-family:'Titillium Web', "Helvetica Neue", helvetica, sans-serif; 
 .page .content li { margin:0; }
 
 footer .nav.nav-pills li > a { padding:4px 15px; font-size:12px; }
-footer { background:#012d52; color:#f0f0f0; min-height:200px; position:relative; width:100%; padding-top:0px; }
+footer { background:#012d52; color:#f0f0f0; min-height:200px; position:fixed; bottom:-190px; width:100%; padding-top:0px; margin-top:100%; transition:all .5s ease .25s;}
+footer:hover { bottom:0; }
+#footer.active { bottom:0; }
 footer .row1 { margin-top:0px; }
 footer .row2 { }
 #menu-footer { margin:4px 0; 
