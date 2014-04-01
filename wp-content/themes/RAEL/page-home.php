@@ -36,7 +36,6 @@ while ( $query->have_posts() ) {
 ?>      
 
       <div class="item background-carousel<?php if($i==0) echo " active"; ?>" style="background-image:url(<?php echo $imgurl; ?>);">
-        <!-- <img src="http://erg.berkeley.edu/wp2013/wp-content/uploads/2013/08/DSC1211-2048.jpg" alt="1"> -->
         <div class="carousel-caption ">
           <div class="carousel-item-title visible-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_title($post->ID); ?> </a></div>
           <div class="hidden-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_content($post->ID); ?></a></div>
