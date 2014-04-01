@@ -17,7 +17,7 @@ Template Name: Child Page Aggrigator
   <div class="col-lg-10 col-lg-offset-1 ">
     <div class="row">
       <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
-      <div class="col-md-10 content lead">
+      <div class="col-md-10 content ">
         <h2 class="section_heading"><?php the_title(); ?></h2>
         <?php the_content(); ?>
         <?php

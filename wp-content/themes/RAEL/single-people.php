@@ -53,7 +53,16 @@
               </div>
               <div id="person_meta" class="col-xs-6 col-sm-12">
                 <?php
-                  echo get_the_term_list( $wp_query->post->ID, 'topics', '<h5 class="">Focus</h5><ul class="topics"><li class="topic">', '</li><li class="topic">', '</li></ul>' );
+                $terms = wp_get_post_terms( $post->ID, 'topics', array("fields" => "all") );
+                if(!empty($terms)){
+                  echo '<h5 class="topics">Focus</h5><ul class="topics">';
+                  foreach( $terms as $term ){
+                    echo '<li class="topic">';
+                    echo ($term->count > 1) ? ('<a href="'. get_term_link($term) .'">'. $term->name .'</a>') : $term->name;
+                    echo '</li>';
+                  }
+                  echo '</ul>';
+                }
                 ?>
               </div>
             </div>

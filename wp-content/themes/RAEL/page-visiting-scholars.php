@@ -17,13 +17,11 @@
     <div class="row">
       <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
       <div class="col-md-10 content">
-        <div class="lead">
           <h2 class="section_heading">ERG <?php the_title(); ?></h2>
           <?php
             the_content();
           ?>
-        </div>
-        <?php
+          <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'visiting-scholars', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title', 'tag__in'=>array(80)));
           // tag id 80 is "spotlight"
           if ( $query->have_posts() ) {

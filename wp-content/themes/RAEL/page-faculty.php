@@ -15,13 +15,11 @@
     <div class="row">
       <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
       <div class="col-md-10 content">
-        <div class="lead">
           <h2 class="section_heading">ERG <?php the_title(); ?></h2>
           <?php
             the_content();
           ?>
-        </div>
-        <?php
+          <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'faculty', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title', 'tag__in'=>array(80)));
           // tag id 80 is "spotlight"
           if ( $query->have_posts() ) {
@@ -34,7 +32,7 @@
           } 
           wp_reset_postdata();
         ?>    
-        <h3 class="section_heading">All Faculty</h2>
+        <h3 class="section_heading">ERG Core Faculty</h2>
         <?php
           // tag__not_in removes 'in memorium' and 'emeritus' faculty from faculty list
           // $query = new WP_Query( array( 'post_type' => 'people', 'tag__not_in'=>array(63,61,80), 'position'=>'faculty', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'ASC', 'orderby' => 'title' ));
@@ -68,7 +66,7 @@
           <?php }
           wp_reset_postdata();
         ?>
-        <h4 class="section_heading">Faculty Emeritus</h4>
+        <h2 class="section_heading">Faculty Emeritus</h2>
         <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'professor-emeritus', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title') );
           // $query = new WP_Query( array( 'tag__in'=>array('emeritus') ));
@@ -101,7 +99,7 @@
           <?php }
           wp_reset_postdata();
         ?>
-        <h4 class="section_heading">In Memorium</h4>
+        <h2 class="section_heading">In Memoriam</h2>
         <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'in-memoriam-2', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title' ));
           if ( $query->have_posts() ) {

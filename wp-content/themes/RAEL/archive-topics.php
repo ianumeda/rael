@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Archive pages.
+ * The template for displaying The Topic Archive pages.
  *
  * Used to display archive-type pages if nothing more specific matches a query.
  * For example, puts together date-based pages if no date.php file exists.
@@ -30,8 +30,22 @@
         	<li>
         		<article>
         		  <h2 class="section_heading">
-        		    <a href="<?php esc_url( the_permalink() ); ?>" title="<?php echo strip_tags(get_the_title($post->ID)); ?>" rel="bookmark"><?php the_title(); ?></a>
-        		    <time datetime="<?php the_time( 'Y-m-d' ); ?>" pubdate><?php the_date(); ?></time>
+        		    <a href="<?php esc_url( the_permalink() ); ?>" title="<?php echo strip_tags(get_the_title($post->ID)); ?>" rel="bookmark">
+                  <?php echo display_name_format(get_the_title()); ?>
+                </a>
+
+                <?php 
+                $i=0;
+                if($titles=wp_get_post_terms($post->ID, 'titles', array("fields" => "names"))) { 
+                  echo '<h5 class="titles">';
+                  foreach($titles as $title){
+                    if($i>0) echo ', ';
+                    echo $title;
+                    $i++;
+                  }
+                  echo '</h5>';
+                }
+                ?>
         		  </h2>
         			<?php the_content(); ?>
         		</article>

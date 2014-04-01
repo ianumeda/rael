@@ -26,7 +26,7 @@
     	</div>
     	<div class="col-md-3 col-sm-12">
   			<ul id="erg_blog" class="nav navbar-nav navbar-right hidden-sm">
-  			  <li><a href="http://lifeaterg.blogspot.fr/" target="_blank">Life at ERG</a></li>
+  			  <li><a href="<?php echo get_permalink(934); ?>" target="_blank"><?php echo get_the_title(934); ?></a></li>
   			</ul>
 			  <div id="sb-search-top" class="sb-search hidden-xs">
   				<form action="<?php echo home_url('/'); ?>" method="get">
@@ -45,4 +45,3 @@
   <div class="col-sm-12" id="branding"> </div>
 </div>
 <?php } ?>
-

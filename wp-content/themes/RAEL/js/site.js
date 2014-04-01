@@ -10,7 +10,7 @@
       } else {
         $('#footer').css({'position':'absolute', 'top':(page_bottom)+'px'});
       }
-    }
+    } 
 
 		new UISearch( document.getElementById( 'sb-search-top' ) );
 		new UISearch( document.getElementById( 'sb-search-bottom' ) );
@@ -25,6 +25,30 @@
       });
       
     }
+
+    var throttle_id=null;
+    function throttle_on_resize(thedelayamount){
+      // this function sets a timer function that calls on_resize after thedelayamount. when called during that delay a new delay is set. 
+      if(thedelayamount==null) thedelayamount=1000;
+      if(throttle_id!=null){
+        // kill current throttle 
+        clearTimeout(throttle_id);
+      }
+      // start a new one...
+      throttle_id=setTimeout(function() { on_resize(true); },thedelayamount); 
+    }
+    
+    function on_resize(go_immediately) {
+      if(!go_immediately) throttle_on_resize();
+      else {
+        throttle_id=null;
+        makesquares();
+        set_carousel_height();
+        set_footer_position();
+        last_resize=$.now();
+      }
+    };
+    
     
     function set_carousel_height(){
       var ideal_h_ratio=.666;
@@ -39,14 +63,11 @@
       $(".carousel_bottom").css({"margin-top":set_height+"px"});
     }
     $( window ).resize(function() {
-      makesquares();
-      set_carousel_height();
-      set_footer_position();
-    });  
-    
-
-    makesquares();
-    set_carousel_height();
-    set_footer_position();
+      on_resize(false);
+    }); 
+    $(window).load(function(e){ 
+      on_resize(false);
+    });    
+    on_resize(false);
 	});
 

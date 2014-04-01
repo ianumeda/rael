@@ -3,6 +3,7 @@ global $person_type;
 if($person_type==undefined) $person_type="";
 ?>
 <div class="person_<?php echo str_replace(' ','_',strtolower($person_type)); ?> person_item row">
+  <div>
   <a class="" href="<?php echo get_permalink($post->ID); ?>">
 <?php 
     if(has_post_thumbnail( $post->ID ) ){
@@ -28,9 +29,21 @@ if($titles=wp_get_post_terms($post->ID, 'titles', array("fields" => "names"))) {
 }
 ?>
     </a>
-    <?php
-      echo get_the_term_list( $post->ID, 'topics', '<ul class="person_meta"><li class="topic">', '</li><li class="topic">', '</li></ul>' );
-    ?>
     <p class="person_excerpt"><?php echo get_the_excerpt(); ?></p>
-    <button type="button" class="btn btn-link btn-block btn-xs"><a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Go to <?php echo display_name_format(get_the_title()); ?>&apos;s Page <span class="glyphicon glyphicon-arrow-right"></span></a></button>
+  </div>
+    <?php
+    $terms = wp_get_post_terms( $post->ID, 'topics', array("fields" => "all") );
+    if(!empty($terms)){
+      echo '<ul class="topics">';
+      $even_or_odd="odd";
+      foreach( $terms as $term ){
+        echo '<li class="topic '.$even_or_odd.'">';
+        echo ($term->count > 1) ? ('<a href="'. get_term_link($term) .'">'. $term->name .'</a>') : $term->name;
+        echo '</li>';
+        $even_or_odd=($even_or_odd=="odd" ? "even" : "odd");
+      }
+      echo '</ul>';
+    }
+    ?>
+    <!-- <button type="button" class="btn btn-link btn-block btn-xs"><a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Go to <?php echo display_name_format(get_the_title()); ?>&apos;s Page <span class="glyphicon glyphicon-arrow-right"></span></a></button> -->
 </div>

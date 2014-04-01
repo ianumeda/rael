@@ -47,7 +47,6 @@
         		<article>
         		  <h3 >
         		    <a href="<?php esc_url( the_permalink() ); ?>" title="<?php echo strip_tags(get_the_title($post->ID)); ?>" rel="bookmark"><?php the_title(); ?></a>
-        		    <time datetime="<?php the_time( 'Y-m-d' ); ?>" pubdate><?php the_date(); ?></time>
         		  </h3>
         			<?php the_content(); ?>
         		</article>
