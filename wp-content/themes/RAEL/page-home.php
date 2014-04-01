@@ -36,10 +36,9 @@ while ( $query->have_posts() ) {
 ?>      
 
       <div class="item background-carousel<?php if($i==0) echo " active"; ?>" style="background-image:url(<?php echo $imgurl; ?>);">
-        <!-- <img src="http://erg.berkeley.edu/wp2013/wp-content/uploads/2013/08/DSC1211-2048.jpg" alt="1"> -->
         <div class="carousel-caption ">
-          <h3 class="visible-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_title($post->ID); ?> </a></h3>
-          <p class="hidden-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_content($post->ID); ?></a></p>
+          <div class="carousel-item-title visible-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_title($post->ID); ?> </a></div>
+          <div class="hidden-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_content($post->ID); ?></a></div>
           <span class="read_more_link"><a href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a></span>
         </div>
         <div class="carousel_bottom">&nbsp;</div>
@@ -110,7 +109,45 @@ $feature_buttons.='</div>';
     <div class="col-lg-6 col-lg-pull-6 hidden-md">
       <div class="row">
 
-      <div id="news_cols" class="col-lg-6 content">
+      <div id="events_cols" class="col-lg-6 ">
+        <h3 class="section_heading">Events</h3>
+        <?php 
+        global $post;
+        $all_events = tribe_get_events(array( 'eventDisplay'=>'upcoming', 'posts_per_page'=>5 ));
+        foreach($all_events as $post)
+        {
+          setup_postdata($post);
+          $eventstatus="";
+          if(tribe_event_in_category('canceled')){ $eventstatus="canceled"; }
+					elseif( tribe_get_start_date($post->ID, true, 'U')-strtotime('now') < 86400) {
+						if( tribe_get_end_date($post->ID, true, 'U') < strtotime('now') ) $eventstatus="passed"; // event is over
+						elseif( tribe_get_start_date($post->ID, true, 'U') < strtotime('now')) $eventstatus="now"; // event is happening now
+						else /*if( tribe_get_start_date($post->ID, true, 'Ymdhi') <= date('Ymdhi', time('now')) )*/ $eventstatus="soon"; // event is upcoming within the next 24 hours
+					}
+					else $eventstatus="future";
+          ?>
+        
+          <div class="row event_item event_<?php echo $eventstatus; ?> post_preview">
+            <div class="event_status <?php echo $eventstatus; ?>"><?php echo $eventstatus; ?></div>
+            <h5 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+            <div class="event_date">
+              <?php echo tribe_events_event_schedule_details(); ?>
+              <?php //echo '<span class="event_status">'. ($eventstatus=="future" ? '' : $eventstatus ) .'</span>'; ?>
+            </div>
+            <?php the_excerpt(); ?>
+      		<button type="button" class="btn btn-link btn-block btn-xs"><a class="post_preview_link" href="<?php the_permalink(); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a></button>
+          </div>
+        <?php 
+        }
+        wp_reset_postdata();
+        ?>        
+        <div class="row news_item">
+          <button type="button" class="btn btn-link btn-block">
+            <a href="./events/category/colloquium/">Go to the Colloquium calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+          </button>
+        </div>
+      </div>
+      <div id="news_cols" class="col-lg-6 ">
         <h3 class="section_heading">News</h3>
             <?php
               // category__not_in is 'spotlight'
@@ -133,70 +170,20 @@ $feature_buttons.='</div>';
               wp_reset_postdata();
             ?>
       </div>
-      <div id="events_cols" class="col-lg-6 content">
-        <h3 class="section_heading">Events</h3>
-            <?php 
-            $args = array(
-              'post_status'=>'publish',
-              'post_type'=>array(TribeEvents::POSTTYPE),
-              'posts_per_page'=>4,
-              //order by startdate from newest to oldest
-              'meta_key'=>'_EventStartDate',
-              'orderby'=>'_EventStartDate',
-              'order'=>'DESC',
-              //required in 3.x
-              'eventDisplay'=>'custom'
-              //query events by category
-              // 'tax_query' => array(
-              //     array(
-              //         'taxonomy' => 'tribe_events_cat',
-              //         'field' => 'slug',
-              //         'terms' => 'featured',
-              //         'operator' => 'IN'
-              //     ),
-              // )
-            );
-            $get_posts = null;
-            $get_posts = new WP_Query();
-
-            $get_posts->query($args);
-            if($get_posts->have_posts()) : while($get_posts->have_posts()) : $get_posts->the_post();
-
-						if( tribe_get_start_date($post->ID, true, 'U')-strtotime('now') < 86400) {
-							if( tribe_get_end_date($post->ID, true, 'U') < strtotime('now') ) $eventstatus="passed"; // event is over
-							elseif( tribe_get_start_date($post->ID, true, 'U') < strtotime('now')) $eventstatus="now"; // event is happening now
-							else /*if( tribe_get_start_date($post->ID, true, 'Ymdhi') <= date('Ymdhi', time('now')) )*/ $eventstatus="soon"; // event is upcoming within the next 24 hours
-						}
-						else $eventstatus="future";
-          ?>
-          <div class="post_preview event_item event_<?php echo $eventstatus; ?>">
-            <h5><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
-            <div class="event_date"><?php echo tribe_events_event_schedule_details(); ?><?php if($eventstatus!="future") echo '<span class="event_status">('. $eventstatus .')</span>'; ?></div>
-              <p>
-            		<?php echo get_the_excerpt(); ?>
-            		<a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a>
-              </p>                  
-          </div>
-            <?php
-              endwhile;
-              endif;
-              wp_reset_query();
-            ?>        
-      </div>
     </div>
-    <div class="row">
-    <button id="link_to_news_page" type="button" class="btn btn-link btn-block">
-      <a href="./news-events/">Go to the News &amp; Events Page <span class="glyphicon glyphicon-chevron-right"></span></a>
-    </button>
-  </div>
+    <div class="row news_item">
+      <button id="link_to_news_page" type="button" class="btn btn-link btn-block">
+        <a href="./news-events/">Go to the News &amp; Events Page <span class="glyphicon glyphicon-chevron-right"></span></a>
+      </button>
+    </div>
   </div>
       <div id="news_tabs" class=" col-md-4 col-md-pull-8 hidden-xs hidden-sm visible-md hidden-lg hidden-xl">
         <ul class="nav nav-tabs" id="news_events_tabs">
-          <li class="active"><a href="#news_tab" data-toggle="pill">News <span class="glyphicon glyphicon-bullhorn"></span></a></li>
-          <li><a href="#events_tab" data-toggle="pill">Events <span class="glyphicon glyphicon-calendar"></span></a></li>
+          <li class="active"><a href="#events_tab" data-toggle="pill">Events <span class="glyphicon glyphicon-calendar"></span></a></li>
+          <li ><a href="#news_tab" data-toggle="pill">News <span class="glyphicon glyphicon-bullhorn"></span></a></li>
         </ul>
-        <div class="tab-content content">
-          <div class="tab-pane active" id="news_tab">
+        <div class="tab-content ">
+          <div class="tab-pane" id="news_tab">
             <?php
               // category__not_in is 'spotlight'
               $query = new WP_Query( array( 'category_name' => 'news', 'category__not_in' => array( 6 ), 'posts_per_page' => '4' ));
@@ -218,60 +205,48 @@ $feature_buttons.='</div>';
               wp_reset_postdata();
             ?>
           </div><!-- #news -->
-          <div class="tab-pane " id="events_tab">
+          <div class="tab-pane active" id="events_tab">
             <?php 
-            $args = array(
-              'post_status'=>'publish',
-              'post_type'=>array(TribeEvents::POSTTYPE),
-              'posts_per_page'=>4,
-              //order by startdate from newest to oldest
-              'meta_key'=>'_EventStartDate',
-              'orderby'=>'_EventStartDate',
-              'order'=>'DESC',
-              //required in 3.x
-              'eventDisplay'=>'custom'
-              //query events by category
-              // 'tax_query' => array(
-              //     array(
-              //         'taxonomy' => 'tribe_events_cat',
-              //         'field' => 'slug',
-              //         'terms' => 'featured',
-              //         'operator' => 'IN'
-              //     ),
-              // )
-            );
-            $get_posts = null;
-            $get_posts = new WP_Query();
-
-            $get_posts->query($args);
-            if($get_posts->have_posts()) : while($get_posts->have_posts()) : $get_posts->the_post(); 
-
-    						if( tribe_get_start_date($post->ID, true, 'U')-strtotime('now') < 86400) {
-    							if( tribe_get_end_date($post->ID, true, 'U') < strtotime('now') ) $eventstatus="passed"; // event is over
-    							elseif( tribe_get_start_date($post->ID, true, 'U') < strtotime('now')) $eventstatus="now"; // event is happening now
-    							else /*if( tribe_get_start_date($post->ID, true, 'Ymdhi') <= date('Ymdhi', time('now')) )*/ $eventstatus="soon"; // event is upcoming within the next 24 hours
-    						}
-    						else $eventstatus="future";
+                        
+            global $post;
+            $all_events = tribe_get_events(array( 'eventDisplay'=>'upcoming', 'posts_per_page'=>5 ));
+            
+            foreach($all_events as $post)
+            {
+              setup_postdata($post);
+              $eventstatus="";
+              if(tribe_event_in_category('canceled')){ $eventstatus="canceled"; }
+  						elseif( tribe_get_start_date($post->ID, true, 'U')-strtotime('now') < 86400) {
+  							if( tribe_get_end_date($post->ID, true, 'U') < strtotime('now') ) $eventstatus="passed"; // event is over
+  							elseif( tribe_get_start_date($post->ID, true, 'U') < strtotime('now')) $eventstatus="now"; // event is happening now
+  							else /*if( tribe_get_start_date($post->ID, true, 'Ymdhi') <= date('Ymdhi', time('now')) )*/ $eventstatus="soon"; // event is upcoming within the next 24 hours
+  						}
+  						else $eventstatus="future";
               ?>
-              <div class="post_preview event_item event_<?php echo $eventstatus; ?>">
-                <div class="event_status event_<?php echo $eventstatus; ?>">
-                  <div class="event_status_container"><?php if($eventstatus!="future") echo $eventstatus; ?></div>
+            
+              <div class="row event_item event_<?php echo $eventstatus; ?> post_preview">
+                <div class="event_status <?php echo $eventstatus; ?>"><?php echo $eventstatus; ?></div>
+                <h5 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+                <div class="event_date">
+                  <?php echo tribe_events_event_schedule_details(); ?>
+                  <?php //echo '<span class="event_status">'. ($eventstatus=="future" ? '' : $eventstatus ) .'</span>'; ?>
                 </div>
-                <h5><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
-                <div class="event_date"><?php echo tribe_events_event_schedule_details(); ?></div>
-                  <p>
-                		<?php echo get_the_excerpt(); ?>
-                		<a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a>
-                  </p>                  
+                <?php the_excerpt(); ?>
+          		<button type="button" class="btn btn-link btn-block btn-xs"><a class="post_preview_link" href="<?php the_permalink(); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a></button>
               </div>
-            <?php
-              endwhile;
-              endif;
-              wp_reset_query();
-            ?>        
+            <?php 
+            }
+            wp_reset_postdata();
+            ?>  
+            <div class="row news_item">
+              <button type="button" class="btn btn-link btn-block">
+                <a href="./events/category/colloquium/">Go to the Colloquium calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+              </button>
+            </div>
+                  
           </div><!-- #events -->
         </div><!-- .tab-content -->
-        <div class="row">
+        <div class="row event_item">
         <button id="link_to_news_page" type="button" class="btn btn-link btn-block">
           <a href="./news-events/">Go to the News &amp; Events Page <span class="glyphicon glyphicon-chevron-right"></span></a>
         </button>
@@ -279,14 +254,14 @@ $feature_buttons.='</div>';
       </div><!-- #news -->
     </div>
   </div>
-  <div id="spotlight" class="content col-sm-4 col-md-3">
+  <div id="spotlight" class=" col-sm-4 col-md-3">
     <h3 class="section_heading">Spotlight</h3>
     <?php
       $query = new WP_Query( array( 'category_name' => 'spotlight', 'posts_per_page' => '2' ));
       if ( $query->have_posts() ) {
       	while ( $query->have_posts() ) {
       		$query->the_post();
-      		echo '<div class="spotlight_item post_preview">';
+      		echo '<div class="row spotlight_item post_preview">';
       		echo '<h4><a href=' . get_permalink($post->ID) . '>' . get_the_title() . '</a></h3>';
       		echo get_preview_image();
     ?>
@@ -302,7 +277,9 @@ $feature_buttons.='</div>';
       <?php }
       wp_reset_postdata();
     ?>
-    <button type="button" class="btn btn-link btn-block"><a class="" href="<?php echo get_category_link( get_cat_ID( 'spotlight' ) ); ?>">Go to Spotlight Archive <span class="glyphicon glyphicon-chevron-right"></span></a></button>
+    <div class="row spotlight_item">
+      <button type="button" class="btn btn-link btn-block"><a class="" href="<?php echo get_category_link( get_cat_ID( 'spotlight' ) ); ?>">Go to Spotlight Archive <span class="glyphicon glyphicon-chevron-right"></span></a></button>
+    </div>
   </div>
 </div><!-- #belowthefold -->
 

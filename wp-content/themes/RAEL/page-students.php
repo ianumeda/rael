@@ -15,14 +15,13 @@
     <div class="row">
       <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
       <div class="col-md-10 content">
-        <div class="lead">
+        <div class="row">
           <h2 class="section_heading">ERG <?php the_title(); ?></h2>
           <?php
             the_content();
           ?>
-        </div>
-        <?php
-          $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'student', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title', 'tag__in'=>array(80)));
+          <?php
+          $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'student', 'posts_per_page' => '1', 'order' => 'ASC', 'orderby' => 'title', 'tag__in'=>array(80)));
           // tag id 80 is "spotlight"
           if ( $query->have_posts() ) {
           	while ( $query->have_posts() ) {
@@ -32,6 +31,7 @@
           } 
           wp_reset_postdata();
         ?>    
+      </div>
         <h3 class="section_heading">All Students</h2>
         <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'student', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'ASC', 'orderby' => 'title' ));

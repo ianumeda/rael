@@ -71,24 +71,19 @@ global $content_columns;
           	<?php endwhile; ?>
 
           	<!-- Event footer -->
-              <div id="tribe-events-footer">
-          		<!-- Navigation -->
-          		<!-- Navigation -->
-          		<h3 class="tribe-events-visuallyhidden"><?php _e( 'Event Navigation', 'tribe-events-calendar' ) ?></h3>
-          		<ul class="tribe-events-sub-nav">
-          			<li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '&laquo; %title%' ) ?></li>
-          			<li class="tribe-events-nav-next"><?php tribe_the_next_event_link( '%title% &raquo;' ) ?></li>
-          		</ul><!-- .tribe-events-sub-nav -->
-          	</div><!-- #tribe-events-footer -->
 
           </div><!-- #tribe-events-content -->
         </article>
-        <ul class="pager">
-          <li><?php previous_post_link('%link', '<span class="glyphicon glyphicon-arrow-left"></span> Previous post: %title', TRUE); ?></li>
-          <li><?php next_post_link('%link', 'Next post: %title <span class="glyphicon glyphicon-arrow-right"></span>', TRUE); ?></li>
-        </ul>
       </div>
     </div>
   </div>
 </div>
+<div id="" class="row">
+  <h3 class="section_heading" style="text-align:center;"><a alt="go to Events Calendar" href="<?php echo tribe_get_events_link() ?>"> <?php _e( 'Browse Events', 'tribe-events-calendar' ) ?></a></h3>
+  <ul class="pager">
+      <li><?php tribe_the_prev_event_link( '<span class="glyphicon glyphicon-arrow-left"></span> %title%' ) ?></li>
+      <li><?php tribe_the_next_event_link( '%title% <span class="glyphicon glyphicon-arrow-right"></span>' ) ?></li>
+  </ul>
+</div><!-- #tribe-events-footer -->
+
 
