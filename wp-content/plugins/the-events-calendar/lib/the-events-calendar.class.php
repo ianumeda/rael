@@ -22,7 +22,7 @@ if ( !class_exists( 'TribeEvents' ) ) {
 		const VENUE_POST_TYPE = 'tribe_venue';
 		const ORGANIZER_POST_TYPE = 'tribe_organizer';
 		const PLUGIN_DOMAIN = 'tribe-events-calendar';
-		const VERSION = '3.5';
+		const VERSION = '3.5.1';
 		const FEED_URL = 'http://tri.be/category/products/feed/';
 		const INFO_API_URL = 'http://wpapi.org/api/plugin/the-events-calendar.php';
 		const WP_PLUGIN_URL = 'http://wordpress.org/extend/plugins/the-events-calendar/';
@@ -447,6 +447,10 @@ if ( !class_exists( 'TribeEvents' ) ) {
 
 			// Upgrade material.
 			add_action( 'admin_init', array( $this, 'checkSuiteIfJustUpdated' ) );
+
+			// backwards compatibility
+			add_filter( 'tribe_get_single_option', array( $this, 'filter_multiday_cutoff' ), 10, 3 );
+
 		}
 
 		/**
@@ -1803,6 +1807,26 @@ if ( !class_exists( 'TribeEvents' ) ) {
 			echo "/* ]]> */\n";
 			echo "</script>\n";
 
+		}
+
+		/**
+		 * We used to store midnight as 12:00. It should be 00:00.
+		 *
+		 * @param string $cutoff
+		 * @param string $default
+		 * @param string $option
+		 *
+		 * @return string
+		 */
+		public function filter_multiday_cutoff( $cutoff, $default, $option ) {
+			if ( $option == 'multiDayCutoff' ) {
+				$value = explode(':', $cutoff);
+				if ( $value[0] == '12' ) {
+					$value[0] = '00';
+					$cutoff = implode(':', $value);
+				}
+			}
+			return $cutoff;
 		}
 
 		/**

@@ -1,6 +1,7 @@
-	</div><!-- #page-->
+	</div><!-- .container -->
   
-	<footer id="footer">
+	<footer id="footer" >
+    <div class="container">
   	<div class="row row0">
 	    <div class="col-md-9 col-sm-12">
     	  <a href="<?php echo home_url(); ?>">
@@ -65,4 +66,5 @@
     <div class="row row4">
   	  <div id="copyright" class="col-xs-12">&copy; <?php echo date("Y"); ?> <?php bloginfo( 'name' ); ?>. All rights reserved.</div>
   	</div>
-	</footer>
+  </div><!-- .container -->
+</footer>

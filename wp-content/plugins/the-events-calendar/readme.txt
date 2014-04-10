@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://m.tri.be/29
 Requires at least: 3.6
 Tested up to: 3.8.1
-Stable tag: 3.5
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,15 +120,15 @@ If you're unclear about the installation process or get stuck, check out our <a 
 
 == Frequently Asked Questions ==
 
-= Is there a shortcode available for The Events Calendar? +
+= Is there a shortcode available for The Events Calendar? =
 
-No, this plugin does not use a shortcode nor is one available at the time being.
+No, this plugin does not use a shortcode nor is one available at the time being. However, you may want to check out the experimental, totally unsupported <a href=“https://wordpress.org/plugins/event-rocket/“>Event Rocket add-on</a> to see if it accomplishes your shortcode needs.
 
 = Are there any troubleshooting steps you'd suggest I try that might resolve my issue before I post a new thread? =
 
-First, make sure that you're running the latest version of The Events Calendar (3.5 as of this release). If you're running Events Calendar PRO it needs to match the version number of The Events Calendar. And if you've got any other add-ons, make sure those are current / running the latest code as well.
+First, make sure that you're running the latest version of The Events Calendar (3.5.1 as of this release). If you're running Events Calendar PRO it needs to match the version number of The Events Calendar. And if you've got any other add-ons, make sure those are current / running the latest code as well.
 
-The most common issues we see are either plugin or theme conflicts. You can test if a plugin or theme is conflicting by manually deactivating other plugins until just The Events Calendar 3.5 is running on your site. If the issue persists from there, revert to the default Twenty Thirteen theme. If the issue is resolved after deactivating a specific plugin or your theme, you'll know that is the source of the conflict.
+The most common issues we see are either plugin or theme conflicts. You can test if a plugin or theme is conflicting by manually deactivating other plugins until just The Events Calendar 3.5.1 is running on your site. If the issue persists from there, revert to the default Twenty Fourteen theme. If the issue is resolved after deactivating a specific plugin or your theme, you'll know that is the source of the conflict.
 
 Note that we aren't going to say "tough luck" if you identify a plugin/theme conflict. While we can't guarantee 100% integration with any plugin or theme out there, we will do our best (and reach out the plugin/theme author as needed) to figure out a solution that benefits everyone.
 
@@ -136,7 +136,7 @@ Note that we aren't going to say "tough luck" if you identify a plugin/theme con
 
 Users of the free The Events Calendar should post their questions in the plugin's <a href="http://wordpress.org/support/plugin/the-events-calendar/">WordPress.org forum</a>, which we hit about once a week (on Wednesdays). Please make sure to read <a href="http://wordpress.org/support/topic/welcome-the-events-calendar-users-read-this-first">our sticky post</a> providing an overview of the support we provide free users BEFORE posting. If you find you're not getting support in as timely a fashion as you wish, you might want to consider purchasing a PRO license.
 
-If you're already a PRO user, you're entitled access to our more actively-monitored <a href="http://m.tri.be/2r">PRO forums</a> at the tri.be website. We can provide a deeper level of support here and hit these forums on a daily basis during the work week. No post should go more than 24-hours during that time without a response.
+If you're already a PRO user, you're entitled access to our more actively-monitored <a href="http://m.tri.be/2r">PRO forums</a> at the tri.be website. We can provide a deeper level of support here and hit these forums on a daily basis during the work week. Generally, except in times of increased support loads, we reply to all comments within 24-48 hours during the business week. 
 
 = Events Calendar PRO looks awesome! I'm sold! How can I get my hands on it? =
 
@@ -144,7 +144,7 @@ Events Calendar PRO can be purchased directly at the <a href="http://m.tri.be/54
 
 = I'm interested in PRO or another add-on, but there are a few questions I've got before making the purchase. Can you help me get those addressed? =
 
-Absolutely. If you're not finding your questions answered on the product pages, hit up our <a href="http://m.tri.be/2w">pre-sale forum</a> at the tri.be site. You can save yourself some time by reviewing the threads first to verify if your question has already been asked. If it hasn't, post a new thread as a guest. We'll get you a reply as quickly as we can, so you can make an informed decision regarding purchase. Keep in mind that the pre-sale forum is available for questions related to any premium product we've got: Events Calendar PRO, Eventbrite Tickets, Tickets; WooCommerce, Community Events, Facebook Events and the forthcoming Filter Bar.
+Absolutely. If you're not finding your questions answered on the product pages, hit up our <a href="http://m.tri.be/2w">pre-sale forum</a> at the tri.be site. You can save yourself some time by reviewing the threads first to verify if your question has already been asked. If it hasn't, post a new thread as a guest. We'll get you a reply as quickly as we can, so you can make an informed decision regarding purchase. Keep in mind that the pre-sale forum is available for questions related to any premium product we've got: Events Calendar PRO, Eventbrite Tickets, WooCommerce Tickets, EDD Tickets, Shopp Tickets, WPEC Tickets, Community Events, Facebook Events and Filter Bar.
 
 If your question is simple and can be addressed in 140 characters, you can always ask it <a href="http://twitter.com/moderntribeinc">on Twitter</a>.
 
@@ -248,7 +248,7 @@ The plugin is produced by <a href="http://m.tri.be/2s">Modern Tribe Inc</a>.
 * Spanish from Hector Gil Rizo
 * Swedish from Ben Andersen
 * Turkish by Derin Korman
-* Ukranian by Vasiliy
+* Ukranian by Vasily Vishnyakov
 
 * Previous translators include Mikhail Michouris, Bastien BC, Dionizio Bonfim Bach, Mihai Burcea, Ed Boon, Rick van Dalen, Jacob Roel Meijering, hristian Andersen, Michael Sebel, Filippo Montanari, David Decker, Kamil Szymanski, Erik Massop, “Terje With Lunndal", Andreas Lorentsen, Sagi Shrieber, Matthew Meyer, Arno Faure, Fanny Heraud, Vincent G from Host1Free, , Petri Kajander, Fran Rosa, Nico (wsMaurik), Panos Efstratiou, Dominique Monhardt, Thomas Butzek, Kjell Vestnes, Luiza Libardi, Diego Meneghetti, Beno Burgener, Burak Pehlevan, and Alexey Fedorov
 
@@ -301,6 +301,13 @@ At no point during the 3.0 lifecycle will the major version change. But you can 
 
 3.x is a complete overhaul of the plugin, and as a result we're starting the changelog fresh. For release notes from the 2.x lifecycle, see <a href="http://m.tri.be/k">our 2.x release notes.</a>
 
+= 3.5.1 =
+
+* Fixed a bug where default events view dropdown on Settings page did not reflect the actual current default events view
+* Addressed poor display issues related to how week view rendered events on sites where the end of the day cutoff was set to midnight (thanks to Andy Fragen on the forums for catching this!)
+* Patched a problem where events in both a parent and child category would display multiple times in list view (thanks to Quentin for catching this one!)
+* Fixed an issue where tribe-events-full.css caused blog post titles to disappear for some users (thanks to Cynthia on the forums for the original report here!)
+
 = 3.5 =
 
 * Added fully responsive styles and functionality for all Events views! For an overview of the changes, see <a href="http://m.tri.be/hv">this blog post</a>
@@ -326,7 +333,7 @@ At no point during the 3.0 lifecycle will the major version change. But you can 
 * Fixed an issue where using a comma in the event cost field would disable the currency symbol from displaying (thanks to Bernhard for first reporting this over at the forums!)
 * Fixed a variety of untranslatable strings
 * Updated link to the Filter Bar plugin in the help tab
-* Added new Ukranian translation files, courtesy of Vasiliy
+* Added new Ukranian translation files, courtesy of Vasily Vishnyakov
 * Added new Montenegrin translation files, courtesy of Sasa Vukovic
 * Added updated Norwegian Bokmål translation files, courtesy of Morten Ruud
 * Added new Norwegian Nynorsk translation files, courtesy of Torbjørn Lauen

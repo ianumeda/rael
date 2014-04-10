@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Crimson+Text:400,600,700|Viga:400|Titillium+Web:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900);
+/*@import url(http://fonts.googleapis.com/css?family=Crimson+Text:400,600,700|Viga:400|Titillium+Web:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900);*/
 /*
 Theme Name: 	ERG2013
 Theme URI: 		http://viewportindustries.com/products/starkers
@@ -25,6 +25,7 @@ CONTENTS:
 
 @import "css/reset.css";
 @import "bootstrap/css/bootstrap.css";
+@import "bootstrap/css/bootstrap-theme.css";
 @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
 
 /*@font-face { 
@@ -44,7 +45,7 @@ footer,
 nav,
 li					{ position:relative; /* For absolutely positioning elements within containers (add more to the list if need be) */ }
 .group:after 		{ display:block; height:0; clear:both; content:"."; visibility:hidden; /* For clearing */ }
-body 				{ background:#f0f0f0; padding-top:36px; font-family:"helvetica neue", Helvetica, sans-serif; font-weight:200; }
+body 				{ background:#f0f0f0; font-family:"helvetica neue", Helvetica, sans-serif; font-weight:200; }
 ::-moz-selection 	{ background:#ff0; color:#333; }
 ::selection 		{ background:#ff0; color:#333; }
 
@@ -219,7 +220,7 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 #top_welcome h1 { padding:.5em 2em; margin-top:0; border-bottom:none; }
 header nav { box-shadow:0px 0 10px -2px black; }
 #page { width:100%; margin-bottom:0px;}
-#page_head { margin-bottom:0px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,.5); /* border-bottom: 0px solid #012d52;*/ height:180px; background-position:center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; overflow:hidden; }
+#page_head { margin-bottom:0px; height:180px; background-position:center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; overflow:hidden; }
 /*#page_head:hover { filter:blur(0px); -o-filter:blur(0px); -ms-filter:blur(0px); -moz-filter:blur(0px); -webkit-filter:blur(0px); }*/
 #page_head #branding { background:none; height:100%; }
 
@@ -228,7 +229,7 @@ header nav { box-shadow:0px 0 10px -2px black; }
 #topnav .current-menu-item > a { background:rgba(119, 157, 189, .5); color:#fff; }
 #topnav .current-menu-parent > a { background:#eee; color:inherit; }
 #topnav a:hover { background:#779dbd; background:rgba(119, 157, 189, .8); color:#fff; }
-body.logged-in.admin-bar > header > nav { top:30px; }
+/*body.logged-in.admin-bar > header > nav { top:30px; }*/
 /*#topnav  current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor*/
 #pagenav { margin-top:20px; padding-left:15px; }
 #pagenav .current-menu-item > a { font-weight:700; }
@@ -386,12 +387,6 @@ padding: .5em .5em 1em;
 .news-events .post_preview_image > img { width:auto; }
 .post_heading time, .section_heading time {display:block; font-size:.7em; padding:0; } 
 time { padding:0; font-size:.7em;}
-#footer { -webkit-border-top-left-radius: 1em;
--webkit-border-top-right-radius: 1em;
--moz-border-radius-topleft: 1em;
--moz-border-radius-topright: 1em;
-border-top-left-radius: 1em;
-border-top-right-radius: 1em; }
 #footer .ucb img { float:left; margin-right:6px; }
 #footer .ucbtext { font-family:UCBOS-Sign Titling, serif; font-weight:700; /*position:absolute; bottom:0; */color:white; }
 #footer .ucbtext .line2 { display:block; }
