@@ -1,17 +1,17 @@
 
 	jQuery(document).ready(function($) {
 
-    // function set_footer_position(){
-    //   var page_position=$('#page').position();
-    //   var page_bottom=page_position.top+$('#page').outerHeight(true);
-    //   if( $(window).height() > page_bottom + $('#footer').outerHeight(true) ){
-    //     $('#footer').css({'margin-top':(page_position+page_bottom-$('#footer').outerHeight(true))+'px'});
-    //   } else {
-    //     // $('#footer').css({'position':'absolute', 'top':(page_bottom)+'px'});
-    //     $('#footer').css({'margin-top':'0px'});
-    //   }
-    // } 
-    // 
+    function set_footer_position(){
+      var page_position=$('#page').position();
+      var page_bottom=page_position.top+$('#page').outerHeight(true);
+      if( $(window).height() < page_bottom + $('#footer').outerHeight(true) ){
+        $('#footer').css({'position':'relative'});
+      } else {
+        // $('#footer').css({'position':'absolute', 'top':(page_bottom)+'px'});
+        $('#footer').css({'position':'fixed', 'bottom':'0'});
+      }
+    } 
+    
 		new UISearch( document.getElementById( 'sb-search-top' ) );
 		new UISearch( document.getElementById( 'sb-search-bottom' ) );
     
@@ -44,7 +44,7 @@
         throttle_id=null;
         makesquares();
         set_carousel_height();
-        // set_footer_position();
+        set_footer_position();
         last_resize=$.now();
       }
     };
@@ -76,6 +76,43 @@
       } else {
         $(this).addClass("active");
       }
-    })
-	});
+    });
+    
+    // $.lockfixed("#topmenu",{offset: {top: 100, bottom: 100}});
+
+    var cbpAnimatedHeader = (function() {
+ 
+        var docElem = document.documentElement,
+            header = document.querySelector( '.cbp-af-header' ),
+            didScroll = false,
+            changeHeaderOn = 300;
+ 
+        function init() {
+            window.addEventListener( 'scroll', function( event ) {
+                if( !didScroll ) {
+                    didScroll = true;
+                    setTimeout( scrollPage, 250 );
+                }
+            }, false );
+        }
+ 
+        function scrollPage() {
+            var sy = scrollY();
+            if ( sy >= changeHeaderOn ) {
+                classie.add( header, 'cbp-af-header-shrink' );
+            }
+            else {
+                classie.remove( header, 'cbp-af-header-shrink' );
+            }
+            didScroll = false;
+        }
+ 
+        function scrollY() {
+            return window.pageYOffset || docElem.scrollTop;
+        }
+ 
+        init();
+ 
+    })();
+});
 

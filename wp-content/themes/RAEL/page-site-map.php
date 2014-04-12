@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3 ">
       <div class="content ">
-        <h2 class="section_heading">ERG <?php the_title(); ?></h2>
+        <h2 class="section_heading">RAEL <?php the_title(); ?></h2>
         <?php the_content(); ?>
   	    <?php wp_nav_menu( array('menu'=>'site-map')); ?>
 

@@ -16,6 +16,7 @@
 		<script src="<?php bloginfo('template_url'); ?>/bootstrap/js/bootstrap.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/js/classie.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/js/uisearch.js"></script>
+		<script src="<?php bloginfo('template_url'); ?>/js/jquery.lockfixed.min.js"></script>
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?>>

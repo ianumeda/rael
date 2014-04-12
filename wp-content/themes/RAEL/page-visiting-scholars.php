@@ -17,7 +17,7 @@
     <div class="row">
       <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
       <div class="col-md-10 content">
-          <h2 class="section_heading">ERG <?php the_title(); ?></h2>
+          <h2 class="section_heading">RAEL <?php the_title(); ?></h2>
           <?php
             the_content();
           ?>

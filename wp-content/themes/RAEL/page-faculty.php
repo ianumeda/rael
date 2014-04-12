@@ -15,7 +15,7 @@
     <div class="row">
       <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
       <div class="col-md-10 content">
-          <h2 class="section_heading">ERG <?php the_title(); ?></h2>
+          <h2 class="section_heading">RAEL <?php the_title(); ?></h2>
           <?php
             the_content();
           ?>
@@ -32,7 +32,7 @@
           } 
           wp_reset_postdata();
         ?>    
-        <h3 class="section_heading">ERG Core Faculty</h2>
+        <h3 class="section_heading">RAEL Core Faculty</h2>
         <?php
           // tag__not_in removes 'in memorium' and 'emeritus' faculty from faculty list
           // $query = new WP_Query( array( 'post_type' => 'people', 'tag__not_in'=>array(63,61,80), 'position'=>'faculty', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'ASC', 'orderby' => 'title' ));

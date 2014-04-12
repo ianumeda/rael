@@ -2,9 +2,9 @@
   <div id="page_head" style="background-image:url(<?php header_image(); ?>);">
     <div class="container">
     	<a href="<?php echo home_url(); ?>">
-    	  <div id="logo" class="hover">
-    	    <div class="branding hidden-xs"><span class="erg">RAEL</span></span><span class="energyresourcesgroup">Renewable &amp; Appropriate Energy Laboratory</span></div>
-    	    <div class="branding visible-xs"><span class="erg">RAEL</span><span class="energyresourcesgroup">Renewable &amp; Appropriate Energy Laboratory</span></div>
+    	  <div id="logo" class="hover logo">
+    	    <div class="branding hidden-xs"><span class="name">RAEL</span></span><span class="name_spelled_out">Renewable &amp; Appropriate Energy Laboratory</span></div>
+    	    <div class="branding visible-xs"><span class="name">RAEL</span><span class="name_spelled_out">Renewable &amp; Appropriate Energy Laboratory</span></div>
     	    <div class="vertical_bar"></div>
       	  <div class="tagline hidden-xs"><?php bloginfo( 'description' ); ?></div>
       	  <div class="tagline visible-xs"><?php bloginfo( 'description' ); ?></div>
@@ -12,7 +12,15 @@
     	</a>
     </div>
   </div>
-  <nav class="navbar navbar-default" role="navigation">
+<div class="cbp-af-header">
+    <div class="cbp-af-inner container">
+        <h1 class="logo">RAEL</h1>
+        <nav >
+      	    <?php wp_nav_menu( array('menu'=>'top','menu_class'=>'nav navbar-nav','walker'=>new wp_bootstrap_navwalker())); ?>
+        </nav>
+    </div>
+</div>
+  <nav id="topmenu" class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -40,4 +48,5 @@
     </div><!-- .container -->
   </nav>
 </header>
-<div class="container">
+<div id="page">
+  <div class="container">
