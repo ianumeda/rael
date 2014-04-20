@@ -85,7 +85,7 @@
         var docElem = document.documentElement,
             header = document.querySelector( '.cbp-af-header' ),
             didScroll = false,
-            changeHeaderOn = 300;
+            changeHeaderOn = 180;
  
         function init() {
             window.addEventListener( 'scroll', function( event ) {
