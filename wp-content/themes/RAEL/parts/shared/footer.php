@@ -5,12 +5,9 @@
   	<div class="row row0">
 	    <div class="col-md-9 col-sm-12">
     	  <a href="<?php echo home_url(); ?>">
-      	  <div id="logo" class="inline">
-      	    <div class="branding"><span class="erg">RAEL</span><!-- <span class="energyresourcesgroup">Renewable &amp; Appropriate Energy Laboratory</span> --></div>
-      	    <div class="vertical_bar"></div>
-          	  <div class="tagline hidden-xs"><?php bloginfo( 'description' ); ?></div>
-          	  <div class="tagline visible-xs"><?php bloginfo( 'description' ); ?></div>
-      	  </div>
+      	  <h1 class="logo">RAEL</h1>
+      	  <div class="tagline hidden-xs"><?php bloginfo( 'description' ); ?></div>
+      	  <div class="tagline visible-xs"><?php bloginfo( 'description' ); ?></div>
     	  </a>
 	    </div>
   	  <div class="col-md-3 col-sm-12">

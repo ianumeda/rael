@@ -12,7 +12,7 @@
       }
     } 
     
-		new UISearch( document.getElementById( 'sb-search-top' ) );
+    // new UISearch( document.getElementById( 'sb-search-top' ) );
 		new UISearch( document.getElementById( 'sb-search-bottom' ) );
     
     function makesquares(){
@@ -45,7 +45,6 @@
         makesquares();
         set_carousel_height();
         set_footer_position();
-        last_resize=$.now();
       }
     };
     

@@ -13,9 +13,9 @@
 		<link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon.ico"/>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/uisearch.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/bootstrap/js/bootstrap.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/js/classie.js"></script>
-		<script src="<?php bloginfo('template_url'); ?>/js/jquery.lockfixed.min.js"></script>
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?>>
