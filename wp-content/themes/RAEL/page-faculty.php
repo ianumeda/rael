@@ -11,10 +11,10 @@
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 
 <div class="row">
-  <div class="col-lg-10 col-lg-offset-1 ">
-    <div class="row">
-      <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
-      <div class="col-md-10 content">
+  <!-- <div class="col-lg-10 col-lg-offset-1 ">
+    <div class="row"> -->
+      <?php //Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
+      <div class=" content">
           <h2 class="section_heading">RAEL <?php the_title(); ?></h2>
           <?php
             the_content();
@@ -131,8 +131,8 @@
           <?php }
           wp_reset_postdata();
         ?>
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
   </div>
 </div>
 

@@ -10,15 +10,15 @@
 
 
 <div class="row">
-  <div class="col-lg-10 col-lg-offset-1 ">
-    <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
-      <div class="col-md-10">
-        <div class="row content">
-          <h3 class="section_heading"><?php the_title(); ?></h3>
+        <div class="content">
           <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
           <?php the_content(); ?>
           <?php endwhile; ?>
 
+        </div>
+        <div class="row">
+          <div id="news_feed" class="col-sm-8 ">
+            <h3 class="section_heading">News</h3>
           <?php
           $query = new WP_Query( array( 'category__and' => array( 5 ), 'posts_per_page' => '1', 'offset' => '0' ));
           if ( $query->have_posts() ) {
@@ -41,10 +41,6 @@
           <?php }
           wp_reset_postdata();
           ?>
-        </div>
-        <div class="row">
-          <div id="news_feed" class="col-sm-8 ">
-            <h3 class="section_heading">News</h3>
             <?php
               $query = new WP_Query( array( 'category_name' => 'news', 'posts_per_page' => '5', 'offset' => '1' ));
               if ( $query->have_posts() ) {
@@ -115,7 +111,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </div>

@@ -66,11 +66,11 @@
         
           <div class="row event_item event_<?php echo $eventstatus; ?> post_preview">
             <div class="event_status <?php echo $eventstatus; ?>"><?php echo $eventstatus; ?></div>
-            <h5 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
             <div class="event_date">
               <?php echo tribe_events_event_schedule_details(); ?>
               <?php //echo '<span class="event_status">'. ($eventstatus=="future" ? '' : $eventstatus ) .'</span>'; ?>
             </div>
+            <h5 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
             <?php the_excerpt(); ?>
       		<button type="button" class="btn btn-link btn-block btn-xs"><a class="post_preview_link" href="<?php the_permalink(); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a></button>
           </div>
@@ -84,17 +84,19 @@
           </button>
         </div>
       </div>
+      
       <div id="news_cols" class="col-lg-6 ">
         <h3 class="section_heading">News</h3>
             <?php
               // category__not_in is 'spotlight'
-              $query = new WP_Query( array( 'category_name' => 'news', 'category__not_in' => array( 5 ), 'posts_per_page' => '4' ));
+              $query = new WP_Query( array( 'category_name' => 'news', 'category__not_in' => array( 5 ), 'posts_per_page' => '8' ));
               if ( $query->have_posts() ) {
               	while ( $query->have_posts() ) {
               		$query->the_post(); 
             ?>
-              		<div <?php post_class("post_preview news_item"); ?>><h5 class="post_title"><a href="<?php the_permalink(); ?>"> <?php echo get_the_title(); ?></a></h4>
+              		<div <?php post_class("post_preview news_item"); ?>>
               		  <time datetime="<?php the_time( 'Y-m-d' ); ?>" pubdate><?php the_date(); ?></time> 
+                    <h5 class="post_title"><a href="<?php the_permalink(); ?>"> <?php echo get_the_title(); ?></a></h5>
                     <p>
                   		<?php // echo get_the_excerpt(); ?>
                   		<a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a>
@@ -108,6 +110,7 @@
             ?>
       </div>
     </div>
+    
     <div class="row news_item">
       <button id="link_to_news_page" type="button" class="btn btn-link btn-block">
         <a href="./news-events/">Go to the News &amp; Events Page <span class="glyphicon glyphicon-chevron-right"></span></a>

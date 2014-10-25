@@ -102,5 +102,5 @@ $feature_buttons.='</div>';
     </div><!-- .container -->
   </nav>
 </header>
-<div id="page">
+<div id="page" class="home_page">
   <div class="container">

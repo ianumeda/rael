@@ -34,7 +34,7 @@
 	      <div class="ucb affiliate_logo"><a href="http://berkeley.edu" alt="UC Berkeley"><img src="<?php echo get_bloginfo('stylesheet_directory'); ?>/images/UCSeal-transparent-122x122.png" width="61" height="61"><span class="ucbtext">University of California,<span class="line2"> Berkeley</span></span></a></div>
 	    </div>
 	    <div class="col-md-4 col-md-push-4">
-	      <div class="cnr affiliate_logo"><a href="http://cnr.berkeley.edu" alt="College of Natural Resources at Berkeley"><img src="http://erg.berkeley.edu/wp2013/wp-content/uploads/2013/12/CNR-RAEL-logo.png"></a></div>
+        <!-- <div class="cnr affiliate_logo"><a href="http://cnr.berkeley.edu" alt="College of Natural Resources at Berkeley"><img src="http://erg.berkeley.edu/wp-content/uploads/2013/12/CNR-RAEL-logo.png"></a></div> -->
 	    </div>
 	    <div class="col-md-4 col-md-pull-4 col-sm-12">
 	      <div class="address">
