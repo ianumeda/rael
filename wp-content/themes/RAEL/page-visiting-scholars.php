@@ -11,6 +11,7 @@
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 
 <?php $person_type="Visiting Scholar"; ?>
+<div class="container">
 
 <div class="row">
   <!-- <div class="col-lg-10 col-lg-offset-1 ">
@@ -69,6 +70,7 @@
   </div>
 </div>
 
+</div>
 <?php endwhile; ?>
 
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

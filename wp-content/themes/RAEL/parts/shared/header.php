@@ -26,4 +26,3 @@
 
 
 <div id="page">
-<div class="container">

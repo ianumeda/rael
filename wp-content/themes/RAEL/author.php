@@ -12,6 +12,7 @@
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
 <?php if ( have_posts() ): the_post(); ?>
+<div class="container">
 
 <h2>Author Archives: <?php echo get_the_author() ; ?></h2>
 
@@ -36,5 +37,5 @@
 <?php else: ?>
 <h2>No posts to display for <?php echo get_the_author() ; ?></h2>	
 <?php endif; ?>
-
+</div>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

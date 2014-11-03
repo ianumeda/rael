@@ -10,8 +10,9 @@
  */
 ?>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
+<div class="container">
 
-<div class="page row">
+<div class="row">
   <div class="col-lg-10 col-lg-offset-1 ">
     <div class="row">
       <?php $content_columns=10; ?>
@@ -41,4 +42,5 @@
   </div>
 </div><!-- .page -->
 
+</div>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
