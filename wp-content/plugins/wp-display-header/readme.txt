@@ -1,10 +1,10 @@
 === WP Display Header ===
-Contributors: kobenland
+Contributors: obenland
 Tags: admin, custom header, header, header image, custom header image, display header, display dynamic header, custom, dynamic, fast, header, image, images, page, plugin, posts
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MWUA92KA2TL6Q
 Requires at least: 3.2
-Tested up to: 3.6
-Stable tag: 2.1.0
+Tested up to: 4.0
+Stable tag: 2.2.0
 
 Select a specific header or random header image for each content item or archive page.
 
@@ -39,9 +39,9 @@ Thanks to Erik T. for the idea to this plugin!
 = What do I need in the `header.php` file to make the plugin work seamlessly? =
 To make it work in your `header.php` file all you need is a `header_image()` call like so:
 
-`<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />`
+`<img src="<?php header_image(); ?>" width="<?php echo get_custom_header()->width; ?>" height="<?php echo get_custom_header()->height; ?>" alt="" />`
 
-See TwentyEleven's `header.php` for reference.
+See TwentyTwelve's `header.php` for reference.
 
 
 = Plugin Filter Hooks =
@@ -58,7 +58,7 @@ See TwentyEleven's `header.php` for reference.
 **wpdh_get_active_post_header** (*string*)
 > The url to the currently active header image.
 
- 
+
 == Screenshots ==
 
 1. The meta box in the main column.
@@ -66,6 +66,11 @@ See TwentyEleven's `header.php` for reference.
 
 
 == Changelog ==
+
+= 2.2.0 =
+* Maintenance release.
+* Some minor code cleanups.
+* Tested for WordPress 4.0.
 
 = 2.1.0 =
 * Added an option to not display a header at all.
@@ -120,5 +125,5 @@ See TwentyEleven's `header.php` for reference.
 = 1.0 =
 * Initial Release.
 
-== Upgrade Notice == 
+== Upgrade Notice ==
 Maintenance update

@@ -9,12 +9,10 @@
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+<div class="container">
 
 <div class="row">
-  <div class="col-lg-10 col-lg-offset-1 ">
-    <div class="row">
-      <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
-      <div class="col-md-10 content">
+      <div class=" content">
           <h2 class="section_heading">RAEL <?php the_title(); ?></h2>
           <?php
             the_content();
@@ -31,7 +29,10 @@
           	}
           } 
           wp_reset_postdata();
-        ?>    
+        ?>  
+  </div>
+</div>  
+<div class="row">
         <h3 class="section_heading">RAEL Core Faculty</h2>
         <?php
           // tag__not_in removes 'in memorium' and 'emeritus' faculty from faculty list
@@ -44,7 +45,7 @@
             $current_post=0;
             $current_column=0;
             $current_post_in_current_column=0;
-            echo '<div class="row">'; // wraps the whole people grid
+            // echo '<div class="row">'; // wraps the whole people grid
           	while ( $query->have_posts() ) {
               if($current_post_in_current_column==0){
                 echo '<div class="col-sm-4 column_level_2">';
@@ -60,12 +61,14 @@
                 if($current_column<$number_of_columns) $posts_per_column=ceil(($query->post_count-$current_post)/($number_of_columns-$current_column));
               }
           	}
-          	echo '</div>';
+            // echo '</div>';
           } else { ?>
           	<div class="alert alert-danger">Content not found.</div>
           <?php }
           wp_reset_postdata();
         ?>
+      </div>
+      <div class="row">
         <h2 class="section_heading">Faculty Emeritus</h2>
         <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'professor-emeritus', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title') );
@@ -77,7 +80,7 @@
             $current_post=0;
             $current_column=0;
             $current_post_in_current_column=0;
-            echo '<div class="row">'; // wraps the whole people grid
+            // echo '<div class="row">'; // wraps the whole people grid
           	while ( $query->have_posts() ) {
               if($current_post_in_current_column==0){
                 echo '<div class="col-sm-4 column_level_2">';
@@ -93,12 +96,14 @@
                 if($current_column<$number_of_columns) $posts_per_column=ceil(($query->post_count-$current_post)/($number_of_columns-$current_column));
               }
           	}
-          	echo '</div>';
+            // echo '</div>';
           } else { ?>
           	<div class="alert alert-danger">Content not found.</div>
           <?php }
           wp_reset_postdata();
         ?>
+      </div>
+      <div class="row">
         <h2 class="section_heading">In Memoriam</h2>
         <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'in-memoriam-2', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title' ));
@@ -109,7 +114,7 @@
             $current_post=0;
             $current_column=0;
             $current_post_in_current_column=0;
-            echo '<div class="row">'; // wraps the whole people grid
+            // echo '<div class="row">'; // wraps the whole people grid
           	while ( $query->have_posts() ) {
               if($current_post_in_current_column==0){
                 echo '<div class="col-sm-4 column_level_2">';
@@ -125,17 +130,17 @@
                 if($current_column<$number_of_columns) $posts_per_column=ceil(($query->post_count-$current_post)/($number_of_columns-$current_column));
               }
           	}
-          	echo '</div>';
+            // echo '</div>';
           } else { ?>
           	<div class="alert alert-danger">Content not found.</div>
           <?php }
           wp_reset_postdata();
         ?>
       </div>
-    </div>
   </div>
 </div>
 
+</div>
 <?php endwhile; ?>
 
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

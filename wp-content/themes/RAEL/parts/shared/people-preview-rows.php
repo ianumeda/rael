@@ -2,7 +2,7 @@
 global $person_type; 
 if($person_type==undefined) $person_type="";
 ?>
-<div class="person_<?php echo str_replace(' ','_',strtolower($person_type)); ?> person_item row">
+<div class="person_<?php echo str_replace(' ','_',strtolower($person_type)); ?> person_item ">
   <div>
   <a class="" href="<?php echo get_permalink($post->ID); ?>">
 <?php 

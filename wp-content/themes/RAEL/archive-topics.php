@@ -15,6 +15,7 @@
  */
 ?>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
+<div class="container">
 
 <div class="row">
   <div class="col-lg-10 col-lg-offset-1 ">
@@ -60,5 +61,5 @@
   </div>
 </div>
 
-
+</div>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

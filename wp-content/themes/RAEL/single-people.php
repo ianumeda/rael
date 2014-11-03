@@ -12,14 +12,14 @@
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-<div class="row">
-  <div class="col-lg-10 col-lg-offset-1 ">
+<div class="container">
+
     <?php $positions=wp_get_post_terms($post->ID, 'position', array("fields" => "all")); ?>
-    <div class="row person_page <?php echo $positions[0]->slug; ?>">
+    <div class=" person_page <?php echo $positions[0]->slug; ?>">
+
       <?php $menu='People'; ?>
-      <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/page-menu' ) ); ?>
-      <div class="col-md-10 content">
-        <div class="row">
+
+      <div class=" content">
           <div id="person_title" class="col-xs-12">
             <h2 class="section_heading">
               <?php echo '<span class="preheading">'.$positions[0]->name." : </span>"; ?>
@@ -39,7 +39,6 @@
         </div>
         <div class="row">
           <div class="col-sm-4 col-sm-push-8">
-            <div class="row">
               <div class="col-xs-6 col-sm-12">
                 <?php
                   if (has_post_thumbnail( $post->ID ) ){
@@ -65,7 +64,6 @@
                 }
                 ?>
               </div>
-            </div>
           </div>
           <div class="col-sm-8 col-sm-pull-4">
             <article>
@@ -73,19 +71,15 @@
             </article>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<?php
+    </div>
+    <?php
 $prevperson = get_adjacent_person('prev');
 $nextperson = get_adjacent_person('next');
 ?>
 
 <?php endwhile; ?>
-
-<div class="row">
+<div class="">
   <h3 class="section_heading" style="text-align:center;">Browse 
   <?php 
   if ($positions[0]->slug=='student') echo 'Students'; 
@@ -104,5 +98,5 @@ $nextperson = get_adjacent_person('next');
     <?php endif; ?>
   </ul>
 </div>
-
+</div>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

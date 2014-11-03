@@ -1,16 +1,12 @@
-	</div><!-- .container -->
 </div><!-- #page --> 
 	<footer id="footer" >
     <div class="container">
-  	<div class="row row0">
+  	<div class="row0">
 	    <div class="col-md-9 col-sm-12">
     	  <a href="<?php echo home_url(); ?>">
-      	  <div id="logo" class="inline">
-      	    <div class="branding"><span class="erg">RAEL</span><!-- <span class="energyresourcesgroup">Renewable &amp; Appropriate Energy Laboratory</span> --></div>
-      	    <div class="vertical_bar"></div>
-          	  <div class="tagline hidden-xs"><?php bloginfo( 'description' ); ?></div>
-          	  <div class="tagline visible-xs"><?php bloginfo( 'description' ); ?></div>
-      	  </div>
+      	  <h1 class="logo">RAEL</h1>
+      	  <div class="tagline hidden-xs"><?php bloginfo( 'description' ); ?></div>
+      	  <div class="tagline visible-xs"><?php bloginfo( 'description' ); ?></div>
     	  </a>
 	    </div>
   	  <div class="col-md-3 col-sm-12">
@@ -27,17 +23,17 @@
   	    </div>
   		</div>
 		</div>
-	  <div class="row row1">
+	  <div class="row1">
 	    <div class="col-sm-12">
         	<?php wp_nav_menu( array('menu'=>'footer','menu_class'=>'nav nav-pills nav-justified','walker'=>new wp_bootstrap_navwalker())); ?>
 	    </div>
 	  </div>
-	  <div class="row row2 affiliate_logos">
+	  <div class="row2 affiliate_logos">
 	    <div class="col-sm-6 col-md-4">
 	      <div class="ucb affiliate_logo"><a href="http://berkeley.edu" alt="UC Berkeley"><img src="<?php echo get_bloginfo('stylesheet_directory'); ?>/images/UCSeal-transparent-122x122.png" width="61" height="61"><span class="ucbtext">University of California,<span class="line2"> Berkeley</span></span></a></div>
 	    </div>
 	    <div class="col-md-4 col-md-push-4">
-	      <div class="cnr affiliate_logo"><a href="http://cnr.berkeley.edu" alt="College of Natural Resources at Berkeley"><img src="http://erg.berkeley.edu/wp2013/wp-content/uploads/2013/12/CNR-RAEL-logo.png"></a></div>
+        <!-- <div class="cnr affiliate_logo"><a href="http://cnr.berkeley.edu" alt="College of Natural Resources at Berkeley"><img src="http://erg.berkeley.edu/wp-content/uploads/2013/12/CNR-RAEL-logo.png"></a></div> -->
 	    </div>
 	    <div class="col-md-4 col-md-pull-4 col-sm-12">
 	      <div class="address">
@@ -55,7 +51,7 @@
 	    </div>
 	  </div>
 
-	  <div class="row row3">
+	  <div class="row3">
 	    <div class="col-sm-12">
 	      <div id="social_mobile" class="visible-xs">
   	      <span id="fb_icon" class="social_icon"><a href="https://www.facebook.com/RAELBerkeley" alt="Visit us on Facebook" target="_blank"><img src="http://erg.berkeley.edu/wp2013/wp-content/uploads/2013/11/facebooklogo-40px-white.png"></a></span>
@@ -63,7 +59,7 @@
   	    </div>
 	    </div>
 	  </div>
-    <div class="row row4">
+    <div class="row4">
   	  <div id="copyright" class="col-xs-12">&copy; <?php echo date("Y"); ?> <?php bloginfo( 'name' ); ?>. All rights reserved.</div>
   	</div>
   </div><!-- .container -->

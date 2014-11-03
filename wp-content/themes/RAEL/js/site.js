@@ -12,7 +12,7 @@
       }
     } 
     
-		new UISearch( document.getElementById( 'sb-search-top' ) );
+    // new UISearch( document.getElementById( 'sb-search-top' ) );
 		new UISearch( document.getElementById( 'sb-search-bottom' ) );
     
     function makesquares(){
@@ -45,7 +45,6 @@
         makesquares();
         set_carousel_height();
         set_footer_position();
-        last_resize=$.now();
       }
     };
     
@@ -85,7 +84,7 @@
         var docElem = document.documentElement,
             header = document.querySelector( '.cbp-af-header' ),
             didScroll = false,
-            changeHeaderOn = 180;
+            changeHeaderOn = 200;
  
         function init() {
             window.addEventListener( 'scroll', function( event ) {
