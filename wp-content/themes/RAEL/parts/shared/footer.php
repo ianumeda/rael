@@ -1,5 +1,7 @@
 </div><!-- #page --> 
 	<footer id="footer" >
+    <div class="grassy_nole visible-lg visible-md visible-sm hidden-xs"></div>
+    <div class="grassy_nole hidden-lg hidden-md hidden-sm visible-xs"></div>
     <div class="container">
   	<div class="row0">
 	    <div class="col-md-9 col-sm-12">

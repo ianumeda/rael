@@ -182,7 +182,7 @@ $feature_buttons.='</div>';
   </div>
       <div id="news_tabs" class=" col-md-4 col-md-pull-8 hidden-xs hidden-sm visible-md hidden-lg hidden-xl">
         <ul class="nav nav-tabs" id="news_events_tabs">
-          <li class="active"><a href="#events_tab" data-toggle="pill">Events <span class="glyphicon glyphicon-calendar"></span></a></li>
+          <li class="active"><a href="#events_tab" data-toggle="pill">Events <span class="fa fa-calendar"></span></a></li>
           <li ><a href="#news_tab" data-toggle="pill">News <span class="glyphicon glyphicon-bullhorn"></span></a></li>
         </ul>
         <div class="tab-content ">
