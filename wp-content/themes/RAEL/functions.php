@@ -181,8 +181,44 @@ function get_adjacent_person($direction="prev", $current_personID=null){
    return get_post($people[$current+1]);
  } else return null; 
 }
+function get_publications_authors($postID){
+  // returns array of post id's of persons associated with postID
+  $publications_authors=get_the_terms($postID, 'people');
+	if($publications_authors && !is_wp_error( $publications_authors )){
+    $author_post_id_list=array();
+    foreach($publications_authors as $author){
+      array_push($author_post_id_list, $author->term_id);
+    }
+    return $author_post_id_list;
+	} else return null;
+}
 
-// hook into the init action and call create_book_taxonomies when it fires
+function get_posts_associated_posts_of_type($postID,$post_type){
+  // returns array of post id's of posts associated with postID of type $post_type
+  $posts_linked_posts=get_the_terms($postID, $post_type);
+	if($posts_linked_posts && !is_wp_error( $posts_linked_posts )){
+    $linked_post_id_list=array();
+    foreach($posts_linked_posts as $linked_post){
+      array_push($linked_post_id_list, $linked_post->term_id);
+    }
+    return $linked_post_id_list;
+	} else return null;
+}
+
+function my_acf_load_field( $field )
+{
+  
+    $field['choices'] = array(
+        'custom' => 'My Custom Choice'
+    );
+
+    return $field;
+}
+
+
+// acf/load_field/name={$field_name} - filter for a specific field based on it's name
+add_filter('acf/load_field/name=topics_select', 'my_acf_load_field');
+
 add_action( 'init', 'create_people_taxonomies', 0 );
 
 // create two taxonomies, genres and writers for the post type "book"

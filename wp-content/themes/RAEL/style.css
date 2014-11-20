@@ -288,6 +288,31 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 .person_page.student .nav li.student > a { color: #ffffff; background-color: #779DBD; }
 .person_page.visiting-scholars .nav li.visiting-scholars > a { color: #ffffff; background-color: #779DBD; }
 .person_page.staff .nav li.staff > a { color: #ffffff; background-color: #779DBD; }
+
+#publications_page {}
+#publications_page .table_head { margin-top:1em; width:100%; position:relative; border-bottom:1px solid #ccc; }
+#publications_page .table_head > div { font-weight:bold; font-size:14px; }
+#publications_page .table_head > .pub_filters { font-weight:normal; font-size:14px; }
+#publications_page .table_head > .pub_date { }
+#publications_page .publication_item { border:1px solid rgba(0,0,0,0.1); border-top:none; }
+#publications_page .publication_item:nth-child(even) { background:rgba(0,0,0,.02); }
+#publications_page .table_head .pub_actions { text-align:right; }
+#publications_page .table_data .publication_item .pub_actions .btn { float:right; }
+#publications_page .table_data .publication_item .pub_topics li { white-space: normal; text-align:left;}
+/*#publications_page .table_data .publication_item .pub_topics li:after { content:","; }
+#publications_page .table_data .publication_item .pub_topics li:last-child:after { content:""; }
+*/#publications_page .table_data .publication_item .more_info_button { background:transparent; border-top:1px solid rgba(0,0,0,.1); border-radius:0; }
+#publications_page .table_data .publication_item .more_info_button:hover { background:rgba(0,0,0,.1); color:white; }
+#publications_page .table_data .pub_actions > span { margin:0 4px; }
+#publications_page .table_data .pub_excerpt { border-top:1px solid rgba(0,0,0,.05); padding-top:.5em; }
+#publications_page .table_data .pub_excerpt ~ button.btn-block > span.fa-angle-up { display:none; }
+#publications_page .table_data .pub_excerpt ~ button.btn-block > span.fa-angle-down { display:inline-block; }
+#publications_page .table_data .pub_excerpt.in ~ button.btn-block > span.fa-angle-up { display:inline-block; }
+#publications_page .table_data .pub_excerpt.in ~ button.btn-block > span.fa-angle-down { display:none; }
+
+.publication_page .publication_title { font-weight:900; font-size:1.8em; }
+.publication_page div.title { font-weight:700; }
+.publication_page div.row { margin-bottom:1em; }
 #pagenav_mobile { border-bottom: 1px solid #ddd;
 padding: .5em 0;
 background: rgba(255,255,255,.5); }

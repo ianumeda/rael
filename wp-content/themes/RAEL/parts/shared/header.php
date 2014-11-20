@@ -13,8 +13,6 @@
       <div class="col-xs-9">
         <nav class="hidden-md hidden-lg visible-sm visible-xs">
     	    <?php //wp_nav_menu( array('menu'=>'top','menu_class'=>'nav')); ?>
-    	    <?php wp_nav_menu( array('menu'=>'top_1','menu_class'=>'nav navbar-nav','walker'=>new wp_bootstrap_navwalker())); ?>
-    	    <?php wp_nav_menu( array('menu'=>'top_2','menu_class'=>'nav navbar-nav','walker'=>new wp_bootstrap_navwalker())); ?>
         </nav>
         <nav class="visible-md visible-lg hidden-sm hidden-xs">
           <?php wp_nav_menu( array('menu'=>'top','menu_class'=>'nav navbar-nav','walker'=>new wp_bootstrap_navwalker())); ?>
