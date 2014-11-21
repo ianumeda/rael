@@ -53,11 +53,13 @@
             ?>
           </select>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-5">
           <input type="text" class="form-control search-query input-sm" placeholder="Search Title, Author, or Topic">
         </div>
-        <div class="col-xs-3">
-          <button class="clear_filter_button btn pull-right btn-sm">Clear All Filters</buton>
+        <div class="col-xs-4">
+          
+          <button class="clear_filter_button btn pull-right btn-sm">Clear All Filters</button>
+          <span class="filter_results"></span>
         </div>
       </div>
       <div class="table_head hidden-xs clearfix">
@@ -82,7 +84,7 @@
           <?php }
           wp_reset_postdata();
         ?>
-      <div id="no_filter_results" class="publication_item row">
+      <div id="no_filter_results" class="alert alert-danger">
         No publications match the selected filter.
       </div>
     </div>
@@ -100,7 +102,13 @@ function do_the_filter(init){
   $('div.publication_item').hide();
   final_results.each(function(){
     $(this).show();
-  })
+  });
+  $('.filter_results').html("Showing "+final_results.length+" of "+($('.publication_item').length)+" publications");
+  if(final_results.length<1){
+    $('#no_filter_results').show();
+  } else {
+    $('#no_filter_results').hide();
+  }
   // if(!init) $('html,body').animate({scrollTop:($('#funds_list').position().top)},800,'swing');
 }
 function year_filter() {
@@ -137,7 +145,8 @@ $(document).ready(function(){
     // this prevents 'enter' from submitting the form and reloading the page...
     if ( e.which == 13 ) e.preventDefault();
   });
-  $('.clear_filter_button').on('click', function(){
+  $('.clear_filter_button').on('click', function(e){
+    e.stopPropagation();
     $('input.search-query').val('');
     $('#year_select').val(0);
     do_the_filter();
