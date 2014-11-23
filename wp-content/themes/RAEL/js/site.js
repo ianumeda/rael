@@ -16,14 +16,23 @@
 		new UISearch( document.getElementById( 'sb-search-bottom' ) );
     
     function makesquares(){
-      $('.headshot.square').each(function(){
-          var $img = $(this),
-              imgWidth = $img.width();
+      $('.square').each(function(){
+        var max_width=240;
+        var $img = $(this),
+            imgWidth = ($img.width() > max_width ? max_width : $img.width());
 
-          $(this).css({"height":imgWidth});
-          $('.person_page .headshot .glyphicon-user').css({"font-size":imgWidth});
+        // $(this).css({"height":imgWidth});
+        $(this).find('.fa').each(function(){ $(this).css({"font-size":imgWidth}); });
       });
-      
+      $('.fitted').each(function(){
+        var max_width=240;
+        var $img = $(this),
+            imgWidth = ($img.width() > max_width ? max_width : $img.width());
+
+        // $(this).css({"height":imgWidth});
+        $(this).find('.fa').each(function(){ $(this).css({"font-size":imgWidth}); });
+        $(this).addClass('is_fitted');
+      });
     }
 
     var throttle_id=null;

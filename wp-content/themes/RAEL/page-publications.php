@@ -69,10 +69,11 @@
         <div class="pub_topics col-sm-2 ">Topics</div>
         <div class="pub_actions col-sm-2">Actions</div>
       </div>
-      <div class="table_data col-xs-12">
+      <div id="publications_list" class="table_data col-xs-12">
         <?php
           $query = new WP_Query( array( 'post_type' => 'publications', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'DESC', 'orderby' => 'date' ));
           if ( $query->have_posts() ) {
+            $counter=0;
             $all_years=array();
           	while ( $query->have_posts() ) {
           		$query->the_post();
@@ -139,6 +140,7 @@ $(document).ready(function(){
     do_the_filter();
   });
   $('.btn').button();
+  $('.collapse').collapse();
   $("input.search-query").on("input change",function(){
     do_the_filter();
   }).keypress(function(e){

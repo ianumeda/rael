@@ -17,6 +17,7 @@
     <div class="publication_page publication_<?php echo $post->ID; ?>">
 
         <div class="row">
+          <a class="btn btn-link" href="<?PHP echo bloginfo("url")."/publications"; ?>"><span class="fa fa-angle-left"></span> Go to the Publications Page</a>
           <div class="col-xs-12 publication_title">
             <h2>
             <?php echo (get_the_title()); ?>
@@ -24,11 +25,32 @@
           </div>
         </div>
         <div class="row">
-          <div class="title col-sm-2">Published:</div>
-          <div class="publish_date col-sm-10">
-            <?php the_date(); ?>
+          <div class="col-sm-3 col-sm-push-9">
+            <?php
+              if (has_post_thumbnail( $post->ID ) ){
+                $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' ); 
+                $imgurl=$image[0];
+                // echo '<div class="post_thumbnail square" style="background-image:url('. $imgurl .')";></div>';
+                echo '<div class="post_thumbnail fitted"><img src="'. $imgurl .'"></div>';
+              } else {
+          		  echo '<div class="post_thumbnail fitted"><span class="fa fa-file-pdf-o"></span></div>';
+              }
+            ?>
+            <?php 
+            if(get_field('publication_file')){
+              echo '<a class="btn btn-default btn-block" title="download this publication" href="'.get_field('publication_file').'"><span class="fa fa-download"></span> Download</a>';
+            }
+            if(get_field('publication_link')){
+              echo '<a class="btn btn-default btn-block" title="download this publication from an external website" href="'.get_field('publication_link').'"><span class="fa fa-external-link"></span> Link to Publication</a>';
+            }?>
           </div>
-        </div>
+          <div class="col-sm-9 col-sm-pull-3">
+            <div class="row">
+              <div class="title col-sm-2 col-xs-8">Published:</div>
+              <div class="publish_date col-sm-7 col-xs-8">
+                <?php the_date(); ?>
+              </div>
+            </div>
         <div class="row">
           <?php
           $authors=get_publications_authors($post->ID);
@@ -86,45 +108,30 @@
             <?php echo $projects_list; ?>
           </div>
         </div>
+        <?php 
+        }
+        $content = get_the_content();
+        if(trim($content) != "") {
+        ?>
+        <div class="row content">
+          <div class="title col-sm-2 col-xs-12">Description:</div>
+          <div class="col-sm-10 ">
+            <article>
+              <?php the_content(); ?>
+            </article>
+          </div>
+        </div>
       <?php } ?>
-      <div class="row clearfix">
-        <div class="title col-sm-2 col-xs-12">Description:</div>
-        <div class="image col-sm-3 col-sm-push-7 col-xs-2 col-xs-push-10">
-          <?php
-            if (has_post_thumbnail( $post->ID ) ){
-              $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' ); 
-              $imgurl=$image[0];
-              echo '<div class="image square headshot" style="background-image:url('. $imgurl .')";></div>';
-            } else {
-        		  echo '<div class="image square headshot"><span class="fa fa-file-pdf-o"></span></div>';
-            }
-          ?>
-        </div>
-        <div class="col-sm-7 col-sm-pull-3 col-xs-10 col-xs-pull-2">
-          <article>
-            <?php the_content(); ?>
-          </article>
-        </div>
       </div>
+    </div>
 
-    <?php
-      $prevperson = get_adjacent_person('prev');
-      $nextperson = get_adjacent_person('next');
-      ?>
-
-      <?php endwhile; ?>
       <div class="row">
         <h3 class="section_heading" style="text-align:center;">Browse Publications:</h3>
-        <ul class="pager">
-          <?php if($prevperson) : ?>
-              <li><a href="<?php echo get_permalink($prevperson->ID)?>"><span class="glyphicon glyphicon-arrow-left"></span> <?php echo display_name_format($prevperson->post_title); ?></a></li>
-          <?php endif; ?>
-
-          <?php if($nextperson) : ?>
-              <li><a href="<?php echo get_permalink($nextperson->ID)?>"><?php echo display_name_format($nextperson->post_title); ?>  <span class="glyphicon glyphicon-arrow-right"></span></a></li>
-          <?php endif; ?>
-        </ul>
+        <div class="pager">
+          <?php get_adjacent_post_links($post->ID); ?>
+        </div>
       </div>
   </div>
 </div>
+      <?php endwhile; ?>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

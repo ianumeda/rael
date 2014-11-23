@@ -28,7 +28,7 @@ if($authors){
   $authors_list.='</ul>';
 }
 ?>
-<div id="publication_<?php echo $post->ID; ?>" class="publication_item row collapse" aria-expanded="false" data-title="<?php echo strtolower(get_the_title($post->ID)); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>">
+<div id="publication_<?php echo $post->ID; ?>" class="publication_item row collapse <?php echo ($counter==0 ? 'in' : '') ?>" data-parent="#publications_list" aria-expanded="false" data-title="<?php echo strtolower(get_the_title($post->ID)); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>">
   <div class="background_button" data-toggle="collapse" data-target="#publication_<?php echo $post->ID; ?>"></div>
   <div class="pub_date col-sm-2"><span class="title visible-xs">Publication Date:</span><?php echo get_the_date('d M Y',$post->ID); ?></div>
   <div class="pub_title col-sm-4"><span class="title visible-xs">Title:</span><a href="<?php echo get_the_permalink($post->ID); ?>" title="View this publication"><?php echo get_the_title($post->ID); ?></a></div>
@@ -49,3 +49,4 @@ if($authors){
     <a class="post_link btn btn-link btn-block btn-sm" href="<?php echo get_permalink($post->ID); ?>">View Publication <span class="fa fa-sign-in"></span></a>
   </div>
 </div>
+<?php $counter++; ?>

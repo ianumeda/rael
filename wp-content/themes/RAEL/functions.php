@@ -215,6 +215,7 @@ function my_acf_load_field( $field )
     return $field;
 }
 
+     'posts_per_page'  => -1,
 
 // acf/load_field/name={$field_name} - filter for a specific field based on it's name
 add_filter('acf/load_field/name=topics_select', 'my_acf_load_field');
