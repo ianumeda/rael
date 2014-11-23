@@ -215,8 +215,39 @@ function my_acf_load_field( $field )
     return $field;
 }
 
+function get_adjacent_post_links ($postID, $orderby='date', $tax){
+  // get_posts in same custom taxonomy
+  $post_type=get_post_type($postID);
+  $obj = get_post_type_object( $post_type );
+  
+  $postlist_args = array(
      'posts_per_page'  => -1,
+     'orderby'         => $orderby,
+     'order'           => 'ASC',
+     'post_type'       => $post_type
+  ); 
+  if($tax){
+    $postlist_args['taxonomy']=$tax;
+  }
+  $postlist = get_posts( $postlist_args );
 
+  // get ids of posts retrieved from get_posts
+  $ids = array();
+  foreach ($postlist as $thepost) {
+     $ids[] = $thepost->ID;
+  }
+
+  // get and echo previous and next post in the same taxonomy        
+  $thisindex = array_search($postID, $ids);
+  $previd = $ids[$thisindex-1];
+  $nextid = $ids[$thisindex+1];
+  if ( !empty($previd) ) {
+    echo '<a rel="prev" class="btn btn-default" href="' . get_permalink($previd). '" title="go to the previous '.$obj->labels->singular_name.'"><span class="fa fa-angle-left"></span> '.get_the_title($previd).'</a>';
+  }
+  if ( !empty($nextid) ) {
+    echo '<a rel="next" class="btn btn-default" href="' . get_permalink($nextid). '" title="go to the next '.$obj->labels->singular_name.'">'.get_the_title($nextid).' <span class="fa fa-angle-right"></span></a>';
+  }
+}
 // acf/load_field/name={$field_name} - filter for a specific field based on it's name
 add_filter('acf/load_field/name=topics_select', 'my_acf_load_field');
 
