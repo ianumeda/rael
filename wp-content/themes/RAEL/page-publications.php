@@ -31,10 +31,14 @@
       $query = new WP_Query( array( 'post_type' => 'publications', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'DESC', 'orderby' => 'date' ));
       if ( $query->have_posts() ) {
         $all_years=array();
+        $all_types=array();
       	while ( $query->have_posts() ) {
       		$query->the_post();
           if(!in_array(get_the_date('Y',$post->ID), $all_years)){
             $all_years[]=get_the_date('Y',$post->ID);
+          }
+          if(!in_array(get_field('publication_type',$post->ID), $all_types)){
+            $all_types[]=get_field('publication_type',$post->ID);
           }
         }
       } 
@@ -43,7 +47,7 @@
       <h3 class="section_heading">All Publications</h3>
       <div class="pub_filters clearfix">
         <div class="title col-sm-1 col-xs-12">Filter:</div>
-        <div class="col-xs-3 col-sm-2">
+        <div class="col-xs-2 col-sm-2">
           <select id="year_select" class="form-control input-sm" onchange="do_the_filter();">
             <option value="0">All Years</option>
             <?php
@@ -53,10 +57,20 @@
             ?>
           </select>
         </div>
-        <div class="col-xs-5">
-          <input type="text" class="form-control search-query input-sm" placeholder="Search Title, Author, or Topic">
+        <div class="col-xs-3 col-sm-2">
+          <select id="publication_type_select" class="form-control input-sm" onchange="do_the_filter();">
+            <option value="0">All Types</option>
+            <?php
+            foreach($all_types as $type){
+              echo '<option value="'.$type.'">'.$type.'</option>';
+            }
+            ?>
+          </select>
         </div>
         <div class="col-xs-4">
+          <input type="text" class="form-control search-query input-sm" placeholder="Search Title, Author, or Topic">
+        </div>
+        <div class="col-xs-3">
           
           <button class="clear_filter_button btn pull-right btn-sm">Clear All Filters</button>
           <span class="filter_results"></span>
@@ -64,7 +78,7 @@
       </div>
       <div class="table_head hidden-xs clearfix">
         <div class="pub_date col-sm-2 ">Publish Date</div>
-        <div class="pub_title col-sm-4 ">Title</div>
+        <div class="pub_title col-sm-4 ">Title (&amp; Type)</div>
         <div class="pub_authors col-sm-2 ">Author(s)</div>
         <div class="pub_topics col-sm-2 ">Topics</div>
         <div class="pub_actions col-sm-2">Actions</div>
@@ -98,8 +112,11 @@
 <script>
 function do_the_filter(init){
   var year_results=year_filter();
+  var type_results=publication_type_filter();
+  console.log(year_results.length, $('#publication_type_select').val(), type_results.length);
+  var select_filter_results=year_results.filter(type_results);
   var search_results=search_filter();
-  var final_results=(search_results==undefined ? year_results : year_results.filter(search_results));
+  var final_results=(search_results==undefined ? select_filter_results : select_filter_results.filter(search_results));
   $('div.publication_item').hide();
   final_results.each(function(){
     $(this).show();
@@ -118,6 +135,14 @@ function year_filter() {
     return $('div.publication_item');
   } else {
     return $('div.publication_item[data-year*="'+year.toLowerCase()+'"]');
+  }
+}
+function publication_type_filter() {
+  var type = $('#publication_type_select').val();
+  if(type=="0"){
+    return $('div.publication_item');
+  } else {
+    return $('div.publication_item[data-type*="'+type+'"]');
   }
 }
 function search_filter(search_string){
@@ -139,6 +164,11 @@ $(document).ready(function(){
     $('input.search-query').val($(this).attr('data-search-query'));
     do_the_filter();
   });
+  $(".publication_type_filter_button").on("click", function(){
+    console.log($(this).html(), $('#publication_type_select').val());
+    $('#publication_type_select').val($(this).attr('data-publication_type'));
+    do_the_filter();
+  });
   $('.btn').button();
   $('.collapse').collapse();
   $("input.search-query").on("input change",function(){
@@ -151,6 +181,7 @@ $(document).ready(function(){
     e.stopPropagation();
     $('input.search-query').val('');
     $('#year_select').val(0);
+    $('#publication_type_select').val(0);
     do_the_filter();
   });
   do_the_filter(true); // ensures the selected year filter is correct on load

@@ -33,15 +33,19 @@
                 // echo '<div class="post_thumbnail square" style="background-image:url('. $imgurl .')";></div>';
                 echo '<div class="post_thumbnail fitted"><img src="'. $imgurl .'"></div>';
               } else {
-          		  echo '<div class="post_thumbnail fitted"><span class="fa fa-file-pdf-o"></span></div>';
+                if(get_field('publication_type')=='Book'){
+            		  echo '<div class="post_thumbnail fitted"><span class="fa fa-book"></span></div>';
+                } else {
+            		  echo '<div class="post_thumbnail fitted"><span class="fa fa-file-pdf-o"></span></div>';
+                }
               }
             ?>
             <?php 
             if(get_field('publication_file')){
-              echo '<a class="btn btn-default btn-block" title="download this publication" href="'.get_field('publication_file').'"><span class="fa fa-download"></span> Download</a>';
+              echo '<a class="btn btn-default btn-block" title="download this publication" href="'.get_field('publication_file').'" target="_blank"><span class="fa fa-download"></span> Download</a>';
             }
             if(get_field('publication_link')){
-              echo '<a class="btn btn-default btn-block" title="download this publication from an external website" href="'.get_field('publication_link').'"><span class="fa fa-external-link"></span> Link to Publication</a>';
+              echo '<a class="btn btn-default btn-block" title="download this publication from an external website" href="'.get_field('publication_link').'" target="_blank"><span class="fa fa-external-link"></span> Link to Publication</a>';
             }?>
           </div>
           <div class="col-sm-9 col-sm-pull-3">
@@ -68,6 +72,15 @@
           <div class="title col-sm-2">Author(s):</div>
           <div class="authors col-sm-10">
             <?php echo $authors_list; ?>
+          </div>
+        </div>
+        <div class="row">
+          <?php
+          $pub_type=get_field('publication_type');
+          ?>
+          <div class="title col-sm-2">Publication Type:</div>
+          <div class="type col-sm-10">
+            <?php echo $pub_type; ?>
           </div>
         </div>
         <?php
@@ -114,7 +127,7 @@
         if(trim($content) != "") {
         ?>
         <div class="row content">
-          <div class="title col-sm-2 col-xs-12">Description:</div>
+          <div class="title col-sm-2 col-xs-12">Abstract:</div>
           <div class="col-sm-10 ">
             <article>
               <?php the_content(); ?>

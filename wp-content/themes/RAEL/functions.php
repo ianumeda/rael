@@ -242,12 +242,27 @@ function get_adjacent_post_links ($postID, $orderby='date', $tax){
   $previd = $ids[$thisindex-1];
   $nextid = $ids[$thisindex+1];
   if ( !empty($previd) ) {
-    echo '<a rel="prev" class="btn btn-default" href="' . get_permalink($previd). '" title="go to the previous '.$obj->labels->singular_name.'"><span class="fa fa-angle-left"></span> '.get_the_title($previd).'</a>';
+    echo '<a rel="prev" class="btn btn-default" href="' . get_permalink($previd). '" title="go to the previous '.$obj->labels->singular_name.'"><span class="fa fa-angle-left"></span> '.myTruncate(get_the_title($previd),30).'</a>';
   }
   if ( !empty($nextid) ) {
-    echo '<a rel="next" class="btn btn-default" href="' . get_permalink($nextid). '" title="go to the next '.$obj->labels->singular_name.'">'.get_the_title($nextid).' <span class="fa fa-angle-right"></span></a>';
+    echo '<a rel="next" class="btn btn-default" href="' . get_permalink($nextid). '" title="go to the next '.$obj->labels->singular_name.'">'.myTruncate(get_the_title($nextid),30).' <span class="fa fa-angle-right"></span></a>';
   }
 }
+function myTruncate($string, $limit, $break=" ", $pad="...")
+{
+  // return with no change if string is shorter than $limit
+  if(strlen($string) <= $limit) return $string;
+
+  // is $break present between $limit and the end of the string?
+  if(false !== ($breakpoint = strpos($string, $break, $limit))) {
+    if($breakpoint < strlen($string) - 1) {
+      $string = substr($string, 0, $breakpoint) . $pad;
+    }
+  }
+
+  return $string;
+}
+
 // acf/load_field/name={$field_name} - filter for a specific field based on it's name
 add_filter('acf/load_field/name=topics_select', 'my_acf_load_field');
 

@@ -28,10 +28,10 @@ if($authors){
   $authors_list.='</ul>';
 }
 ?>
-<div id="publication_<?php echo $post->ID; ?>" class="publication_item row collapse <?php echo ($counter==0 ? 'in' : '') ?>" data-parent="#publications_list" aria-expanded="false" data-title="<?php echo strtolower(get_the_title($post->ID)); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>">
+<div id="publication_<?php echo $post->ID; ?>" class="publication_item row collapse <?php echo ($counter==0 ? 'in' : '') ?>" data-parent="#publications_list" aria-expanded="false" data-title="<?php echo strtolower(get_the_title($post->ID)); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>" data-type="<?php echo get_field('publication_type', $post->ID); ?>">
   <div class="background_button" data-toggle="collapse" data-target="#publication_<?php echo $post->ID; ?>"></div>
   <div class="pub_date col-sm-2"><span class="title visible-xs">Publication Date:</span><?php echo get_the_date('d M Y',$post->ID); ?></div>
-  <div class="pub_title col-sm-4"><span class="title visible-xs">Title:</span><a href="<?php echo get_the_permalink($post->ID); ?>" title="View this publication"><?php echo get_the_title($post->ID); ?></a></div>
+  <div class="pub_title col-sm-4"><span class="title visible-xs">Title:</span><a href="<?php echo get_the_permalink($post->ID); ?>" title="View this publication"><?php echo get_the_title($post->ID); ?></a> <button class="publication_type_filter_button btn btn-xs btn-link" title="filter for this publication type" data-publication_type="<?php echo get_field('publication_type',$post->ID); ?>">(<?php echo get_field('publication_type',$post->ID); ?>)</button></div>
   <div class="pub_authors col-sm-2"><span class="title visible-xs">Author(s):</span>
     <?php echo $authors_list; ?>
   </div>
@@ -39,8 +39,12 @@ if($authors){
     <?php echo $term_list; ?>
   </div>
   <div class="pub_actions col-sm-2"><span class="title visible-xs">Actions:</span>
-    <button class="download btn btn-link btn-xs">Download <span class="fa fa-download"></span></button>
-    <a class="post_link btn btn-link btn-xs" href="<?php echo get_permalink($post->ID); ?>">View Publication <span class="fa fa-sign-in"></span></a>
+    <?php if(get_field('publication_file',$post->ID)) { ?>
+    <a href="<?php echo get_field('publication_file', $post->ID); ?>" target="_blank" class="download btn btn-link btn-xs">Download <span class="fa fa-download"></span></a>
+    <?php } elseif(get_field('publication_link',$post->ID)){ ?>
+    <a href="<?php echo get_field('publication_file', $post->ID); ?>" target="_blank" class="external_link btn btn-link btn-xs">Link <span class="fa fa-external-link"></span></a>
+    <?php } ?>
+    <a class="post_link btn btn-link btn-xs" href="<?php echo get_permalink($post->ID); ?>">View <span class="fa fa-sign-in"></span></a>
     <button class="more_info btn btn-link btn-xs" data-toggle="collapse" data-target="#publication_<?php echo $post->ID; ?>">More Info <span class="fa fa-angle-down"></span></button>
   </div>
   <div class="pub_excerpt col-sm-12" id="pub_<?php echo $post->ID; ?>_collapse">
