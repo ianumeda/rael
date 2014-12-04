@@ -44,10 +44,9 @@
       } 
     ?>
     <div class="row publications_layout">
-      <h3 class="section_heading">All Publications</h3>
       <div class="pub_filters clearfix">
         <div class="title col-sm-1 col-xs-12">Filter:</div>
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2">
           <select id="year_select" class="form-control input-sm" onchange="do_the_filter();">
             <option value="0">All Years</option>
             <?php
@@ -57,7 +56,7 @@
             ?>
           </select>
         </div>
-        <div class="col-xs-3 col-sm-2">
+        <div class="col-xs-12 col-sm-2">
           <select id="publication_type_select" class="form-control input-sm" onchange="do_the_filter();">
             <option value="0">All Types</option>
             <?php
@@ -67,21 +66,19 @@
             ?>
           </select>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-12 col-sm-4">
           <input type="text" class="form-control search-query input-sm" placeholder="Search Title, Author, or Topic">
         </div>
-        <div class="col-xs-3">
-          
+        <div class="col-xs-12 col-sm-3">
           <button class="clear_filter_button btn pull-right btn-sm">Clear All Filters</button>
           <span class="filter_results"></span>
         </div>
       </div>
       <div class="table_head hidden-xs clearfix">
         <div class="pub_date col-sm-2 ">Publish Date</div>
-        <div class="pub_title col-sm-4 ">Title (&amp; Type)</div>
+        <div class="pub_title col-sm-7 ">Title</div>
         <div class="pub_authors col-sm-2 ">Author(s)</div>
-        <div class="pub_topics col-sm-2 ">Topics</div>
-        <div class="pub_actions col-sm-2">Actions</div>
+        <div class="pub_actions col-sm-1">Actions</div>
       </div>
       <div id="publications_list" class="table_data col-xs-12">
         <?php
@@ -170,7 +167,7 @@ $(document).ready(function(){
     do_the_filter();
   });
   $('.btn').button();
-  $('.collapse').collapse();
+  // $('.collapse').collapse();
   $("input.search-query").on("input change",function(){
     do_the_filter();
   }).keypress(function(e){

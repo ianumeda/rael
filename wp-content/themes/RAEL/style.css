@@ -293,24 +293,25 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 #publications_page .table_head { margin-top:1em; width:100%; position:relative; border-bottom:1px solid #ccc; }
 #publications_page .table_head > div { font-weight:bold; font-size:14px; }
 #publications_page .table_head > .pub_filters { font-weight:normal; font-size:14px; }
+#publications_page .pub_filters > div { margin-bottom:2px; }
 #publications_page .table_head > .pub_date { }
-#publications_page .publication_item { padding-top:70px; border:1px solid rgba(0,0,0,0.1); border-top:none; overflow:hidden; }
-#publications_page .publication_item > div { position:relative;top:-70px; }
-#publications_page .publication_item > div.pub_excerpt { margin-bottom:-70px; }
-#publications_page .publication_item:nth-child(even) { background:rgba(0,0,0,.03); }
+#publications_page .publication_item { border-top:none; overflow:hidden; }
+#publications_page .publication_item .row > div { margin-bottom:2px; }
+#publications_page .publication_item:nth-child(odd) { background:rgba(127,127,127,.08); }
+#publications_page .publication_item:nth-child(even) { background:rgba(127,127,127,.04); }
+#publications_page .publication_item:hover { background:rgba(0,0,0,.06); }
 #publications_page .table_head .pub_actions { text-align:right; }
-#publications_page .table_data .publication_item .pub_actions .btn { float:right; }
 #publications_page .table_data .publication_item .pub_topics li { white-space: normal; text-align:left;}
 /*#publications_page .table_data .publication_item .pub_topics li:after { content:","; }
 #publications_page .table_data .publication_item .pub_topics li:last-child:after { content:""; }
 */
+#publications_page .publication_item .title { font-size:10px; font-weight:500; text-align:right; line-height:18px;}
 #publications_page .table_data .publication_item .more_info_button { background:transparent; border-top:1px solid rgba(0,0,0,.1); border-radius:0; }
 #publications_page .table_data .publication_item .more_info_button:hover { background:rgba(0,0,0,.1); color:white; }
 #publications_page .publication_item > div.background_button { background:rgba(0,0,0,0); position:absolute; top:0; left:0; height:100%; width:100%; }
-#publications_page .publication_item:hover > div.background_button { background:rgba(0,0,0,.05); }
-#publications_page .publication_item > div > span.visible-xs { float: left !important; font-weight: bold; margin-right: 0.5em; }
-#publications_page .table_data .pub_actions > span { margin:0 4px; }
-#publications_page .table_data .pub_excerpt { border-top:1px solid rgba(0,0,0,.05); padding-top:.5em; }
+#publications_page .publication_item:hover > div.background_button { background:rgba(0,0,0,0); }
+#publications_page .publication_item .pub_actions a,#publications_page .publication_item .pub_actions button { float:right; }
+#publications_page .publication_item .pub_date .the_date { font-size:12px; line-height:22px; }
 #publications_page .table_data .pub_excerpt ~ button.btn-block > span.fa-angle-up { display:none; }
 #publications_page .table_data .pub_excerpt ~ button.btn-block > span.fa-angle-down { display:inline-block; }
 #publications_page .table_data .pub_excerpt.in ~ button.btn-block > span.fa-angle-up { display:inline-block; }
