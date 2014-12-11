@@ -118,7 +118,11 @@ function do_the_filter(init){
   final_results.each(function(){
     $(this).show();
   });
-  $('.filter_results').html("Showing "+final_results.length+" of "+($('.publication_item').length)+" publications");
+  if(final_results.length == $('.publication_item').length){
+    $('.filter_results').html("Showing all publications");
+  } else {
+    $('.filter_results').html("Showing "+final_results.length+" of "+($('.publication_item').length)+" publications");
+  }
   if(final_results.length<1){
     $('#no_filter_results').show();
   } else {

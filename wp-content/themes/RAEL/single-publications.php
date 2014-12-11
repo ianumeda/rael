@@ -66,6 +66,14 @@
               $authors_list.=get_the_title($author);
               $authors_list.='</a></li>';
             }
+            if(!empty(get_field('additional_authors'))){
+              $add_authors=explode("\n", get_field('additional_authors'));
+              foreach($add_authors as $author){
+                $authors_list.='<li class="author">';
+                $authors_list.=$author;
+                $authors_list.='</li>';
+              }
+            }
             $authors_list.='</ui>';
           }          
           ?>
@@ -74,6 +82,18 @@
             <?php echo $authors_list; ?>
           </div>
         </div>
+        <?PHP 
+        if(!empty(get_field('doi'))){ 
+        ?>
+        <div class="publication_doi row">
+          <div class="title col-sm-2">DOI:</div>
+          <div class="topics col-sm-10">
+            <a href="http://dx.doi.org/<?php echo get_field('doi'); ?>" target="_blank"><?php echo get_field('doi'); ?></a>
+          </div>
+        </div>
+        <?php             
+        }
+        ?>
         <div class="row">
           <?php
           $pub_type=get_field('publication_type');
@@ -126,7 +146,7 @@
         $content = get_the_content();
         if(trim($content) != "") {
         ?>
-        <div class="row content">
+        <div class="row the_content">
           <div class="title col-sm-2 col-xs-12">Abstract:</div>
           <div class="col-sm-10 ">
             <article>

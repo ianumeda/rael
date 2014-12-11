@@ -25,7 +25,29 @@ if($authors){
     $authors_list.='</li>';
     $authors_string.=get_the_title($author)."|";
   }
+  if(!empty(get_field('additional_authors',$post->ID))){
+    $add_authors=explode("\n", get_field('additional_authors',$post->ID));
+    foreach($add_authors as $author){
+      $authors_list.='<li class="btn btn-link btn-xs author click-search-filter" title="filter using this name" data-search-query="'.strtolower($author).'">';
+      $authors_list.=$author;
+      $authors_list.='</li>';
+      $authors_string.=$author."|";
+    }
+  }
   $authors_list.='</ul>';
+}
+$projects=get_posts_associated_posts_of_type($post->ID,'projects');
+$projects_list='';
+$projects_string='';
+if($projects){
+  $projects_list.='<ul class="projects">';
+  foreach( $projects as $project ){
+    $projects_list.='<li class="btn btn-link btn-xs author click-search-filter" title="filter for this project" data-search-query="'.strtolower(get_the_title($project)).'">';
+    $projects_list.=get_the_title($project);
+    $projects_list.='</li>';
+    $projects_string.=get_the_title($project)."|";
+  }
+  $projects_list.='</ul>';
 }
 ?>
 <div id="publication_<?php echo $post->ID; ?>" class="publication_item <?php echo ($counter==0 ? 'in' : '') ?>" data-title="<?php echo strtolower(get_the_title($post->ID)).'|'.strtolower(get_field('published_in',$post->ID)); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>" data-type="<?php echo get_field('publication_type', $post->ID); ?>">
@@ -67,7 +89,7 @@ if($authors){
       <div class="col-xs-10 col-sm-12">
         <?php if(get_field('publication_file',$post->ID)) { ?>
         <a href="<?php echo get_field('publication_file', $post->ID); ?>" target="_blank" class="download btn btn-link btn-xs"><span class="hidden-xs visible-sm">DL <span class="fa fa-download"></span></span><span class="visible-xs hidden-sm visible-md visible-lg">Download <span class="fa fa-download"></span></span></a>
-        <?php } elseif(get_field('publication_link',$post->ID)){ ?>
+        <?php } elseif(!empty(get_field('publication_link',$post->ID))){ ?>
         <a href="<?php echo get_field('publication_file', $post->ID); ?>" target="_blank" class="external_link btn btn-link btn-xs">Link <span class="fa fa-external-link"></span></a>
         <?php } ?>
         <a class="post_link btn btn-link btn-xs" href="<?php echo get_permalink($post->ID); ?>">View <span class="fa fa-sign-in"></span></a>
@@ -86,7 +108,7 @@ if($authors){
       </div>
     <? 
       } 
-      if(count($term_list)>0) { 
+      if($term_list!="") { 
     ?>
     <div class="row">
       <div class="title col-xs-2">Topics:</div>
@@ -96,6 +118,26 @@ if($authors){
     </div>
     <? 
       } 
+      if($projects_list) { 
+    ?>
+    <div class="row">
+      <div class="title col-xs-2">Associated Projects:</div>
+      <div class="pub_topics col-xs-10 col-sm-8">
+        <?php echo $projects_list; ?>
+      </div>
+    </div>
+    <? 
+    } 
+    if(!empty(get_field('doi',$post->ID))){ 
+    ?>
+    <div class="row">
+      <div class="title col-xs-2">DOI:</div>
+      <div class="topics col-xs-10">
+        <a href="http://dx.doi.org/<?php echo get_field('doi',$post->ID); ?>" target="_blank"><?php echo get_field('doi',$post->ID); ?></a>
+      </div>
+    </div>
+    <?php             
+    }
     ?>
     <div class="pub_link col-xs-12">
       <a class="post_link btn btn-link btn-block btn-sm" href="<?php echo get_permalink($post->ID); ?>">View Publication <span class="fa fa-sign-in"></span></a>
