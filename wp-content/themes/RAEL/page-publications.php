@@ -107,12 +107,11 @@
 <?php endwhile; ?>
 
 <script>
-function do_the_filter(init){
-  var year_results=year_filter();
-  var type_results=publication_type_filter();
-  console.log(year_results.length, $('#publication_type_select').val(), type_results.length);
+function do_the_filter(filter_year,filter_type,filter_string){
+  var year_results=year_filter(filter_year);
+  var type_results=publication_type_filter(filter_type);
   var select_filter_results=year_results.filter(type_results);
-  var search_results=search_filter();
+  var search_results=search_filter(filter_string);
   var final_results=(search_results==undefined ? select_filter_results : select_filter_results.filter(search_results));
   $('div.publication_item').hide();
   final_results.each(function(){
@@ -128,18 +127,26 @@ function do_the_filter(init){
   } else {
     $('#no_filter_results').hide();
   }
-  // if(!init) $('html,body').animate({scrollTop:($('#funds_list').position().top)},800,'swing');
 }
-function year_filter() {
-  var year = $('#year_select').val();
+function year_filter(year) {
+  if(year){ 
+    console.log("year filter:", year);
+    $("#year_select").val(year);
+  } else {
+    var year = $('#year_select').val();
+  }
   if(year=="All Years"){
     return $('div.publication_item');
   } else {
-    return $('div.publication_item[data-year*="'+year.toLowerCase()+'"]');
+    return $('div.publication_item[data-year*="'+year+'"]');
   }
 }
-function publication_type_filter() {
-  var type = $('#publication_type_select').val();
+function publication_type_filter(type) {
+  if(type){ 
+    $('#publication_type_select').val(type); 
+  } else {
+    var type = $('#publication_type_select').val();
+  }
   if(type=="0"){
     return $('div.publication_item');
   } else {
@@ -147,7 +154,11 @@ function publication_type_filter() {
   }
 }
 function search_filter(search_string){
-  search_string=search_string==null ? $('input.search-query').val().toLowerCase() : search_string.toLowerCase();
+  if(search_string){
+    $('input.search-query').val(search_string);
+  } else {
+    search_string=search_string==null ? $('input.search-query').val().toLowerCase() : search_string.toLowerCase();    
+  }
   if(search_string.length>1){
     var name_results=$('div.publication_item[data-topics*="'+search_string+'"]').add($('div.publication_item[data-title*="'+search_string+'"]')).add($('div.publication_item[data-authors*="'+search_string+'"]'));
     return name_results;
@@ -155,12 +166,13 @@ function search_filter(search_string){
     return null;
   }
 }
-// function highlight_text(search_string){
-//   search_string=search_string==null ? $('input.search-query').val().toLowerCase() : search_string.toLowerCase();
-//   $('div.publication_item[data-topics*="'+search_string+'"]').add($('div.publication_item[data-title*="'+search_string+'"]')).add($('div.publication_item[data-authors*="'+search_string+'"]'));
-// }
 
 $(document).ready(function(){
+  var init_filter_year="<?php echo htmlspecialchars($_GET["publication_year"]); ?>";
+  var init_filter_type="<?php echo htmlspecialchars($_GET["publication_type"]); ?>";
+  var init_filter_string="<?php echo htmlspecialchars($_GET["publication_search"]); ?>";
+  console.log("init filters:",init_filter_year, init_filter_type, init_filter_string);
+
   $(".click-search-filter").on("click", function(){
     $('input.search-query').val($(this).attr('data-search-query'));
     do_the_filter();
@@ -185,7 +197,7 @@ $(document).ready(function(){
     $('#publication_type_select').val(0);
     do_the_filter();
   });
-  do_the_filter(true); // ensures the selected year filter is correct on load
+  do_the_filter(init_filter_year,init_filter_type,init_filter_string); // ensures the selected year filter is correct on load
 });
 </script>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
