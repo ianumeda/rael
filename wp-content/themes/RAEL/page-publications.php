@@ -113,9 +113,9 @@ function do_the_filter(filter_year,filter_type,filter_string){
   var select_filter_results=year_results.filter(type_results);
   var search_results=search_filter(filter_string);
   var final_results=(search_results==undefined ? select_filter_results : select_filter_results.filter(search_results));
-  $('div.publication_item').hide();
+  $('div.publication_item').fadeOut();
   final_results.each(function(){
-    $(this).show();
+    $(this).fadeIn();
   });
   if(final_results.length == $('.publication_item').length){
     $('.filter_results').html("Showing all publications");

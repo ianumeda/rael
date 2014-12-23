@@ -35,6 +35,10 @@
       });
     }
 
+    $('.coverall_link').each(function(){
+      $(this).css("line-height",$(this).parent().height()+"px");
+    });
+    
     var throttle_id=null;
     function throttle_on_resize(thedelayamount){
       // this function sets a timer function that calls on_resize after thedelayamount. when called during that delay a new delay is set. 
@@ -93,7 +97,7 @@
         var docElem = document.documentElement,
             header = document.querySelector( '.cbp-af-header' ),
             didScroll = false,
-            changeHeaderOn = 200;
+            changeHeaderOn = 150;
  
         function init() {
             window.addEventListener( 'scroll', function( event ) {

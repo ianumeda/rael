@@ -260,7 +260,7 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 /*#welcome .section_heading { padding:.5em; }*/
 #top_welcome { background:#f4f4f4; margin-bottom:0; text-align:center; }
 #top_welcome h1 { padding:.5em 2em; margin-top:0; border-bottom:none; }
-#page { width:100%; margin-bottom:0px;}
+#page { width:100%; margin-bottom:120px;}
 #page_head { margin-bottom:0px; height:200px; background-position:center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; overflow:hidden; }
 /*#page_head:hover { filter:blur(0px); -o-filter:blur(0px); -ms-filter:blur(0px); -moz-filter:blur(0px); -webkit-filter:blur(0px); }*/
 #page_head #branding { background:none; height:100%; }
@@ -279,6 +279,8 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
   font-size: .8em;
   margin-top: .5em;
 }
+a.coverall_link, .coverall_link { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; color:rgba(255,255,255,.8); font-size:2em; font-weight:100; text-decoration:none; text-align:center; vertical-align:center; background:rgba(0,0,0,.4); transition:opacity .5s;}
+.coverall_link:hover { opacity:1; }
 .person_page #person_meta ul { margin:0 30px; }
 .person_spotlight .person_meta { margin-top:10px; padding:0 10px; }
 .person_spotlight .person_meta > .title { display:block; text-align:center; font-weight:bold; font-size:.8em; text-transform:uppercase; color:#666; }
@@ -326,6 +328,13 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 .publication_page .post_thumbnail img { width:100%;height:auto; margin:0 0 .5em; }
 .fitted { visibility:hidden; opacity:0; transition:all 1s linear; }
 .fitted.is_fitted{ visibility:visible; opacity:1; }
+#projects_page .project_item { margin:1em 0; }
+#projects_page .project_item .fitted_image { height: 360px; width: 100%; background-size: cover; background-position: center; }
+#projects_page .project_item .fitted_icon { height: 360px; width: 100%; font-size:360px; text-align:center; opacity:.2; }
+#projects_page .project_item .project_title { font-size:2em; }
+#projects_page .projects_filters { margin-bottom:1em;}
+#projects_page .project_info > div { margin:0 0 .5em;}
+#projects_page .project_info span.title { font-weight:700; font-size:.8em; }
 #pagenav_mobile { border-bottom: 1px solid #ddd;
 padding: .5em 0;
 background: rgba(255,255,255,.5); }

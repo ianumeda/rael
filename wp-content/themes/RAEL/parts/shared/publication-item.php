@@ -64,12 +64,7 @@ if($projects){
     <div class="row">
       <div class="title visible-xs col-xs-2">Title:</div>
       <div class="col-xs-10 col-sm-12">
-        <a href="<?php echo get_the_permalink($post->ID); ?>" title="View this publication"><?php echo get_the_title($post->ID); ?></a> <button class="publication_type_filter_button btn btn-xs btn-link" title="filter for this publication type" data-publication_type="<?php echo get_field('publication_type',$post->ID); ?>">[<?php echo get_field('publication_type',$post->ID); ?>]</button>
-        <?php 
-        if(get_field('published_in',$post->ID)) { 
-          echo '<button class="btn btn-link btn-xs click-search-filter published_in" data-search-query="'.strtolower(get_field('published_in',$post->ID)).'">['.get_field('published_in',$post->ID).']</button>';
-        } 
-        ?>
+        <a href="<?php echo get_the_permalink($post->ID); ?>" title="View this publication"><?php echo get_the_title($post->ID); ?></a> 
       </div>
     </div>
   </div>
@@ -104,6 +99,24 @@ if($projects){
         <div class="title col-xs-2">Abstract:</div>
         <div class="pub_excerpt col-xs-10 col-sm-8">
           <?php echo get_the_excerpt($post->ID); ?>
+        </div>
+      </div>
+        <?php 
+        if(get_field('published_in',$post->ID)) { 
+        ?>
+      <div class="row">
+        <div class="title col-xs-2">Published In:</div>
+        <div class="pub_in col-xs-10 col-sm-8">
+          <button class="btn btn-link btn-xs click-search-filter published_in" data-search-query="<?php echo strtolower(get_field('published_in',$post->ID)); ?>"><?php echo get_field('published_in',$post->ID); ?></button>
+        </div>
+      </div>
+      <?php
+        } 
+      ?>
+      <div class="row">
+        <div class="title col-xs-2">Type:</div>
+        <div class="pub_type col-xs-10 col-sm-8">
+          <button class="publication_type_filter_button btn btn-xs btn-link" title="filter for this publication type" data-publication_type="<?php echo get_field('publication_type',$post->ID); ?>"><?php echo get_field('publication_type',$post->ID); ?></button>
         </div>
       </div>
     <? 
