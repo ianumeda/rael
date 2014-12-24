@@ -50,7 +50,7 @@ if($projects){
   $projects_list.='</ul>';
 }
 ?>
-<div id="publication_<?php echo $post->ID; ?>" class="publication_item <?php echo ($counter==0 ? 'in' : '') ?>" data-title="<?php echo strtolower(get_the_title($post->ID)).'|'.strtolower(get_field('published_in',$post->ID)); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>" data-type="<?php echo get_field('publication_type', $post->ID); ?>">
+<div id="publication_<?php echo $post->ID; ?>" class="publication_item <?php echo ($counter==0 ? 'in' : '') ?>" data-title="<?php echo strtolower(get_the_title($post->ID)).'|'.strtolower(get_field('published_in',$post->ID)).'|'.strtolower($projects_string); ?>" data-topics="<?php echo strtolower($term_string); ?>" data-year="<?php echo get_the_date('Y',$post->ID); ?>" data-authors="<?php echo strtolower($authors_string); ?>" data-type="<?php echo get_field('publication_type', $post->ID); ?>">
 
   <div class="background_button" data-toggle="collapse" data-target="#pub_<?php echo $post->ID; ?>_more_info_collapse"></div>
 <div class="row">

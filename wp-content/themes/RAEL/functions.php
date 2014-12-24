@@ -204,6 +204,25 @@ function get_posts_associated_posts_of_type($postID,$post_type){
     return $linked_post_id_list;
 	} else return null;
 }
+function get_posts_reverse_associated_posts_of_type ($postID, $post_type){
+  // performs a reverse lookup for posts of $post_type that are associated with $postID via CPT
+  $args = array(
+  	'posts_per_page'   => -1,
+  	'offset'           => 0,
+  	'orderby'          => 'post_date',
+  	'order'            => 'DESC',
+  	'post_type'        => $post_type,
+  	'post_status'      => 'publish',
+  	 );
+  $all_posts_of_type=get_posts($args);
+  $reverse_associated_posts=array();
+  foreach($all_posts_of_type as $a_post){
+    if(in_array($postID, get_posts_associated_posts_of_type($a_post, get_post_type($postID)))){
+      $reverse_associated_posts[]=$a_post;
+    }
+  }
+  return $reverse_associated_posts;
+}
 
 function my_acf_load_field( $field )
 {

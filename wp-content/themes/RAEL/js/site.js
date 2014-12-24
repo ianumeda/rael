@@ -25,7 +25,7 @@
         $(this).find('.fa').each(function(){ $(this).css({"font-size":imgWidth}); });
       });
       $('.fitted').each(function(){
-        var max_width=240;
+        var max_width=$(this).parent().innerWidth();//240;
         var $img = $(this),
             imgWidth = ($img.width() > max_width ? max_width : $img.width());
 

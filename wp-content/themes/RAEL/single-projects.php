@@ -12,14 +12,25 @@
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+
+    <div class="project_page project_<?php echo $post->ID; ?>">
+          <a class="btn btn-link" href="<?PHP echo bloginfo("url")."/projects"; ?>"><span class="fa fa-angle-left"></span> Go to the Projects Page</a>
+<?php
+  if (has_post_thumbnail( $post->ID ) ){
+    $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' ); 
+    $imgurl=$image[0];
+    ?>
+    <div class="banner_image" style="background-image:url(<?php echo $imgurl; ?>)";>
+      <div class="fade_to_white"></div>
+    </div>
+  <?php 
+  } 
+?>
 <div class="container">
 
-    <div class="publication_page publication_<?php echo $post->ID; ?>">
-
         <div class="row">
-          <a class="btn btn-link" href="<?PHP echo bloginfo("url")."/projects"; ?>"><span class="fa fa-angle-left"></span> Go to the Projects Page</a>
-          <div class="col-xs-12 publication_title">
-            <h2>
+          <div class="col-xs-12">
+            <h2 class="project_title">
             <?php echo (get_the_title()); ?>
             </h2>
           </div>
@@ -33,11 +44,7 @@
                 // echo '<div class="post_thumbnail square" style="background-image:url('. $imgurl .')";></div>';
                 echo '<div class="post_thumbnail fitted"><img src="'. $imgurl .'"></div>';
               } else {
-                if(get_field('publication_type')=='Book'){
-            		  echo '<div class="post_thumbnail fitted"><span class="fa fa-book"></span></div>';
-                } else {
-            		  echo '<div class="post_thumbnail fitted"><span class="fa fa-file-pdf-o"></span></div>';
-                }
+          		  echo '<div class="post_thumbnail fitted"><span class="fa fa-picture-o"></span></div>';
               }
             ?>
             <?php 
@@ -127,7 +134,25 @@
             </article>
           </div>
         </div>
-      <?php } ?>
+      <?php } 
+      $related_news_posts=get_posts_reverse_associated_posts_of_type($post->ID, 'post');
+      if(count($related_news_posts) > 0){
+      ?>
+        <div class="row news">
+          <div class="title col-sm-2 col-xs-12">Related News:</div>
+          <div class="col-sm-10 ">
+            <ol>
+            <?php
+            foreach($related_news_posts as $news_post){
+              echo '<li><a href="'.get_permalink($news_post).'" title="go to this news post"><span class="title">'.get_the_title($news_post).'</span></a> <span class="date">'.get_the_date('d M Y',$news_post).'</span> </li>';
+            }
+            ?>
+            </ol>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
       </div>
     </div>
 
@@ -138,6 +163,7 @@
         </div>
       </div>
   </div>
+
 </div>
       <?php endwhile; ?>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
