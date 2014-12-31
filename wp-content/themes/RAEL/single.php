@@ -22,6 +22,28 @@
         <?php the_content(); ?>
         <?php if(comments_open()) comments_template( '', true ); ?>
       </article>
+  <?php
+    $projects=get_posts_associated_posts_of_type($post->ID,'projects');
+    if($projects){
+    ?>
+    <div class="projects">
+    <?php
+      $projects_list.='<ul>';
+      foreach( $projects as $project ){
+        $projects_list.='<li class="project"><a class="" title="go to the '.display_name_format(get_the_title($project)).' page" href="'.get_permalink($project).'">';
+        $projects_list.=get_the_title($project);
+        $projects_list.='</a></li>';
+      }
+      $projects_list.='</ul>'; 
+      ?>
+      <div class="title col-sm-2">Associated Projects:</div>
+      <div class="projects col-sm-10">
+        <?php echo $projects_list; ?>
+      </div>
+    </div>
+    <?php 
+    }
+    ?>
     </div>
   </div>
   <div class="row">

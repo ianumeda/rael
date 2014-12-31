@@ -61,7 +61,7 @@
           $authors=get_posts_associated_posts_of_type($post->ID,'people');
           $authors_list='';
           if($authors){
-            $authors_list.='<ui>';
+            $authors_list.='<ul>';
             foreach( $authors as $author ){
               $authors_list.='<li class="author"><a class="" title="go to '.display_name_format(get_the_title($author)).'\'s page" href="'.get_permalink($author).'">';
               $authors_list.=get_the_title($author);
@@ -75,7 +75,7 @@
                 $authors_list.='</li>';
               }
             }
-            $authors_list.='</ui>';
+            $authors_list.='</ul>';
           }          
           ?>
           <div class="title col-sm-2">Project Members:</div>
@@ -103,22 +103,22 @@
         </div>
         <?php             
         }
-        $projects=get_posts_associated_posts_of_type($post->ID,'publications');
-        if($projects){
+        $publications=get_posts_reverse_associated_posts_of_type($post->ID,'publications');
+        if($publications){
         ?>
         <div class="projects row">
         <?php
-          $projects_list.='<ui>';
-          foreach( $projects as $project ){
-            $projects_list.='<li class="project"><a class="" title="go to the '.(get_the_title($project)).' page" href="'.get_permalink($project).'">';
-            $projects_list.=get_the_title($project);
-            $projects_list.='</a></li>';
+          $publications_list.='<ul>';
+          foreach( $publications as $publication ){
+            $publications_list.='<li class="project"><a class="" title="go to the '.(get_the_title($publication)).' page" href="'.get_permalink($publication).'">';
+            $publications_list.=get_the_title($publication);
+            $publications_list.='</a></li>';
           }
-          $projects_list.='</ui>'; 
+          $publications_list.='</ul>'; 
           ?>
           <div class="title col-sm-2">Associated Publications:</div>
           <div class="projects col-sm-10">
-            <?php echo $projects_list; ?>
+            <?php echo $publications_list; ?>
           </div>
         </div>
         <?php 

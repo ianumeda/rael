@@ -60,7 +60,7 @@
           $authors=get_publications_authors($post->ID);
           $authors_list='';
           if($authors){
-            $authors_list.='<ui>';
+            $authors_list.='<ul>';
             foreach( $authors as $author ){
               $authors_list.='<li class="author"><a class="" title="go to '.display_name_format(get_the_title($author)).'\'s page" href="'.get_permalink($author).'">';
               $authors_list.=get_the_title($author);
@@ -74,7 +74,7 @@
                 $authors_list.='</li>';
               }
             }
-            $authors_list.='</ui>';
+            $authors_list.='</ul>';
           }          
           ?>
           <div class="title col-sm-2">Author(s):</div>
@@ -128,13 +128,13 @@
         ?>
         <div class="projects row">
         <?php
-          $projects_list.='<ui>';
+          $projects_list.='<ul>';
           foreach( $projects as $project ){
             $projects_list.='<li class="project"><a class="" title="go to the '.display_name_format(get_the_title($project)).' page" href="'.get_permalink($project).'">';
             $projects_list.=get_the_title($project);
             $projects_list.='</a></li>';
           }
-          $projects_list.='</ui>'; 
+          $projects_list.='</ul>'; 
           ?>
           <div class="title col-sm-2">Associated Projects:</div>
           <div class="projects col-sm-10">
