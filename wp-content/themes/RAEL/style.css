@@ -123,8 +123,9 @@ footer .row2 { }
   -o-transition: all 500ms;
   transition: all 500ms; 
 }
-.branding .tagline > span { display:block; text-align:center; }
-.branding h1 { font-size:60px; line-height:1em; }
+.branding .tagline > span { display:inline-block; text-align:center; }
+.branding h1 { font-size:40px; line-height:1em; float:left; }
+.branding h6 { line-height: 40px; float: left; padding-left: 15px; border-left: 2px solid rgba(0,0,0,.5); margin-left: 15px; }
 .logo, .shiftnav-menu-title { font-family: "Donegal One", serif; }
 #menu-footer:hover { background:rgba(255,255,255,.1); }
 #menu-footer li a { border-radius:0; }
@@ -337,8 +338,8 @@ a.coverall_link, .coverall_link { position:absolute; top:0; left:0; width:100%; 
 #projects_page .project_info > div { margin:0 0 .5em;}
 #projects_page .project_info span.title { font-weight:700; font-size:.8em; }
 .project_page .project_title { font-weight:100; font-size:2.5em; }
-.project_page .banner_image + .container { margin-top:300px; }
-.project_page .banner_image { height:400px; width:100%; background-size:cover; background-position:center; position:absolute; }
+.project_page .banner_image ~ .container { margin-top:-50px; }
+.project_page .banner_image { height:400px; width:100%; background-size:cover; background-position:center; position:relative; }
 .project_page span.date { font-size:.8em; color:#aaa;}
 .fade_to_white { position:absolute; height:100%; width:100%; top:0; left:0; 
   background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,1) 100%); /* FF3.6+ */
@@ -628,7 +629,7 @@ div[id*='contact-form-'] { margin: 2em; box-shadow: inset 0 0 10px -3px; padding
  
 @media screen and (max-width: 24em) {
 }
-body > #shiftnav-toggle-main { background:rgba(255,255,255,.9); transition:.5s ease; text-align:left; color:#222;}
+body > #shiftnav-toggle-main { background:rgba(255,255,255,.9); transition:.5s ease; text-align:left; color:#222; box-shadow: 0 0 10px -4px; }
 body > #shiftnav-toggle-main:hover { background:rgba(255,255,255,1); }
 .shiftnav-inner > .shiftnav-foot-content { padding:1em; color:#ccc; text-align:center; }
 .shiftnav-inner > .shiftnav-foot-content hr { margin:.5em 0; border-color:rgba(255,255,255,.3); }

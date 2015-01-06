@@ -14,7 +14,7 @@
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 
     <div class="project_page project_<?php echo $post->ID; ?>">
-          <a class="btn btn-link" href="<?PHP echo bloginfo("url")."/projects"; ?>"><span class="fa fa-angle-left"></span> Go to the Projects Page</a>
+          <!-- <a class="btn btn-link" href="<?PHP echo bloginfo("url")."/projects"; ?>"><span class="fa fa-angle-left"></span> Go to the Projects Page</a> -->
 <?php
   if (has_post_thumbnail( $post->ID ) ){
     $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' ); 
@@ -31,6 +31,7 @@
         <div class="row">
           <div class="col-xs-12">
             <h2 class="project_title">
+              <?php shiftnav_toggle( 'projects', "<span class='fa fa-bars'></span>" ); ?>
             <?php echo (get_the_title()); ?>
             </h2>
           </div>
@@ -157,7 +158,7 @@
     </div>
 
       <div class="row">
-        <h3 class="section_heading" style="text-align:center;">Browse Projects:</h3>
+        <h3 class="section_heading" style="text-align:center;"><?php shiftnav_toggle( 'projects', "<span class='fa fa-bars'></span> Projects" ); ?></h3>
         <div class="pager">
           <?php get_adjacent_post_links($post->ID); ?>
         </div>
