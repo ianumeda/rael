@@ -99,7 +99,6 @@ h6 					{ font-family: "Helvetica Neue", helvetica, sans-serif; font-weight:700;
 					{ /* Place your styles here for all 'Retina' screens */ }
 
 }
-#page { margin-top:140px; }
 #page.home_page { margin-top:0; }
 #page .content, .page .content { padding:1em 0px 0; }
 /*.page .content ol { padding:0 60px; }*/
@@ -108,7 +107,6 @@ h6 					{ font-family: "Helvetica Neue", helvetica, sans-serif; font-weight:700;
 
 footer .nav.nav-pills li > a { padding:4px 15px; font-size:12px; }
 footer { 
-  color:#f0f0f0; 
   min-height:201px; 
   position:relative; 
   width:100%; 
@@ -125,7 +123,9 @@ footer .row2 { }
   -o-transition: all 500ms;
   transition: all 500ms; 
 }
-.logo { font-family: "Donegal One", serif; }
+.branding .tagline > span { display:block; text-align:center; }
+.branding h1 { font-size:60px; line-height:1em; }
+.logo, .shiftnav-menu-title { font-family: "Donegal One", serif; }
 #menu-footer:hover { background:rgba(255,255,255,.1); }
 #menu-footer li a { border-radius:0; }
 #menu-footer li a:hover,#menu-footer li.current-menu-item { color:#fff; background-color:#779DBD; }
@@ -617,186 +617,19 @@ div[id*='contact-form-'] { margin: 2em; box-shadow: inset 0 0 10px -3px; padding
 #feature_carousel .carousel-caption .carousel-item-title { font-size:24px; font-weight:200; text-align:center; }
 
 
-.cbp-af-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    z-index: 10000;
-/*    height: 150px;*/
-/*    overflow: hidden;*/
-    -webkit-transition: height 0.3s;
-    -moz-transition: height 0.3s;
-    transition: height 0.3s;
-    box-shadow: 0 0 10px -5px black;
-}
- 
-.cbp-af-header .cbp-af-inner {
-/*    width: 90%;
-    max-width: 69em;
-    margin: 0 auto;
-    padding: 0 1.875em;*/
-}
- 
-.cbp-af-header h1,
-.cbp-af-header nav {
-    display: inline-block;
-    position: relative;
-}
-.cbp-af-header .navbar-nav .open .dropdown-menu { 
-  position:absolute; float:left; background-color:#f9f9f9; right:0; box-shadow: 0 3px 10px -5px black; 
-}
-.cbp-af-header .navbar-nav .open .dropdown-menu > li > a { white-space:normal; } 
-.cbp-af-header nav ul { margin:0; float:right; }
- /* We just have one-lined elements, so we'll center the elements with the line-height set to the height of the header */
-.cbp-af-header h1,
-.cbp-af-header nav div > ul > li > a {
-    line-height: 150px;
-}
-.cbp-af-header #menu-top_1 > li > a { line-height:100px; }
-.cbp-af-header #menu-top_2 > li > a { line-height:100px; }
-@media (max-width: 400px) {
-  .cbp-af-header #menu-top_1 > li > a { line-height:50px; }
-  .cbp-af-header #menu-top_2 > li > a { line-height:50px; }
-}
 
-.cbp-af-header nav div > ul > li > a { padding-top:0; padding-bottom:0; } 
-.cbp-af-header .logo { 
-  hei201px50px; 
-  padding:10px; 
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.cbp-af-header .logo.tagline { 
-  display:none;
-  height:auto; 
-  padding:10px; 
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.cbp-af-header h1 {
-    text-transform: uppercase;
-    color: #333;
-    letter-spacing: 4px;
-    font-size: 5em;
-    margin: 0;
-    float: left;
-}
-.cbp-af-header h6 {
-  opacity:1;
-/*    text-transform: uppercase;*/
-    color: #333;
-    letter-spacing: 1px;
-    font-size: 13px;
-    margin: -70px 0 0;
-    float: left;
-    line-height:1.5em;
-}
-.cbp-af-header h6 > span {
-  display:block;
-}
- 
-.cbp-af-header nav {
-    float: right;
-}
-.cbp-af-header .nav > li { display:inline-block; } 
-.cbp-af-header nav div > ul > li > a {
-    color: #222;
-    font-weight: 400;
-    margin: 0px;
-    font-size: 1em;
-}
- 
-.cbp-af-header nav a:hover {
-    color: #333;
-}
- 
-/* Transitions and class for reduced height */
-.cbp-af-header h1,
-.cbp-af-header nav a {
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
- 
-.cbp-af-header.cbp-af-header-shrink {
-/*    height: 60px;*/
-}
- 
-.cbp-af-header.cbp-af-header-shrink h1,
-.cbp-af-header.cbp-af-header-shrink nav div > ul > li > a,
-.single-piece .cbp-af-header.cbp-af-header-shrink h1, 
-.single-piece .cbp-af-header.cbp-af-header-shrink nav div > ul > li > a {
-    line-height: 60px;
-}
-.cbp-af-header.cbp-af-header-shrink #menu-top_1 > li > a { line-height:30px; }
-.cbp-af-header.cbp-af-header-shrink #menu-top_2 > li > a { line-height:30px; }
-
-@media (max-width: 767px) {
-  .cbp-af-header.cbp-af-header-shrink #menu-top_1 > li > a { line-height:15px; }
-  .cbp-af-header.cbp-af-header-shrink #menu-top_2 > li > a { line-height:15px; }
-}
-.cbp-af-header.cbp-af-header-shrink .logo { height:60px; padding:0; }
- 
-.cbp-af-header.cbp-af-header-shrink h1 {
-    font-size: 2em;
-}
-.cbp-af-header.cbp-af-header-shrink h6 {
-  opacity:0;
-}
- 
 /* Example Media Queries */
 @media screen and (max-width: 55em) {
      
-    .cbp-af-header .cbp-af-inner {
-        width: 100%;
-    }
- 
-    .cbp-af-header h1,
-    .cbp-af-header nav {
-        display: block;
-        margin: 0 auto;
-        text-align: right;
-/*        float: none;*/
-    }
- 
-    .cbp-af-header h1,
-    .cbp-af-header nav > ul > li > a {
-        line-height: 115px;
-    }
- 
-    .cbp-af-header nav a {
-        margin: 0 10px;
-    }
- 
-    .cbp-af-header.cbp-af-header-shrink h1,
-    .cbp-af-header.cbp-af-header-shrink nav a {
-        line-height: 45px;
-    }
- 
-    .cbp-af-header.cbp-af-header-shrink h1 {
-        font-size: 2em;
-    }
- 
-    .cbp-af-header.cbp-af-header-shrink nav a {
-        font-size: 1em;
-    }
 }
  
 @media screen and (max-width: 32.25em) {
-    .cbp-af-header nav a {
-        font-size: 1em;
-    }
 }
  
 @media screen and (max-width: 24em) {
-    .cbp-af-header nav a,
-    .cbp-af-header.cbp-af-header-shrink nav a {
-        line-height: 1;
-    }
 }
-body > #shiftnav-toggle-main { background:transparent; }
-#shiftnav-toggle-main .shiftnav-toggle-main-block { display:none; }
+body > #shiftnav-toggle-main { background:rgba(255,255,255,.9); transition:.5s ease; text-align:left; color:#222;}
+body > #shiftnav-toggle-main:hover { background:rgba(255,255,255,1); }
+.shiftnav-inner > .shiftnav-foot-content { padding:1em; color:#ccc; text-align:center; }
+.shiftnav-inner > .shiftnav-foot-content hr { margin:.5em 0; border-color:rgba(255,255,255,.3); }
+.shiftnav-inner > .shiftnav-foot-content a { color:inherit; text-decoration:underline; }

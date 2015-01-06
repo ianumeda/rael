@@ -13,7 +13,7 @@
     } 
     
     // new UISearch( document.getElementById( 'sb-search-top' ) );
-		new UISearch( document.getElementById( 'sb-search-bottom' ) );
+    // new UISearch( document.getElementById( 'sb-search-bottom' ) );
     
     function makesquares(){
       $('.square').each(function(){
@@ -57,7 +57,7 @@
         throttle_id=null;
         makesquares();
         set_carousel_height();
-        set_footer_position();
+        // set_footer_position();
       }
     };
     
