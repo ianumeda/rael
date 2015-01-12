@@ -181,8 +181,110 @@ function get_adjacent_person($direction="prev", $current_personID=null){
    return get_post($people[$current+1]);
  } else return null; 
 }
+function get_publications_authors($postID){
+  // returns array of post id's of persons associated with postID
+  $publications_authors=get_the_terms($postID, 'people');
+	if($publications_authors && !is_wp_error( $publications_authors )){
+    $author_post_id_list=array();
+    foreach($publications_authors as $author){
+      array_push($author_post_id_list, $author->term_id);
+    }
+    return $author_post_id_list;
+	} else return null;
+}
 
-// hook into the init action and call create_book_taxonomies when it fires
+function get_posts_associated_posts_of_type($postID,$post_type){
+  // returns array of post id's of posts associated with postID of type $post_type
+  $posts_linked_posts=get_the_terms($postID, $post_type);
+	if($posts_linked_posts && !is_wp_error( $posts_linked_posts )){
+    $linked_post_id_list=array();
+    foreach($posts_linked_posts as $linked_post){
+      array_push($linked_post_id_list, $linked_post->term_id);
+    }
+    return $linked_post_id_list;
+	} else return null;
+}
+function get_posts_reverse_associated_posts_of_type ($postID, $post_type){
+  // performs a reverse lookup for posts of $post_type that are associated with $postID via CPT
+  $args = array(
+  	'posts_per_page'   => -1,
+  	'offset'           => 0,
+  	'orderby'          => 'post_date',
+  	'order'            => 'DESC',
+  	'post_type'        => $post_type,
+  	'post_status'      => 'publish',
+  	 );
+  $all_posts_of_type=get_posts($args);
+  $reverse_associated_posts=array();
+  foreach($all_posts_of_type as $a_post){
+    if(in_array($postID, get_posts_associated_posts_of_type($a_post, get_post_type($postID)))){
+      $reverse_associated_posts[]=$a_post;
+    }
+  }
+  return $reverse_associated_posts;
+}
+
+function my_acf_load_field( $field )
+{
+  
+    $field['choices'] = array(
+        'custom' => 'My Custom Choice'
+    );
+
+    return $field;
+}
+
+function get_adjacent_post_links ($postID, $orderby='date', $tax){
+  // get_posts in same custom taxonomy
+  $post_type=get_post_type($postID);
+  $obj = get_post_type_object( $post_type );
+  
+  $postlist_args = array(
+     'posts_per_page'  => -1,
+     'orderby'         => $orderby,
+     'order'           => 'ASC',
+     'post_type'       => $post_type
+  ); 
+  if($tax){
+    $postlist_args['taxonomy']=$tax;
+  }
+  $postlist = get_posts( $postlist_args );
+
+  // get ids of posts retrieved from get_posts
+  $ids = array();
+  foreach ($postlist as $thepost) {
+     $ids[] = $thepost->ID;
+  }
+
+  // get and echo previous and next post in the same taxonomy        
+  $thisindex = array_search($postID, $ids);
+  $previd = $ids[$thisindex-1];
+  $nextid = $ids[$thisindex+1];
+  if ( !empty($previd) ) {
+    echo '<a rel="prev" class="btn btn-default" href="' . get_permalink($previd). '" title="go to the previous '.$obj->labels->singular_name.'"><span class="fa fa-angle-left"></span> '.myTruncate(get_the_title($previd),30).'</a>';
+  }
+  if ( !empty($nextid) ) {
+    echo '<a rel="next" class="btn btn-default" href="' . get_permalink($nextid). '" title="go to the next '.$obj->labels->singular_name.'">'.myTruncate(get_the_title($nextid),30).' <span class="fa fa-angle-right"></span></a>';
+  }
+}
+function myTruncate($string, $limit, $break=" ", $pad="...")
+{
+  // return with no change if string is shorter than $limit
+  if(strlen($string) <= $limit) return $string;
+
+  // is $break present between $limit and the end of the string?
+  if(false !== ($breakpoint = strpos($string, $break, $limit))) {
+    if($breakpoint < strlen($string) - 1) {
+      $string = substr($string, 0, $breakpoint) . $pad;
+    }
+  }
+
+  return $string;
+}
+
+// acf/load_field/name={$field_name} - filter for a specific field based on it's name
+add_filter('acf/load_field/name=topics_select', 'my_acf_load_field');
+
 add_action( 'init', 'create_people_taxonomies', 0 );
 
 // create two taxonomies, genres and writers for the post type "book"

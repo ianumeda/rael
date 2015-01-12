@@ -11,21 +11,31 @@
         $('#footer').css({'position':'fixed', 'bottom':'0'});
       }
     } 
-    
-    // new UISearch( document.getElementById( 'sb-search-top' ) );
-		new UISearch( document.getElementById( 'sb-search-bottom' ) );
-    
+        
     function makesquares(){
-      $('.headshot.square').each(function(){
-          var $img = $(this),
-              imgWidth = $img.width();
+      $('.square').each(function(){
+        var max_width=240;
+        var $img = $(this),
+            imgWidth = ($img.width() > max_width ? max_width : $img.width());
 
-          $(this).css({"height":imgWidth});
-          $('.person_page .headshot .glyphicon-user').css({"font-size":imgWidth});
+        // $(this).css({"height":imgWidth});
+        $(this).find('.fa').each(function(){ $(this).css({"font-size":imgWidth}); });
       });
-      
+      $('.fitted').each(function(){
+        var max_width=$(this).parent().innerWidth();//240;
+        var $img = $(this),
+            imgWidth = ($img.width() > max_width ? max_width : $img.width());
+
+        // $(this).css({"height":imgWidth});
+        $(this).find('.fa').each(function(){ $(this).css({"font-size":imgWidth}); });
+        $(this).addClass('is_fitted');
+      });
     }
 
+    $('.coverall_link').each(function(){
+      $(this).css("line-height",$(this).parent().height()+"px");
+    });
+    
     var throttle_id=null;
     function throttle_on_resize(thedelayamount){
       // this function sets a timer function that calls on_resize after thedelayamount. when called during that delay a new delay is set. 
@@ -44,7 +54,7 @@
         throttle_id=null;
         makesquares();
         set_carousel_height();
-        set_footer_position();
+        // set_footer_position();
       }
     };
     
@@ -77,41 +87,5 @@
       }
     });
     
-    // $.lockfixed("#topmenu",{offset: {top: 100, bottom: 100}});
-
-    var cbpAnimatedHeader = (function() {
- 
-        var docElem = document.documentElement,
-            header = document.querySelector( '.cbp-af-header' ),
-            didScroll = false,
-            changeHeaderOn = 200;
- 
-        function init() {
-            window.addEventListener( 'scroll', function( event ) {
-                if( !didScroll ) {
-                    didScroll = true;
-                    setTimeout( scrollPage, 250 );
-                }
-            }, false );
-        }
- 
-        function scrollPage() {
-            var sy = scrollY();
-            if ( sy >= changeHeaderOn ) {
-                classie.add( header, 'cbp-af-header-shrink' );
-            }
-            else {
-                classie.remove( header, 'cbp-af-header-shrink' );
-            }
-            didScroll = false;
-        }
- 
-        function scrollY() {
-            return window.pageYOffset || docElem.scrollTop;
-        }
- 
-        init();
- 
-    })();
 });
 
