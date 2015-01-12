@@ -18,8 +18,8 @@
 
         <div class="row">
           <a class="btn btn-link" href="<?PHP echo bloginfo("url")."/publications"; ?>"><span class="fa fa-angle-left"></span> Go to the Publications Page</a>
-          <div class="col-xs-12 publication_title">
-            <h2>
+          <div class="col-xs-12">
+            <h2 class="publication_title">
             <?php echo (get_the_title()); ?>
             </h2>
           </div>

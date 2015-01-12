@@ -31,7 +31,6 @@
         <div class="row">
           <div class="col-xs-12">
             <h2 class="project_title">
-              <?php shiftnav_toggle( 'projects', "<span class='fa fa-bars'></span>" ); ?>
             <?php echo (get_the_title()); ?>
             </h2>
           </div>

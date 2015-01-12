@@ -11,10 +11,7 @@
         $('#footer').css({'position':'fixed', 'bottom':'0'});
       }
     } 
-    
-    // new UISearch( document.getElementById( 'sb-search-top' ) );
-    // new UISearch( document.getElementById( 'sb-search-bottom' ) );
-    
+        
     function makesquares(){
       $('.square').each(function(){
         var max_width=240;
@@ -90,41 +87,5 @@
       }
     });
     
-    // $.lockfixed("#topmenu",{offset: {top: 100, bottom: 100}});
-
-    var cbpAnimatedHeader = (function() {
- 
-        var docElem = document.documentElement,
-            header = document.querySelector( '.cbp-af-header' ),
-            didScroll = false,
-            changeHeaderOn = 100;
- 
-        function init() {
-            window.addEventListener( 'scroll', function( event ) {
-                if( !didScroll ) {
-                    didScroll = true;
-                    setTimeout( scrollPage, 250 );
-                }
-            }, false );
-        }
- 
-        function scrollPage() {
-            var sy = scrollY();
-            if ( sy >= changeHeaderOn ) {
-                classie.add( header, 'cbp-af-header-shrink' );
-            }
-            else {
-                classie.remove( header, 'cbp-af-header-shrink' );
-            }
-            didScroll = false;
-        }
- 
-        function scrollY() {
-            return window.pageYOffset || docElem.scrollTop;
-        }
- 
-        init();
- 
-    })();
 });
 

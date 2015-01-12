@@ -22,19 +22,6 @@
           <?php
             the_content();
           ?>
-          <?php
-          $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'visiting-scholars', 'posts_per_page' => '-1', 'order' => 'ASC', 'orderby' => 'title', 'tag__in'=>array(80)));
-          // tag id 80 is "spotlight"
-          if ( $query->have_posts() ) {
-          	while ( $query->have_posts() ) {
-          		$query->the_post();
-          		$columns_per_preview=4;
-        		  Starkers_Utilities::get_template_parts( array( 'parts/shared/people-spotlight' ) ); 
-          	}
-          } 
-          wp_reset_postdata();
-        ?>    
-        <h3 class="section_heading">All Visiting Scholars</h2>
         <?php
           $query = new WP_Query( array( 'post_type' => 'people', 'position'=>'visiting-scholars', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'ASC', 'orderby' => 'title' ));
           if ( $query->have_posts() ) {
@@ -69,6 +56,7 @@
     </div> -->
   </div>
 </div>
+  <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/people-footer' ) ); ?>
 
 </div>
 <?php endwhile; ?>
