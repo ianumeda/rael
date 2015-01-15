@@ -28,11 +28,8 @@
 	$ui_css_srv_panel   = (isset($view_state['dup-settings-diag-srv-panel'])  && $view_state['dup-settings-diag-srv-panel'])   ? 'display:block' : 'display:none';
 	$ui_css_opts_panel  = (isset($view_state['dup-settings-diag-opts-panel']) && $view_state['dup-settings-diag-opts-panel'])  ? 'display:block' : 'display:none';
 	
-	if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARTDED_FOR'] != '') {
-		$client_ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	} else {
-		$client_ip_address = $_SERVER['REMOTE_ADDR'];
-	}
+
+	$client_ip_address = DUP_Server::GetClientIP();
 	
 	//POST BACK
 	$action_updated = null;
@@ -67,7 +64,7 @@
 	textarea.dup-opts-read {width:100%; height:40px; font-size:12px}
 </style>
 
-<form id="dup-settings-form" action="<?php echo admin_url( 'admin.php?page=duplicator-settings&tab=diagnostics' ); ?>" method="post">
+<form id="dup-settings-form" action="<?php echo admin_url( 'admin.php?page=duplicator-tools&tab=diagnostics' ); ?>" method="post">
 	<?php wp_nonce_field( 'duplicator_settings_page' ); ?>
 	<input type="hidden" id="dup-settings-form-action" name="action" value="">
 	<br/>
@@ -92,11 +89,19 @@
 			<tr>
 				<td><?php _e("Duplicator Version", 'wpduplicator'); ?></td>
 				<td><?php echo DUPLICATOR_VERSION ?></td>
-			</tr>	
+			</tr>
 			<tr>
 				<td><?php _e("Operating System", 'wpduplicator'); ?></td>
 				<td><?php echo PHP_OS ?></td>
-			</tr>					   
+			</tr>
+			<tr>
+				<td><?php _e("Timezone", 'wpduplicator'); ?></td>
+				<td><?php echo  date_default_timezone_get() ; ?> &nbsp; <small><i>This is a <a href='options-general.php'>WordPress setting</a></i></small></td>
+			</tr>	
+			<tr>
+				<td><?php _e("Server Time", 'wpduplicator'); ?></td>
+				<td><?php echo date("Y-m-d H:i:s"); ?></td>
+			</tr>				   
 			<tr>
 				<td><?php _e("Web Server", 'wpduplicator'); ?></td>
 				<td><?php echo $_SERVER['SERVER_SOFTWARE'] ?></td>

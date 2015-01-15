@@ -68,10 +68,12 @@ class DUP_Server {
 		$version_test = version_compare($wp_version,  DUPLICATOR_SCAN_MIN_WP) >= 0 ? true : false;
 		
 		//Cache
+		$Package = DUP_Package::GetActive();
 		$cache_path = DUP_Util::SafePath(WP_CONTENT_DIR) .  '/cache';
 		$dirEmpty	= DUP_Util::IsDirectoryEmpty($cache_path);
 		$dirSize	= DUP_Util::GetDirectorySize($cache_path); 
-		$cache_test = ($dirEmpty  || $dirSize < DUPLICATOR_SCAN_CACHESIZE ) ? true : false;
+		$cach_filtered = in_array($cache_path, explode(';', $Package->Archive->FilterDirs));
+		$cache_test = ($cach_filtered || $dirEmpty  || $dirSize < DUPLICATOR_SCAN_CACHESIZE ) ? true : false;
 		
 		//Core Files
 		$files = array();
@@ -108,6 +110,44 @@ class DUP_Server {
 		$sqlFile = file_exists(DUPLICATOR_WPROOTPATH . DUPLICATOR_INSTALL_SQL);
 		$logFile = file_exists(DUPLICATOR_WPROOTPATH . DUPLICATOR_INSTALL_LOG);
 		return  ($phpFile || $sqlFile || $logFile);
+	}
+	
+	/** 
+	* Get the IP of a client machine
+	* @return string   IP of the client machine
+	*/
+	public static function GetClientIP() {
+		
+		if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)){
+            return  $_SERVER["HTTP_X_FORWARDED_FOR"];  
+        }else if (array_key_exists('REMOTE_ADDR', $_SERVER)) { 
+            return $_SERVER["REMOTE_ADDR"]; 
+        }else if (array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
+            return $_SERVER["HTTP_CLIENT_IP"]; 
+        } 
+
+        return '';
+	}
+	
+	/** 
+	* Get PHP memory useage 
+	* @return string   Returns human readable memory useage.
+	*/
+	public static function GetPHPMemory($peak = false) {
+		
+		if ($peak) {
+			$result = 'Unable to read PHP peak memory usage';
+			if (function_exists('memory_get_peak_usage')) {
+				$result = DUP_Util::ByteSize(memory_get_peak_usage(true));
+			} 
+		} else {
+			$result = 'Unable to read PHP memory usage';
+			if (function_exists('memory_get_usage')) {
+				$result = DUP_Util::ByteSize(memory_get_usage(true));
+			} 
+		}
+
+        return $result;
 	}
 	
 }

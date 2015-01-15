@@ -1,7 +1,7 @@
 <?php
 //Prevent directly browsing to the file
 if (function_exists('plugin_dir_url')) {
-    define('DUPLICATOR_VERSION',        '0.5.8');
+    define('DUPLICATOR_VERSION',        '0.5.12');
     define("DUPLICATOR_HOMEPAGE",       "http://lifeinthegrid.com/labs/duplicator");
     define("DUPLICATOR_GIVELINK",       "http://lifeinthegrid.com/partner");
     define("DUPLICATOR_HELPLINK",       "http://lifeinthegrid.com/duplicator-docs");
@@ -33,8 +33,9 @@ if (function_exists('plugin_dir_url')) {
 	//RESTRAINT CONSTANTS
     define("DUPLICATOR_PHP_MAX_MEMORY",  '5000M');
     define("DUPLICATOR_DB_MAX_TIME",     5000);
+	define("DUPLICATOR_DB_EOF_MARKER",   'DUPLICATOR_MYSQLDUMP_EOF');
 	define("DUPLICATOR_SCAN_SITE",    157286400);	//150MB
-	define("DUPLICATOR_SCAN_WARNFILESIZE", 4194304);//4MB
+	define("DUPLICATOR_SCAN_WARNFILESIZE", 3145728);//3MB
 	define("DUPLICATOR_SCAN_CACHESIZE", 524288);	//512K
 	define("DUPLICATOR_SCAN_DBSIZE",  52428800);	//50MB
 	define("DUPLICATOR_SCAN_DBROWS",  250000);

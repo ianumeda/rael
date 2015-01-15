@@ -113,33 +113,40 @@ class DUP_Archive {
 		}
 		
 		//Filter Directories
+		//Invalid test contains checks for: characters over 250, invlaid characters, 
+		//empty string and directories ending with period (Windows incompatable)
 		foreach ($this->Dirs as $key => $val) {
-			$name = basename($val); 
-			if (strlen($val) > 250 || preg_match('/(\/|\*|\?|\>|\<|\:|\\|\|)/', $name)|| trim($name) == "") {
-				$this->WarnFileName[] = $val;
-				$this->OmitDirs[]     = $val;
-				unset($this->Dirs[$key]);
-			} else {
-				//PATH FILTERS
-				foreach($this->filterDirsArray as $item) { 
-					if (strstr($val, $item)) {
-						$this->OmitDirs[] = $val;
-						unset($this->Dirs[$key]);
-						continue 2;
-					}
+			//Remove path filter directories
+			foreach($this->filterDirsArray as $item) { 
+				if (strstr($val, $item)) {
+					$this->OmitDirs[] = $val;
+					unset($this->Dirs[$key]);
+					continue 2;
 				}
 			}
+			
+			//Locate invalid directories and warn
+			$name = basename($val); 
+			$invalid_test = strlen($val) > 250 
+							|| 	preg_match('/(\/|\*|\?|\>|\<|\:|\\|\|)/', $name) 
+							|| 	trim($name) == "" 
+							||  (strrpos($name, '.') == strlen($name) - 1  && substr($name, -1) == '.');
+			
+			if ($invalid_test) {
+				$this->WarnFileName[] = $val;
+				$this->OmitDirs[]     = $val;
+			} 
 		}
 	}
 	
+	//Get all files and filter out error prone subsets
 	private function getFiles() {
-		
 		foreach ($this->Dirs as $key => $val) {
-			foreach (glob("{$val}/{,.}*", GLOB_NOSORT | GLOB_BRACE) as $filePath) {
+			$files = DUP_Util::ListFiles($val);
+			foreach ($files as $filePath) {
 				$fileName = basename($filePath);
 				$valid = true;
 				if (!is_dir($filePath)){
-					
 					if (!in_array(@pathinfo($filePath, PATHINFO_EXTENSION), $this->filterExtsArray)  && is_readable($filePath)) {
 						$fileSize = @filesize($filePath);
 						$fileSize = empty($fileSize) ? 0 : $fileSize; 

@@ -26,13 +26,11 @@
 			$req01a = 'Fail';
 		}
 	}
-	$req01b = ($zip_file_count == 1) ? 'Pass' : 'Fail';
-	$req01  = ($req01a == 'Pass' && $req01b == 'Pass') ? 'Pass' : 'Fail';
-	$req02 = (((strtolower(@ini_get('safe_mode'))   == 'on')   
-				||  (strtolower(@ini_get('safe_mode')) == 'yes') 
-				||  (strtolower(@ini_get('safe_mode')) == 'true') 
-				||  (ini_get("safe_mode") == 1 ))) ? 'Fail' : 'Pass';
-	$req03  = function_exists('mysqli_connect') ? 'Pass' : 'Fail';
+	$req01b   = ($zip_file_count == 1) ? 'Pass' : 'Fail';
+	$req01    = ($req01a == 'Pass' && $req01b == 'Pass') ? 'Pass' : 'Fail';
+	$safe_ini = strtolower(@ini_get('safe_mode'));
+	$req02    =  $safe_ini  != 'on' || $safe_ini != 'yes' || $safe_ini != 'true' || ini_get("safe_mode") != 1 ? 'Pass' : 'Fail';
+	$req03    = function_exists('mysqli_connect') ? 'Pass' : 'Fail';
 	$php_compare  = version_compare(phpversion(), '5.2.17');
 	$req04 = $php_compare >= 0 ? 'Pass' : 'Fail';
 	$total_req = ($req01 == 'Pass' && $req02 == 'Pass' && $req03 == 'Pass' && $req04 == 'Pass') ? 'Pass' : 'Fail';
@@ -124,13 +122,9 @@
 			error:   function(data){ alert('An error occurred while testing the database connection!  Be sure the install file and package are both in the same directory.'); }
 		});
 		
-		$("#dup-step1-dialog-db").dialog({
-			height:400, width:600, modal: true,
-			position:['center', 150],
-			buttons: {Close: function() {$(this).dialog( "close" );}}
-		});
-	
 		$('#dbconn-test-msg').html("Attempting Connection.  Please wait...");
+		$("#dup-step1-dbconn-status").show(500);
+		
 	};
 	
 	Duplicator.showDeleteWarning = function () {
@@ -230,10 +224,18 @@ VIEW: STEP 1- INPUT -->
     	    <tr><td>Password</td><td><input type="text" name="dbpass" id="dbpass" value="<?php echo htmlspecialchars($GLOBALS['FW_DBPASS']); ?>"  placeholder="valid database user password"   /></td></tr>
     	</table>
 		
+		
+		<!-- =========================================
+		DIALOG: DB CONNECTION CHECK  -->
 		<div id="dup-step1-dbconn">
-			<input id="dup-step1-dbconn-btn" type="button" onclick="Duplicator.dlgTestDB()" style="" value="Test Connection..." />
+			<input id="dup-step1-dbconn-btn" type="button" onclick="Duplicator.dlgTestDB()" style="" value="Test Connection" />
+			<div id="dup-step1-dbconn-status" style="display:none">
+				<div style="padding: 0px 10px 10px 10px;">		
+					<div id="dbconn-test-msg" style="min-height:80px"></div>
+				</div>
+				<small><a href="javascript:void()" onclick="$('#dup-step1-dbconn-status').hide(1000)">Hide Connection Details</a></small>
+			</div>
 		</div>
-
 
     	<!-- !!DO NOT CHANGE/EDIT OR REMOVE THIS SECTION!!
     	If your interested in Private Label Rights please contact us at the URL below to discuss
@@ -354,7 +356,7 @@ PANEL: SERVER CHECKS  -->
 <div id="dup-step1-dialog-data" style="padding: 0px 10px 10px 10px;">
 	
 	<b>Archive Name:</b> <?php echo $zip_file_name; ?> <br/>
-	<b>Pakcage Notes:</b> <?php echo empty($GLOBALS['FW_PACKAGE_NOTES']) ? 'No notes provided for this pakcage.' : $GLOBALS['FW_PACKAGE_NOTES']; ?><br/><br/>
+	<b>Package Notes:</b> <?php echo empty($GLOBALS['FW_PACKAGE_NOTES']) ? 'No notes provided for this pakcage.' : $GLOBALS['FW_PACKAGE_NOTES']; ?><br/><br/>
 					
 	<!-- SYSTEM REQUIREMENTS -->
 	<b>REQUIREMENTS</b> &nbsp; <i style='font-size:11px'>click links for details</i>
@@ -443,21 +445,4 @@ PANEL: SERVER CHECKS  -->
 </div>
 
 
-<!-- =========================================
-DIALOG: DB CONNECTION CHECK  -->
-<div id="dup-step1-dialog-db" title="Connection Test" style="display:none">
-    <div id="dup-step1-dialog-db-data" style="padding: 0px 10px 10px 10px;">		
-		<div id="dbconn-test-msg" style="min-height:50px"></div>
-		<br/>
-		<div class="help" style="border-top:1px solid silver">
-			<b>Common Connection Issues:</b><br/>
-			- Double check case sensitive values 'User', 'Password' &amp; the 'Database Name' <br/>
-			- Validate the database and database user exist on this server <br/>
-			- Check if the database user has the correct permission levels to this database <br/>
-			- The host 'localhost' may not work on all hosting providers <br/>
-			- Contact your hosting provider for the exact required parameters <br/>
-			- See the 'Database Setup Help' section on step 1 for more details<br/>
-			- Visit the online resources 'Common FAQ page' <br/>
-		</div>
-    </div>
-</div>
+

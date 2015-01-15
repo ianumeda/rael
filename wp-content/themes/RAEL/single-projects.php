@@ -158,9 +158,9 @@
 
       <div class="row">
         <h3 class="section_heading" style="text-align:center;"><?php shiftnav_toggle( 'projects', "<span class='fa fa-bars'></span> Projects" ); ?></h3>
-        <div class="pager">
+        <!-- <div class="pager">
           <?php get_adjacent_post_links($post->ID); ?>
-        </div>
+        </div> -->
       </div>
   </div>
 

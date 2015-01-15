@@ -78,7 +78,9 @@ class DUP_Zip  extends DUP_Archive {
 				if (self::$zipArchive->addEmptyDir(ltrim(str_replace(self::$compressDir, '', $dir), '/'))) {
 					self::$countDirs++;
 				} else {
-					DUP_Log::Info("WARNING: Unable to zip directory: '{$dir}'");
+					//Don't warn when dirtory is the root path
+					if (strcmp($dir, rtrim(self::$compressDir, '/')) != 0)
+						DUP_Log::Info("WARNING: Unable to zip directory: '{$dir}'" . rtrim(self::$compressDir, '/'));
 				}
 			}
 		
@@ -126,10 +128,12 @@ class DUP_Zip  extends DUP_Archive {
 		
             $timerAllEnd = DUP_Util::GetMicrotime();
             $timerAllSum = DUP_Util::ElapsedTime($timerAllEnd, $timerAllStart);
+
 			
 			self::$zipFileSize = @filesize(self::$zipPath);
 			DUP_Log::Info("COMPRESSED SIZE: " . DUP_Util::ByteSize(self::$zipFileSize));
             DUP_Log::Info("ARCHIVE RUNTIME: {$timerAllSum}");
+			DUP_Log::Info("MEMORY STACK: " . DUP_Server::GetPHPMemory());
         } 
         catch (Exception $e) {
 			DUP_Log::Error("Runtime error in package.archive.zip.php constructor.", "Exception: {$e}");

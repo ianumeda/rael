@@ -70,8 +70,8 @@ $feature_buttons.='</div>';
 <?php } else { ?>
 	<div class="alert alert-danger">Carousel content not found.</div>
 <?php } wp_reset_postdata(); ?>
-<div class="container">
 <div id="thefold" class="row">&nbsp;</div>
+<div class="container">
 <div id="belowthefold" class="row">
       <?php
         $query = new WP_Query( array( 'post_type' => 'page', 'post_parent' => $post->ID, 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'ASC', 'orderby' => 'menu_order' ));
@@ -81,24 +81,26 @@ $feature_buttons.='</div>';
         		$query->the_post();
             if($i==1) {
               ?>
-              <div id="welcome" class="col-lg-6 col-md-4  content">
-                <div class="section ">
-          		    <h2 class="section_heading"><?php echo get_the_title($post->ID); ?></h2>
-                  <?php the_content(); ?>
-            	  </div>
-              <?php 
-                } else {
-              ?>
-              <div class="section ">
-          		  <h2 class="section_heading"><?php echo get_the_title($post->ID); ?></h2>
-                  <?php the_content(); ?>
-              </div>
+              <div id="welcome" class="col-sm-6 match_this_height match_height">
+                <div >
+                  <div class="section content">
+            		    <h2 class="section_heading"><?php echo get_the_title($post->ID); ?></h2>
+                    <?php the_content(); ?>
+              	  </div>
+                <?php 
+                  } else {
+                ?>
+                <div class="section content">
+            		  <h2 class="section_heading"><?php echo get_the_title($post->ID); ?></h2>
+                    <?php the_content(); ?>
+                </div>
               <?php 
             }
           	$i++;
         	}
           ?>
             </div>
+          </div>
           <?php 
             } else { 
           ?>
@@ -107,7 +109,8 @@ $feature_buttons.='</div>';
         wp_reset_postdata();
       ?>
     
-      <div id="events_cols" class="col-lg-3 col-md-2 ">
+      <div class="col-sm-3">
+        <div id="events_cols" class="match_height">
         <h3 class="section_heading">Events</h3>
         <?php 
         global $post;
@@ -125,7 +128,7 @@ $feature_buttons.='</div>';
 					else $eventstatus="future";
           ?>
         
-          <div class="row event_item event_<?php echo $eventstatus; ?> post_preview">
+          <div class="event_item event_<?php echo $eventstatus; ?> post_preview">
             <div class="event_status <?php echo $eventstatus; ?>"><?php echo $eventstatus; ?></div>
             <div class="event_date">
               <?php echo tribe_events_event_schedule_details(); ?>
@@ -138,16 +141,18 @@ $feature_buttons.='</div>';
         <?php 
         }
         wp_reset_postdata();
-        ?>        
-        <div class="row news_item">
+        ?>      
+      </div>  
+        <div class="news_item">
           <button type="button" class="btn btn-link btn-block">
-            <a href="./events/category/colloquium/">Go to the Colloquium calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a href="./events/">Go to the Events calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
           </button>
         </div>
       </div>
       
-      <div id="news_cols" class="col-lg-3 col-md-2 ">
-        <h3 class="section_heading">News</h3>
+      <div class="col-sm-3">
+        <div id="news_cols" class="match_height">
+          <h3 class="section_heading">News</h3>
             <?php
               // category__not_in is 'spotlight'
               $query = new WP_Query( array( 'category_name' => 'news', 'category__not_in' => array( 5 ), 'posts_per_page' => '8' ));
@@ -159,7 +164,7 @@ $feature_buttons.='</div>';
               		  <time datetime="<?php the_time( 'Y-m-d' ); ?>" pubdate><?php the_date(); ?></time> 
                     <h5 class="post_title"><a href="<?php the_permalink(); ?>"> <?php echo get_the_title(); ?></a></h5>
                     <p>
-                  		<?php // echo get_the_excerpt(); ?>
+                  		<?php echo get_the_excerpt(); ?>
                   		<a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a>
                     </p>                  
               		</div>
@@ -170,12 +175,13 @@ $feature_buttons.='</div>';
               wp_reset_postdata();
             ?>
       </div>
-  </div>
-    <div class="row news_item">
-      <button id="link_to_news_page" type="button" class="btn btn-link btn-block">
-        <a href="./news-events/">Go to the News &amp; Events Page <span class="glyphicon glyphicon-chevron-right"></span></a>
-      </button>
+      <div class="news_item">
+        <button type="button" class="btn btn-link btn-block">
+          <a href="./events/">Go to News &amp; Events <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </button>
+      </div>
     </div>
+  </div>
 
     </div>
 </div><!-- #belowthefold -->

@@ -1,6 +1,6 @@
 <?php
 
-/* Instantiate the class. */
+// Instantiate the class
 global $cpt_onomies_admin;
 $cpt_onomies_admin = new CPT_ONOMIES_ADMIN();
 
@@ -26,6 +26,8 @@ class CPT_ONOMIES_ADMIN {
 	 * @since 1.0
 	 */
 	public function __construct() {
+		
+		// we're only running these suckers in the admin
 		if ( is_admin() ) {
 		
 			// if the user visits edit-tags.php to manage the terms, we set them straight
@@ -69,11 +71,15 @@ class CPT_ONOMIES_ADMIN {
 			add_filter( 'manage_pages_columns', array( &$this, 'add_cpt_onomy_admin_column' ), 100, 1 );
 			add_filter( 'manage_posts_columns', array( &$this, 'add_cpt_onomy_admin_column' ), 100, 2 );
 			
+			// define sortable columns
+			add_action( 'load-edit.php', array( &$this, 'add_cpt_onomy_admin_sortable_columns_filter' ) );
+			
 			// edit custom admin columns for version < 3.5 - backwards compatibility for a little while
 			add_action( 'manage_pages_custom_column', array( &$this, 'edit_cpt_onomy_admin_column' ), 10, 2 );
 			add_action( 'manage_posts_custom_column', array( &$this, 'edit_cpt_onomy_admin_column' ), 10, 2 );
 				
-		}	
+		}
+			
 	}
 	public function CPT_ONOMIES_ADMIN() { $this->__construct(); }
 	
@@ -116,25 +122,26 @@ class CPT_ONOMIES_ADMIN {
 		global $current_screen;
 			
 		// several pages in the admin need this script
-		wp_register_script( 'jquery-form-validation', CPT_ONOMIES_URL . 'js/jquery.validate.min.js', array( 'jquery' ), '', true );
+		wp_register_script( 'jquery-form-validation', plugins_url( 'js/jquery.validate.min.js', __FILE__ ), array( 'jquery' ), NULL, true );
 		
 		// enqueue scripts depending on page
 		switch( $page ) {
 		
 			case 'edit.php':
-				wp_enqueue_script( CPT_ONOMIES_DASH . '-admin-edit', CPT_ONOMIES_URL . 'js/admin-edit.js', array( 'jquery', 'inline-edit-post' ), '', true );
+				wp_enqueue_script( CPT_ONOMIES_DASH . '-admin-edit', plugins_url( 'js/admin-edit.js', __FILE__ ), array( 'jquery', 'inline-edit-post' ), NULL, true );
 				break;
 				
 			case 'post.php':
 			case 'post-new.php':
-				wp_enqueue_style( CPT_ONOMIES_DASH . '-admin-post', CPT_ONOMIES_URL . 'css/admin-post.css' );
-				wp_enqueue_script( CPT_ONOMIES_DASH . '-admin-post', CPT_ONOMIES_URL . 'js/admin-post.js', array( 'jquery', 'post', 'jquery-ui-autocomplete' ), '', true );
+				wp_enqueue_style( CPT_ONOMIES_DASH . '-admin-post', plugins_url( 'css/admin-post.css', __FILE__ ), false, NULL );
+				wp_enqueue_script( CPT_ONOMIES_DASH . '-admin-post', plugins_url( 'js/admin-post.js', __FILE__ ), array( 'jquery', 'post', 'jquery-ui-autocomplete' ), NULL, true );
 				
 				// our localized info
 				$cpt_onomies_admin_post_data = array();
 				$cpt_onomies_admin_post_translation = array(
 					'term_does_not_exist' => sprintf( __( 'The term you are trying to add does not exist. %s terms, a.k.a posts, must already exist to be available for selection.', CPT_ONOMIES_TEXTDOMAIN ), 'CPT-onomy' ),
 					'add_a_term' => __( 'Add a term', CPT_ONOMIES_TEXTDOMAIN ),
+					'add_the_term' => __( 'Add the term', CPT_ONOMIES_TEXTDOMAIN ),
 					'no_self_relationship' => __( 'Kind of silly to create a relationship between a post and itself, eh?', CPT_ONOMIES_TEXTDOMAIN ),
 					'relationship_already_exists' => __( 'This relationship already exists.', CPT_ONOMIES_TEXTDOMAIN ),
 					'close' => __( 'Close', CPT_ONOMIES_TEXTDOMAIN ),
@@ -149,8 +156,8 @@ class CPT_ONOMIES_ADMIN {
 					$cpt_onomies_admin_post_translation[ 'no_terms_selected' ][ $taxonomy ] = sprintf( __( 'There are no %s selected.', CPT_ONOMIES_TEXTDOMAIN ), strtolower( $tax->labels->name ) );
 				}
 				
+				// add our info to the scripts
 				wp_localize_script( CPT_ONOMIES_DASH . '-admin-post', 'cpt_onomies_admin_post_data', $cpt_onomies_admin_post_data );
-				
 				wp_localize_script( CPT_ONOMIES_DASH . '-admin-post', 'cpt_onomies_admin_post_L10n', $cpt_onomies_admin_post_translation );
 				
 				break;
@@ -167,9 +174,9 @@ class CPT_ONOMIES_ADMIN {
 	 * @since 1.3
 	 */		
 	public function ajax_get_cpt_onomy_terms_include_term_ids() {
-		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && !empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : array();
-		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : NULL;
-		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;
+		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : array();
+		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : NULL;
+		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;
 		$include_term_ids = array();
 		if ( isset( $taxonomy ) ) {
 			$taxonomy_include_term_ids = $this->get_cpt_onomy_terms_include_term_ids( $taxonomy, $post_type, $post_id );
@@ -226,9 +233,9 @@ class CPT_ONOMIES_ADMIN {
 	 * @since 1.2.1
 	 */		
 	public function ajax_get_cpt_onomy_terms_exclude_term_ids() {
-		$taxonomies = ( isset( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) && !empty( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomies' ] : array();
-		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : NULL;
-		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;
+		$taxonomies = ( isset( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomies' ] : array();
+		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : NULL;
+		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;
 		$exclude_term_ids = array();
 		foreach( $taxonomies as $taxonomy ) {
 			$taxonomy_exclude_term_ids = $this->get_cpt_onomy_terms_exclude_term_ids( $taxonomy, $post_type, $post_id );
@@ -312,13 +319,13 @@ class CPT_ONOMIES_ADMIN {
 	 * @since 1.1
 	 */	
 	public function ajax_get_wp_object_terms() {
-		$post_ids = ( isset( $_POST[ 'custom_post_type_onomies_post_ids' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_ids' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_ids' ] : array();
-		$taxonomies = ( isset( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) && !empty( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomies' ] : array();
-		$get_parent_title = ( isset( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) && !empty( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) ) ? true : false;
-		$terms_fields = ( isset( $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ] ) && !empty( $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ] ) && in_array( $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ], array( 'ids' ) ) ) ? $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ] : NULL;
-		if ( !empty( $post_ids ) && !empty( $taxonomies ) ) {
-			if ( !is_array( $post_ids ) ) $post_ids = array( $post_ids );
-			if ( !is_array( $taxonomies ) ) $taxonomies = array( $taxonomies );
+		$post_ids = ( isset( $_POST[ 'custom_post_type_onomies_post_ids' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_ids' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_ids' ] : array();
+		$taxonomies = ( isset( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_taxonomies' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomies' ] : array();
+		$get_parent_title = ( isset( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) ) ? true : false;
+		$terms_fields = ( isset( $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ] ) && in_array( $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ], array( 'ids' ) ) ) ? $_POST[ 'custom_post_type_onomies_wp_get_object_terms_fields' ] : NULL;
+		if ( ! empty( $post_ids ) && ! empty( $taxonomies ) ) {
+			if ( ! is_array( $post_ids ) ) $post_ids = array( $post_ids );
+			if ( ! is_array( $taxonomies ) ) $taxonomies = array( $taxonomies );
 			
 			// set any arguments
 			$args = array();
@@ -356,17 +363,17 @@ class CPT_ONOMIES_ADMIN {
 	 */		
 	public function ajax_check_if_term_exists() {
 		global $cpt_onomy;
-		$term = ( isset( $_POST[ 'custom_post_type_onomies_term' ] ) && !empty( $_POST[ 'custom_post_type_onomies_term' ] ) ) ? $_POST[ 'custom_post_type_onomies_term' ] : '';
-		$term_id = ( isset( $_POST[ 'custom_post_type_onomies_term_id' ] ) && !empty( $_POST[ 'custom_post_type_onomies_term_id' ] ) && (int)$_POST[ 'custom_post_type_onomies_term_id' ] > 0 ) ? (int)$_POST[ 'custom_post_type_onomies_term_id' ] : 0;
-		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && !empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : '';
-		$get_parent_title = ( isset( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) && !empty( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) ) ? true : false;
+		$term = ( isset( $_POST[ 'custom_post_type_onomies_term' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_term' ] ) ) ? $_POST[ 'custom_post_type_onomies_term' ] : '';
+		$term_id = ( isset( $_POST[ 'custom_post_type_onomies_term_id' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_term_id' ] ) && (int)$_POST[ 'custom_post_type_onomies_term_id' ] > 0 ) ? (int)$_POST[ 'custom_post_type_onomies_term_id' ] : 0;
+		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : '';
+		$get_parent_title = ( isset( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_get_parent_title' ] ) ) ? true : false;
 		if ( ( $term || $term_id > 0 ) && $taxonomy ) {
 			$term_exists = false;
 			if ( $term_id > 0 )
 				$term_exists = $cpt_onomy->term_exists( $term_id, $taxonomy );
-			if ( !$term_exists && $term )
+			if ( ! $term_exists && $term )
 				$term_exists = $cpt_onomy->term_exists( $term, $taxonomy );
-			if ( !$term_exists )
+			if ( ! $term_exists )
 				echo json_encode( array() );
 			elseif ( is_numeric( $term_exists ) )
 				echo json_encode( (object) array( 'term_id' => $term_exists ) );
@@ -408,10 +415,10 @@ class CPT_ONOMIES_ADMIN {
 	 */
 	public function ajax_meta_box_autocomplete_callback() {
 		global $wpdb;    
-		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && !empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : NULL;
-		$term = ( isset( $_POST[ 'custom_post_type_onomies_term' ] ) && !empty( $_POST[ 'custom_post_type_onomies_term' ] ) ) ? $_POST[ 'custom_post_type_onomies_term' ] : NULL;
-		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : 0;	
-		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;	
+		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : NULL;
+		$term = ( isset( $_POST[ 'custom_post_type_onomies_term' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_term' ] ) ) ? $_POST[ 'custom_post_type_onomies_term' ] : NULL;
+		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : 0;	
+		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;	
 		if ( $taxonomy && $term ) {
 			$available_terms = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title AS label, post_parent AS parent FROM " . $wpdb->posts . " WHERE post_type = %s AND post_status = 'publish' ORDER BY post_title ASC", $taxonomy ) );
 			if ( $available_terms ) {
@@ -493,15 +500,22 @@ class CPT_ONOMIES_ADMIN {
 	 */
 	public function add_cpt_onomy_meta_boxes( $post_type, $post ) {
 		global $cpt_onomies_manager;
+		
+		// Loop through all the taxonomies tied to this post type
 		foreach( get_object_taxonomies( $post_type, 'objects' ) as $taxonomy => $tax ) {
-			// make sure its a registered CPT-onomy
+			
+			// Make sure its a registered CPT-onomy
 			if ( $cpt_onomies_manager->is_registered_cpt_onomy( $taxonomy ) ) {
 			
-				// this filter allows you to remove the meta box by returning false
-				// if 'show_ui' is false, do not add meta box
+				// This filter allows you to remove the meta box by returning false
+				// If 'show_ui' is false, do not add meta box
 				if ( apply_filters( 'custom_post_type_onomies_add_cpt_onomy_admin_meta_box', ( post_type_exists( $taxonomy ) ? get_post_type_object( $taxonomy )->show_ui : true ), $taxonomy, $post_type ) ) {
-				
-					add_meta_box( CPT_ONOMIES_DASH.'-'.$taxonomy, __( $tax->label, CPT_ONOMIES_TEXTDOMAIN ), array( &$this, 'print_cpt_onomy_meta_box' ), $post_type, 'side', 'core', array( 'taxonomy' => $taxonomy ) );
+					
+					// What's the meta box title? - default is taxonomy label
+					$meta_box_title = isset( $tax->meta_box_title ) && ! empty( $tax->meta_box_title ) ? $tax->meta_box_title : $tax->label;
+					
+					// Add the meta box					
+					add_meta_box( CPT_ONOMIES_DASH.'-'.$taxonomy, apply_filters( 'custom_post_type_onomies_meta_box_title', __( $meta_box_title, CPT_ONOMIES_TEXTDOMAIN ), $taxonomy, $post_type ), array( &$this, 'print_cpt_onomy_meta_box' ), $post_type, 'side', 'core', array( 'taxonomy' => $taxonomy ) );
 					
 				}
 				
@@ -547,8 +561,8 @@ class CPT_ONOMIES_ADMIN {
 		wp_nonce_field( 'assigning_' . CPT_ONOMIES_UNDERSCORE . '_taxonomy_relationships', CPT_ONOMIES_UNDERSCORE . '_nonce' );
 		
 		// define variables
-		$post_type = ( isset( $post->post_type ) && !empty( $post->post_type ) && post_type_exists( $post->post_type ) ) ? $post->post_type : NULL;
-		$taxonomy = ( isset( $metabox[ 'args' ][ 'taxonomy' ] ) && !empty( $metabox[ 'args' ][ 'taxonomy' ] ) && taxonomy_exists( $metabox[ 'args' ][ 'taxonomy' ] ) ) ? $metabox[ 'args' ][ 'taxonomy' ] : NULL;
+		$post_type = ( isset( $post->post_type ) && ! empty( $post->post_type ) && post_type_exists( $post->post_type ) ) ? $post->post_type : NULL;
+		$taxonomy = ( isset( $metabox[ 'args' ][ 'taxonomy' ] ) && ! empty( $metabox[ 'args' ][ 'taxonomy' ] ) && taxonomy_exists( $metabox[ 'args' ][ 'taxonomy' ] ) ) ? $metabox[ 'args' ][ 'taxonomy' ] : NULL;
 		
 		if ( $post_type && $taxonomy ) {
 			
@@ -582,7 +596,7 @@ class CPT_ONOMIES_ADMIN {
 			switch( $format ) {
 			
 				case 'autocomplete':
-												
+					
 					?><div id="taxonomy-<?php echo $taxonomy; ?>" class="cpt_onomies_tags_div">
 						<div class="jaxtag">
 							<div class="nojs-tags hide-if-js">
@@ -600,7 +614,7 @@ class CPT_ONOMIES_ADMIN {
 								</div>
 							<?php endif; ?>
 						</div>
-						<div class="cpt_onomies_tag_checklist<?php if ( !current_user_can( $tax->cap->assign_terms ) ) { echo ' alone'; } ?>"></div>
+						<div class="cpt_onomies_tag_checklist<?php if ( ! current_user_can( $tax->cap->assign_terms ) ) { echo ' alone'; } ?>"></div>
 					</div>
 					<?php if ( current_user_can( $tax->cap->assign_terms ) ) : ?>
 						<p class="hide-if-no-js"><a href="#titlediv" class="cpt_onomies_tag_cloud" id="link-<?php echo $taxonomy; ?>"><?php _e( $tax->labels->choose_from_most_used, CPT_ONOMIES_TEXTDOMAIN ); ?></a></p>
@@ -705,7 +719,7 @@ class CPT_ONOMIES_ADMIN {
 			return $post_id;
 					
 		// verify nonce
-		if ( !( isset( $_POST[ 'is_bulk_quick_edit' ] ) || ( isset( $_POST[ '_wpnonce' ] ) && wp_verify_nonce( $_POST[ '_wpnonce' ], 'update-' . $post->post_type . '_' . $post_id ) ) || ( isset( $_POST[ CPT_ONOMIES_UNDERSCORE . '_nonce' ] ) && wp_verify_nonce( $_POST[ CPT_ONOMIES_UNDERSCORE . '_nonce' ], 'assigning_' . CPT_ONOMIES_UNDERSCORE . '_taxonomy_relationships' ) ) ) )
+		if ( ! ( isset( $_POST[ 'is_bulk_quick_edit' ] ) || ( isset( $_POST[ '_wpnonce' ] ) && wp_verify_nonce( $_POST[ '_wpnonce' ], 'update-' . $post->post_type . '_' . $post_id ) ) || ( isset( $_POST[ CPT_ONOMIES_UNDERSCORE . '_nonce' ] ) && wp_verify_nonce( $_POST[ CPT_ONOMIES_UNDERSCORE . '_nonce' ], 'assigning_' . CPT_ONOMIES_UNDERSCORE . '_taxonomy_relationships' ) ) ) )
 			return $post_id;
 					
 		// check autosave
@@ -723,14 +737,14 @@ class CPT_ONOMIES_ADMIN {
 			if ( isset( $_POST[ 'assign_cpt_onomies_' . $taxonomy . '_rel' ] ) && $cpt_onomies_manager->is_registered_cpt_onomy( $taxonomy ) ) {
 			
 				// check permissions
-				if ( !current_user_can( $tax->cap->assign_terms ) )
+				if ( ! current_user_can( $tax->cap->assign_terms ) )
 					continue;
 										
 				// set object terms				
 				if ( isset( $_POST[ CPT_ONOMIES_POSTMETA_KEY ][ $taxonomy ] ) ) {
 				
 					// need to make sure its an array
-					if ( !is_array( $_POST[ CPT_ONOMIES_POSTMETA_KEY ][ $taxonomy ] ) )
+					if ( ! is_array( $_POST[ CPT_ONOMIES_POSTMETA_KEY ][ $taxonomy ] ) )
 						$_POST[ CPT_ONOMIES_POSTMETA_KEY ][ $taxonomy ] = explode( ',', $_POST[ CPT_ONOMIES_POSTMETA_KEY ][ $taxonomy ] );		
 										
 					$cpt_onomy->wp_set_object_terms( $post_id, $_POST[ CPT_ONOMIES_POSTMETA_KEY ][ $taxonomy ], $taxonomy );
@@ -816,10 +830,10 @@ class CPT_ONOMIES_ADMIN {
 	 */	
 	public function ajax_save_bulk_edit() {
 		global $cpt_onomy;
-		$post_ids = ( isset( $_POST[ 'custom_post_type_onomies_post_ids' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_ids' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_ids' ] : array();
-		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && !empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : NULL;
-		$checked_ids = ( isset( $_POST[ 'custom_post_type_onomies_checked_ids' ] ) && !empty( $_POST[ 'custom_post_type_onomies_checked_ids' ] ) ) ? $_POST[ 'custom_post_type_onomies_checked_ids' ] : array();
-		if ( !empty( $post_ids ) && !empty( $taxonomy ) ) {			
+		$post_ids = ( isset( $_POST[ 'custom_post_type_onomies_post_ids' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_ids' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_ids' ] : array();
+		$taxonomy = ( isset( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_taxonomy' ] ) ) ? $_POST[ 'custom_post_type_onomies_taxonomy' ] : NULL;
+		$checked_ids = ( isset( $_POST[ 'custom_post_type_onomies_checked_ids' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_checked_ids' ] ) ) ? $_POST[ 'custom_post_type_onomies_checked_ids' ] : array();
+		if ( ! empty( $post_ids ) && ! empty( $taxonomy ) ) {			
 			$tax = get_taxonomy( $taxonomy );
 			// check permissions
 			if ( current_user_can( $tax->cap->assign_terms ) ) {
@@ -827,7 +841,7 @@ class CPT_ONOMIES_ADMIN {
 					
 					// set object terms 
 					// "append" is set to true so it doesn't delete relationships, only creates)
-					if ( !empty( $checked_ids ) )
+					if ( ! empty( $checked_ids ) )
 						$cpt_onomy->wp_set_object_terms( $post_id, $checked_ids, $taxonomy, true );
 						
 				}					
@@ -846,10 +860,10 @@ class CPT_ONOMIES_ADMIN {
 	 * @since 1.0.3
 	 */	
 	public function ajax_quick_edit_populate_custom_columns() {		
-		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) && is_numeric( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;
-		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && !empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : NULL;
-		$column_name = ( isset( $_POST[ 'custom_post_type_onomies_column_name' ] ) && !empty( $_POST[ 'custom_post_type_onomies_column_name' ] ) ) ? $_POST[ 'custom_post_type_onomies_column_name' ] : NULL;		
-		if ( $post_id && !empty( $post_type ) && !empty( $column_name ) ) {
+		$post_id = ( isset( $_POST[ 'custom_post_type_onomies_post_id' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_id' ] ) && is_numeric( $_POST[ 'custom_post_type_onomies_post_id' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_id' ] : 0;
+		$post_type = ( isset( $_POST[ 'custom_post_type_onomies_post_type' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_post_type' ] ) ) ? $_POST[ 'custom_post_type_onomies_post_type' ] : NULL;
+		$column_name = ( isset( $_POST[ 'custom_post_type_onomies_column_name' ] ) && ! empty( $_POST[ 'custom_post_type_onomies_column_name' ] ) ) ? $_POST[ 'custom_post_type_onomies_column_name' ] : NULL;		
+		if ( $post_id && ! empty( $post_type ) && ! empty( $column_name ) ) {
 			
 			// since the ajax will not retrieve comment info
 			if ( $column_name == 'comments' ) {
@@ -876,6 +890,21 @@ class CPT_ONOMIES_ADMIN {
 	}
 	
 	/**
+	 * As of version 1.3, the admin columns are added via the new WordPress
+	 * register_taxonomy() "show_admin_column" setting. WordPress 3.5
+	 * introduced the "show_admin_column" setting for register_taxonomy(),
+	 * bringing about default WordPress functionality for admin "Edit Posts"
+	 * taxonomy columns so CPT-onomies will now hook into this functionality.
+	 *
+	 * The dropdown filters are tied to this setting, in that that the dropdown
+	 * is only added if the column is added.
+	 * 
+	 * However, this setting was not introduced until 3.5 so I will keep this
+	 * functionality, for a little while, for backwards compatibility. If version
+	 * is less than 3.5, this function will add the dropdown. No matter the method,
+	 * the 'custom_post_type_onomies_add_cpt_onomy_admin_dropdown_filter' filter will
+	 * allow the user the ability to remove the dropdown by CPT-onomy or post type.
+	 *
 	 * Adds dropdown(s) to the "Edit Posts" screen which allow you to filter your posts by
 	 * your CPT-onomies. CPT-onomies "hides" the dropdown if it's matching column is hidden.
 	 *
@@ -895,42 +924,60 @@ class CPT_ONOMIES_ADMIN {
 		list( $columns, $hidden ) = $wp_list_table->get_column_info();
 		foreach ( $columns as $column_name => $column_display_name ) {
 		
-			if ( strpos( $column_name, CPT_ONOMIES_UNDERSCORE ) !== false ) {
+			/**
+			 * The filter drop down is added if you have the column added
+			 * but you still have the capability to remove the dropdown
+			 * via filter, if desired.
+			 */
+			
+			// get taxonomy name
+			$taxonomy = NULL;
+			
+			// if version >= 3.5
+			if ( get_bloginfo( 'version' ) >= 3.5
+				&& preg_match( '/^taxonomy\-(.+)$/i', $column_name, $match )
+				&& isset( $match ) && isset( $match[1] ) )
+				$taxonomy = $match[1];
+			
+			// backwards compatibility
+			else if ( strpos( $column_name, CPT_ONOMIES_UNDERSCORE ) !== false )
 				$taxonomy = strtolower( str_replace( CPT_ONOMIES_UNDERSCORE . '_', '', $column_name ) );
 				
-				// make sure its a registered CPT-onomy
-				if ( $cpt_onomies_manager->is_registered_cpt_onomy( $taxonomy ) ) {
+			// make sure its a registered CPT-onomy
+			if ( $taxonomy && $cpt_onomies_manager->is_registered_cpt_onomy( $taxonomy ) ) {
+			
+				// get taxonomy information
+				$tax = get_taxonomy( $taxonomy );
 				
-					// this filter allows you to remove the dropdown by returning false
-					if ( apply_filters( 'custom_post_type_onomies_add_cpt_onomy_admin_dropdown_filter', true, $taxonomy, $post_type ) ) {
+				// this filter allows you to remove the dropdown by returning false
+				if ( apply_filters( 'custom_post_type_onomies_add_cpt_onomy_admin_dropdown_filter', ( isset( $tax->show_admin_column ) && ! $tax->show_admin_column ) ? false : true, $taxonomy, $post_type ) ) {
+				
+					// get post type info
+					$post_type_object = get_post_type_object( $taxonomy );
 					
-						// get post type info
-						$post_type_object = get_post_type_object( $taxonomy );
-						
-						// get selected term
-						$selected = ( isset( $_REQUEST[ $taxonomy ] ) ) ? $_REQUEST[ $taxonomy ] : NULL;
-						
-						// if slug, then get term id					
-						if ( !is_numeric( $selected ) ) {
-							$term = $cpt_onomy->get_term_by( 'slug', $selected, $taxonomy );
-							if ( $term ) $selected = $term->term_id;
-						}
-						
-						$dropdown_options = array(
-							'show_option_all' => __( 'View all ' . $post_type_object->labels->all_items, CPT_ONOMIES_TEXTDOMAIN ),
-							'hierarchical' => true,
-							'show_count' => false,
-							'orderby' => 'name',
-							'selected' => $selected,
-							'name' => $taxonomy,
-							'id' => 'dropdown_' .  CPT_ONOMIES_UNDERSCORE . '_' . $taxonomy,
-							'class' => 'postform ' . ( ( in_array( $column_name, $hidden ) ) ? ' hide-all' : '' ),
-							'taxonomy' => $taxonomy,
-							'hide_if_empty' => true
-						);
-						wp_dropdown_categories( $dropdown_options );
-						
+					// get selected term
+					$selected = ( isset( $_REQUEST[ $taxonomy ] ) ) ? $_REQUEST[ $taxonomy ] : NULL;
+					
+					// if slug, then get term id					
+					if ( ! is_numeric( $selected ) ) {
+						$term = $cpt_onomy->get_term_by( 'slug', $selected, $taxonomy );
+						if ( $term ) $selected = $term->term_id;
 					}
+					
+					// print dropdown
+					$dropdown_options = array(
+						'show_option_all' => __( 'View all ' . $post_type_object->labels->all_items, CPT_ONOMIES_TEXTDOMAIN ),
+						'hierarchical' => true,
+						'show_count' => false,
+						'orderby' => 'name',
+						'selected' => $selected,
+						'name' => $taxonomy,
+						'id' => 'dropdown_' .  CPT_ONOMIES_UNDERSCORE . '_' . $taxonomy,
+						'class' => 'postform ' . ( ( in_array( $column_name, $hidden ) ) ? ' hide-all' : '' ),
+						'taxonomy' => $taxonomy,
+						'hide_if_empty' => true
+					);
+					wp_dropdown_categories( $dropdown_options );
 					
 				}
 				
@@ -947,16 +994,11 @@ class CPT_ONOMIES_ADMIN {
 	 * bringing about default WordPress functionality for admin "Edit Posts"
 	 * taxonomy columns so CPT-onomies will now hook into this functionality.
 	 *
-	 * However, this  setting was not introduced until 3.5 so I will keep this
+	 * However, this setting was not introduced until 3.5 so I will keep this
 	 * functionality, for a little while, for backwards compatibility. If version
 	 * is less than 3.5, this function will add the column. No matter the method,
 	 * the 'custom_post_type_onomies_add_cpt_onomy_admin_column' filter will
 	 * allow the user the ability to remove the column by CPT-onomy or post type.
-	 *
-	 * Version 1.3 also deprecated column sortability to align with new
-	 * default WordPress taxonomy column functionality. I will keep CPT-onomy
-	 * functions for simply adding a column, for a little while, for backwards
-	 * compatibility but am going ahead and removing sortability.
 	 *
 	 * If a CPT-onomy is attached to a post type, the plugin adds a column
 	 * to the post type's edit screen which lists each post's assigned terms.
@@ -985,15 +1027,19 @@ class CPT_ONOMIES_ADMIN {
 			// make sure its a registered CPT-onomy
 			if ( $cpt_onomies_manager->is_registered_cpt_onomy( $taxonomy ) ) {
 		
-				// "show_admin_column" works for you but you still have capability
-				// to remove column, via filter, if desired. In this case,
-				// "show_admin_column" must already be set to true, which is similar
-				// to previous setup where the column was added by default and you
-				// just used the filter to remove it.
+				/**
+				 * If version >= 3.5, the 'show_admin_column' setting works for you
+				 * but you still have the capability to remove the column,
+				 * via filter, if desired. 'show_admin_column' is set to true
+				 * by default, which is similar to previous setup where the
+				 * column was added by default and you used the filter to remove it.
+				 */
 				if ( get_bloginfo( 'version' ) >= 3.5 ) {
 				
-					// if the column already exists, this filter allows you
-					// to remove the column by returning false.
+					/**
+					 * If the column already exists, i.e. added by WordPress,
+					 * this filter allows you to remove the column by returning false.
+					 */
 					if ( array_key_exists( 'taxonomy-' . $taxonomy, $columns )
 						&& ! apply_filters( 'custom_post_type_onomies_add_cpt_onomy_admin_column', true, $taxonomy, $post_type ) ) {
 					
@@ -1007,7 +1053,10 @@ class CPT_ONOMIES_ADMIN {
 				// backwards compatability
 				else {
 				
-					// this filter allows you to remove the column by returning false
+					/**
+					 * The column is added by default. This filter allows you
+					 * to remove the column by returning false.
+					 */
 					if ( apply_filters( 'custom_post_type_onomies_add_cpt_onomy_admin_column', ( isset( $tax->show_admin_column ) && ! $tax->show_admin_column ) ? false : true, $taxonomy, $post_type ) ) {
 					
 						// want to add before comments and date
@@ -1049,6 +1098,78 @@ class CPT_ONOMIES_ADMIN {
 			}
 		}
 		return $columns;
+	}
+	
+	/**
+	 * Adds the filter for adding/managing sortable
+	 * CPT-onomy admin columns.
+	 *
+	 * I deprecated the ability to make the CPT-onomy admin
+	 * columns sortable in version 1.3 to align with new,
+	 * default WP taxonomy admin column functionality.
+	 * Re-instated the sortable columns in version 1.3.2
+	 * due to its popularity.
+	 *
+	 * This function is invoked by the action 'load-edit.php'.
+	 *
+	 * @reinstated in 1.3.2, first introduced in 1.0.3, deprecated in 1.3
+	 * @uses $current_screen
+	 */
+	public function add_cpt_onomy_admin_sortable_columns_filter() {
+		global $current_screen;
+		if ( $current_screen && isset( $current_screen->id ) )
+			add_filter( "manage_{$current_screen->id}_sortable_columns", array( &$this, 'add_cpt_onomy_admin_sortable_columns' ) );
+	}
+	
+	/**
+	 * Tells Wordpress to make our CPT-onomy admin columns sortable.
+	 * 
+	 * You can disable the columns from being sortable by returning false to the
+	 * 'custom_post_type_onomies_add_cpt_onomy_admin_sortable_column' filter, which
+	 * passes two parameters: the $taxonomy and the $post_type.
+	 *
+	 * If you want to remove the column altogether, set "Show Admin Column"
+	 * to false in your CPT-onomy settings, or return false to the
+	 * 'custom_post_type_onomies_add_cpt_onomy_admin_column' filter, which
+	 * passes the same two parameters: $taxonomy and $post_type.
+	 *
+	 * This function is invoked by the filter "manage_{$current_screen->id}_sortable_columns".
+	 *
+	 * @reinstated in 1.3.2, first introduced in 1.0.3, deprecated in 1.3
+	 * @uses $cpt_onomies_manager, $current_screen
+	 * @param array $sortable_columns - the sortable columns info already created by WordPress
+	 * @return array - the sortable columns info after it has been filtered
+	 * @filters 'custom_post_type_onomies_add_cpt_onomy_admin_sortable_column' - $taxonomy, $post_type
+	 */
+	public function add_cpt_onomy_admin_sortable_columns( $sortable_columns ) {
+		global $cpt_onomies_manager, $current_screen;
+		if ( $post_type = isset( $current_screen->post_type ) ? $current_screen->post_type : NULL ) {
+			foreach( get_object_taxonomies( $post_type, 'objects' ) as $taxonomy => $tax ) {
+			
+				// make sure its a registered CPT-onomy
+				// get the taxonomy's query variable
+				if ( $cpt_onomies_manager->is_registered_cpt_onomy( $taxonomy )
+					&& ( $query_var = isset( $tax->query_var ) ? $tax->query_var : NULL ) ) {
+					
+					// this filter allows you to remove the column by returning false
+					// all CPT-onomy admin columns are default-ly added as sortable
+					if ( apply_filters( 'custom_post_type_onomies_add_cpt_onomy_admin_sortable_column', true, $taxonomy, $post_type ) ) {
+					
+						// if version >= 3.5
+						if ( get_bloginfo( 'version' ) >= 3.5 )
+							$sortable_columns[ 'taxonomy-' . $taxonomy ] = $query_var;
+						
+						// backwards compatibility
+						else if ( strpos( $column_name, CPT_ONOMIES_UNDERSCORE ) !== false )
+							$sortable_columns[ CPT_ONOMIES_UNDERSCORE . '_' . $taxonomy ] = $query_var;
+						
+					}
+					
+				}
+			
+			}			
+		}
+		return $sortable_columns;
 	}
 		
 	/**
@@ -1113,7 +1234,7 @@ class CPTonomy_Walker_Terms_Checklist extends Walker {
 	function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
 		global $cpt_onomies_admin, $post_type, $post;
 		
-		if ( !$element )
+		if ( ! $element )
 			return;
 
 		$id_field = $this->db_fields[ 'id' ];
@@ -1150,7 +1271,7 @@ class CPTonomy_Walker_Terms_Checklist extends Walker {
 	
 				foreach( $children_elements[ $id ] as $child ) {
 	
-					if ( !isset( $newlevel ) ) {
+					if ( ! isset( $newlevel ) ) {
 						$newlevel = true;
 						//start the child delimiter
 						$cb_args = array_merge( array( &$output, $depth ), $args );
@@ -1186,7 +1307,7 @@ class CPTonomy_Walker_Terms_Checklist extends Walker {
 	
 	function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 ) {
 		extract( $args );
-		if ( !empty( $taxonomy ) ) {
+		if ( ! empty( $taxonomy ) ) {
 			$class = in_array( $object->term_id, $popular_cats ) ? ' class="popular-category"' : '';
 			$output .= "\n<li id='{$taxonomy}-{$object->term_id}'$class>" . '<label class="selectit"><input value="' . $object->term_id . '" type="checkbox" name="' . CPT_ONOMIES_POSTMETA_KEY . '[' . $taxonomy . '][]" id="in-'.$taxonomy.'-' . $object->term_id . '"' . checked( in_array( $object->term_id, $selected_cats ), true, false ) . disabled( empty( $args[ 'disabled' ] ), false, false ) . ' /> ' . esc_html( apply_filters( 'the_category', $object->name )) . '</label>';
 		}
@@ -1196,5 +1317,3 @@ class CPTonomy_Walker_Terms_Checklist extends Walker {
 		$output .= "</li>\n";
 	}
 }
-		
-?>
