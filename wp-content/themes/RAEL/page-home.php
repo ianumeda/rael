@@ -88,7 +88,10 @@ $feature_buttons.='</div>';
                     <?php the_content(); ?>
               	  </div>
                 <?php 
-                  } else {
+              } elseif($i==$query->found_posts){
+                  $the_last_bit_of_content_on_the_home_page='<div id="last_section" class="col-xs-12"><div class="section content">
+            		  <h2 class="section_heading">'. get_the_title($post->ID) .'</h2>'. get_the_content($post->ID) .'</div></div>';
+                } else {
                 ?>
                 <div class="section content">
             		  <h2 class="section_heading"><?php echo get_the_title($post->ID); ?></h2>
@@ -100,6 +103,7 @@ $feature_buttons.='</div>';
         	}
           ?>
             </div>
+            <div class="spacer hidden-xs"></div>
           </div>
           <?php 
             } else { 
@@ -111,19 +115,19 @@ $feature_buttons.='</div>';
     
       <?php 
       global $post;
-      $all_events = tribe_get_events(array( 'eventDisplay'=>'upcoming', 'posts_per_page'=>5 ));
+      $all_events = tribe_get_events(array( 'eventDisplay'=>'upcoming', 'posts_per_page'=>10 ));
       if(count($all_events)>0){ 
         if(count($all_events)>=3){
           // if sufficient upcoming events make a separate column for events, otherwise stack events on top of news ?>
-          <div class="col-sm-3">
+          <div id="events_col" class="col-sm-3">
         <?php
         } else {
         ?> 
-          <div class="col-sm-6">
+          <div id="events_col" class="col-sm-6">
         <?php
           }
         ?>
-        <div id="events_col" class="">
+        <div>
         <h3 class="section_heading">Events</h3>
         <?php 
         foreach($all_events as $post)
@@ -154,7 +158,9 @@ $feature_buttons.='</div>';
         }
         wp_reset_postdata();
         ?>      
-      </div>  
+      </div>
+      <div class="spacer hidden-xs"></div>
+        
         <div class="news_item">
           <button type="button" class="btn btn-link btn-block">
             <a href="./events/">Go to the Events calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -166,11 +172,11 @@ $feature_buttons.='</div>';
         ?>
           
       <?php if(count($all_events)>=3) { ?>
-        <div class="col-sm-3">        
+        <div id="news_col" class="col-sm-3">        
       <?php } else { ?> 
-        <div class="col-sm-6">        
+        <div id="news_col" class="col-sm-6">        
       <?php } ?>    
-        <div id="news_col" class="">
+        <div class="">
           <h3 class="section_heading">News</h3>
             <?php
               $query = new WP_Query( array( 'category_name' => 'news', 'posts_per_page' => '10' ));
@@ -193,16 +199,19 @@ $feature_buttons.='</div>';
               wp_reset_postdata();
             ?>
       </div>
+      <div class="spacer hidden-xs"></div>
       <div class="news_item">
         <button type="button" class="btn btn-link btn-block">
           <a href="./events/">Go to News &amp; Events <span class="glyphicon glyphicon-chevron-right"></span></a>
         </button>
       </div>
     </div>
-  </div>
+    <?php echo $the_last_bit_of_content_on_the_home_page; ?>
+
+  </div><!-- #belowthefold -->
 
     </div>
-</div><!-- #belowthefold -->
+</div>
 
 </div>
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
@@ -212,10 +221,19 @@ $(document).ready(function(){
   // the following removes news items from the news column until the height of the news column matches the layout
   if(<?php echo count($all_events); ?> >= 3) height_to_match=($("#events_col").height() > $("#welcome").height() ? $("#events_col").height() : $("#welcome").height() );
   else height_to_match= $("#welcome").height() - $("#events_col").height() ;
-  var last_news_item=$('#news_col .news_item:last-child');
+  var last_news_item=$('#news_col > div > .news_item:last-child');
   while(last_news_item && $('#news_col').height()-last_news_item.height()>height_to_match){
-    last_news_item.remove();
-    last_news_item=$('#news_col .news_item:last-child');
+    last_news_item.hide();
+    last_news_item=last_news_item.prev();
+  }
+  // now increase spacer divs so all columns match
+  if($('#events_col').hasClass('col-sm-3')){
+    $('#welcome .spacer').height($('#news_col').height()-$('#welcome').height()-$('#welcome .spacer').height());
+    $('#events_col .spacer').height($('#welcome').height()-$('#events_col').height()-$('#events_col .spacer').height());
+    $('#news_col .spacer').height($('#welcome').height()-$('#news_col').height()-$('#news_col .spacer').height());
+  } else {
+    $('#welcome .spacer').height($('#events_col').height()+$('#news_col').height()-$('#welcome').height()-$('#welcome .spacer').height());
+    $('#news_col .spacer').height($('#welcome').height()-$('#events_col').height()-$('#news_col').height()-$('#news_col .spacer').height());
   }
 });
 </script>
