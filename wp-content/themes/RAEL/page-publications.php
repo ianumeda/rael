@@ -166,7 +166,13 @@ function search_filter(search_string){
     return null;
   }
 }
-
+var filter_id;
+function filter_delay(){
+  if(filter_id){
+    clearTimeout(filter_id);
+  }
+  filter_id=setTimeout(function(){do_the_filter();},1000);
+}
 $(document).ready(function(){
   var init_filter_year="<?php echo htmlspecialchars($_GET["publication_year"]); ?>";
   var init_filter_type="<?php echo htmlspecialchars($_GET["publication_type"]); ?>";
@@ -185,7 +191,7 @@ $(document).ready(function(){
   $('.btn').button();
   // $('.collapse').collapse();
   $("input.search-query").on("input change",function(){
-    do_the_filter();
+    filter_delay();
   }).keypress(function(e){
     // this prevents 'enter' from submitting the form and reloading the page...
     if ( e.which == 13 ) e.preventDefault();

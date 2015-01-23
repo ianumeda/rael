@@ -16,7 +16,7 @@ if ( $query->have_posts() ) {
 <div id="feature_box" class="">
   <div id="feature_carousel" class="carousel carousel slide col-md-12" data-interval="10000">
     <!-- Indicators -->
-    <ol class="carousel-indicators hidden-md hidden-lg">
+    <ol class="carousel-indicators">
       <li data-target="#feature_carousel" data-slide-to="0" class="carousel-indicator active"></li>
       <li data-target="#feature_carousel" data-slide-to="1" class="carousel-indicator"></li>
       <li data-target="#feature_carousel" data-slide-to="2" class="carousel-indicator"></li>
@@ -70,7 +70,7 @@ $feature_buttons.='</div>';
 <?php } else { ?>
 	<div class="alert alert-danger">Carousel content not found.</div>
 <?php } wp_reset_postdata(); ?>
-<div id="thefold" class="row">&nbsp;</div>
+<div id="thefold" class="">&nbsp;</div>
 <div class="container">
 <div id="belowthefold" class="row">
       <?php
@@ -81,7 +81,7 @@ $feature_buttons.='</div>';
         		$query->the_post();
             if($i==1) {
               ?>
-              <div id="welcome" class="col-sm-6 match_this_height match_height">
+              <div id="welcome" class="col-sm-6 ">
                 <div >
                   <div class="section content">
             		    <h2 class="section_heading"><?php echo get_the_title($post->ID); ?></h2>
@@ -109,12 +109,23 @@ $feature_buttons.='</div>';
         wp_reset_postdata();
       ?>
     
-      <div class="col-sm-3">
-        <div id="events_cols" class="match_height">
+      <?php 
+      global $post;
+      $all_events = tribe_get_events(array( 'eventDisplay'=>'upcoming', 'posts_per_page'=>5 ));
+      if(count($all_events)>0){ 
+        if(count($all_events)>=3){
+          // if sufficient upcoming events make a separate column for events, otherwise stack events on top of news ?>
+          <div class="col-sm-3">
+        <?php
+        } else {
+        ?> 
+          <div class="col-sm-6">
+        <?php
+          }
+        ?>
+        <div id="events_col" class="">
         <h3 class="section_heading">Events</h3>
         <?php 
-        global $post;
-        $all_events = tribe_get_events(array( 'eventDisplay'=>'upcoming', 'posts_per_page'=>5 ));
         foreach($all_events as $post)
         {
           setup_postdata($post);
@@ -131,10 +142,11 @@ $feature_buttons.='</div>';
           <div class="event_item event_<?php echo $eventstatus; ?> post_preview">
             <div class="event_status <?php echo $eventstatus; ?>"><?php echo $eventstatus; ?></div>
             <div class="event_date">
+              <span class="fa fa-calendar-o"></span>
               <?php echo tribe_events_event_schedule_details(); ?>
               <?php //echo '<span class="event_status">'. ($eventstatus=="future" ? '' : $eventstatus ) .'</span>'; ?>
             </div>
-            <h5 class="post_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+            <div class="post_title event_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
             <?php the_excerpt(); ?>
       		<button type="button" class="btn btn-link btn-block btn-xs"><a class="post_preview_link" href="<?php the_permalink(); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a></button>
           </div>
@@ -149,21 +161,27 @@ $feature_buttons.='</div>';
           </button>
         </div>
       </div>
-      
-      <div class="col-sm-3">
-        <div id="news_cols" class="match_height">
+        <?php
+        }
+        ?>
+          
+      <?php if(count($all_events)>=3) { ?>
+        <div class="col-sm-3">        
+      <?php } else { ?> 
+        <div class="col-sm-6">        
+      <?php } ?>    
+        <div id="news_col" class="">
           <h3 class="section_heading">News</h3>
             <?php
-              // category__not_in is 'spotlight'
-              $query = new WP_Query( array( 'category_name' => 'news', 'category__not_in' => array( 5 ), 'posts_per_page' => '8' ));
+              $query = new WP_Query( array( 'category_name' => 'news', 'posts_per_page' => '10' ));
               if ( $query->have_posts() ) {
               	while ( $query->have_posts() ) {
               		$query->the_post(); 
             ?>
               		<div <?php post_class("post_preview news_item"); ?>>
-              		  <time datetime="<?php the_time( 'Y-m-d' ); ?>" pubdate><?php the_date(); ?></time> 
                     <h5 class="post_title"><a href="<?php the_permalink(); ?>"> <?php echo get_the_title(); ?></a></h5>
                     <p>
+                      <time datetime="<?php the_time( 'Y-m-d' ); ?>" pubdate><?php the_time('M d'); ?></time> 
                   		<?php echo get_the_excerpt(); ?>
                   		<a class="post_preview_link" href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a>
                     </p>                  
@@ -190,37 +208,14 @@ $feature_buttons.='</div>';
 <?php Starkers_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
 
 <script>
-function check_for_active_slide(){
-  var which_slide_is_active = $('.carousel-indicator.active').attr('data-slide-to');
-  if(which_slide_is_active!=null){
-    // alert(which_slide_is_active);
-    $('.feature_button').removeClass('active');
-    $('#feature'+which_slide_is_active).addClass('active');
+$(document).ready(function(){
+  // the following removes news items from the news column until the height of the news column matches the layout
+  if(<?php echo count($all_events); ?> >= 3) height_to_match=($("#events_col").height() > $("#welcome").height() ? $("#events_col").height() : $("#welcome").height() );
+  else height_to_match= $("#welcome").height() - $("#events_col").height() ;
+  var last_news_item=$('#news_col .news_item:last-child');
+  while(last_news_item && $('#news_col').height()-last_news_item.height()>height_to_match){
+    last_news_item.remove();
+    last_news_item=$('#news_col .news_item:last-child');
   }
-  else {
-    setTimeout(check_for_active_slide, 100); // check again in .1 seconds
-  }
-}
-
-$('#feature_carousel').on('slid.bs.carousel', function(){ check_for_active_slide(); });
-$("#feature0").hover(function(){
-  $('.carousel').carousel(0);
-}).click(function(){
-  window.location = $(this).children('a').attr('href');
-});
-$("#feature1").hover(function(){
-  $('.carousel').carousel(1);
-}).click(function(){
-  window.location = $(this).children('a').attr('href');
-});
-$("#feature2").hover(function(){
-  $('.carousel').carousel(2);
-}).click(function(){
-  window.location = $(this).children('a').attr('href');
-});
-$("#feature3").hover(function(){
-  $('.carousel').carousel(3);
-}).click(function(){
-  window.location = $(this).children('a').attr('href');
 });
 </script>
