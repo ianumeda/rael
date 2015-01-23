@@ -161,7 +161,7 @@ $feature_buttons.='</div>';
       </div>
       <div class="spacer hidden-xs"></div>
         
-        <div class="news_item">
+        <div class="">
           <button type="button" class="btn btn-link btn-block">
             <a href="./events/">Go to the Events calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
           </button>
@@ -200,7 +200,7 @@ $feature_buttons.='</div>';
             ?>
       </div>
       <div class="spacer hidden-xs"></div>
-      <div class="news_item">
+      <div class="">
         <button type="button" class="btn btn-link btn-block">
           <a href="./events/">Go to News &amp; Events <span class="glyphicon glyphicon-chevron-right"></span></a>
         </button>
@@ -219,21 +219,6 @@ $feature_buttons.='</div>';
 <script>
 $(document).ready(function(){
   // the following removes news items from the news column until the height of the news column matches the layout
-  if(<?php echo count($all_events); ?> >= 3) height_to_match=($("#events_col").height() > $("#welcome").height() ? $("#events_col").height() : $("#welcome").height() );
-  else height_to_match= $("#welcome").height() - $("#events_col").height() ;
-  var last_news_item=$('#news_col > div > .news_item:last-child');
-  while(last_news_item && $('#news_col').height()-last_news_item.height()>height_to_match){
-    last_news_item.hide();
-    last_news_item=last_news_item.prev();
-  }
-  // now increase spacer divs so all columns match
-  if($('#events_col').hasClass('col-sm-3')){
-    $('#welcome .spacer').height($('#news_col').height()-$('#welcome').height()-$('#welcome .spacer').height());
-    $('#events_col .spacer').height($('#welcome').height()-$('#events_col').height()-$('#events_col .spacer').height());
-    $('#news_col .spacer').height($('#welcome').height()-$('#news_col').height()-$('#news_col .spacer').height());
-  } else {
-    $('#welcome .spacer').height($('#events_col').height()+$('#news_col').height()-$('#welcome').height()-$('#welcome .spacer').height());
-    $('#news_col .spacer').height($('#welcome').height()-$('#events_col').height()-$('#news_col').height()-$('#news_col .spacer').height());
-  }
+  home_page_layout();
 });
 </script>
