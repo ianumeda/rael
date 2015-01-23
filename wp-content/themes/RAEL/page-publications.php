@@ -80,7 +80,7 @@
         <div class="pub_authors col-sm-2 ">Author(s)</div>
         <div class="pub_actions col-sm-1">Actions</div>
       </div>
-      <div id="publications_list" class="table_data col-xs-12">
+      <div id="publications_list" class="table_data">
         <?php
           $query = new WP_Query( array( 'post_type' => 'publications', 'posts_per_page' => '-1', 'offset' => '0', 'order' => 'DESC', 'orderby' => 'date' ));
           if ( $query->have_posts() ) {
@@ -118,9 +118,9 @@ function do_the_filter(filter_year,filter_type,filter_string){
     $(this).fadeIn();
   });
   if(final_results.length == $('.publication_item').length){
-    $('.filter_results').html("Showing all publications");
+    $('.filter_results').html("Showing all items");
   } else {
-    $('.filter_results').html("Showing "+final_results.length+" of "+($('.publication_item').length)+" publications");
+    $('.filter_results').html("Showing "+final_results.length+" of "+($('.publication_item').length)+" items");
   }
   if(final_results.length<1){
     $('#no_filter_results').show();

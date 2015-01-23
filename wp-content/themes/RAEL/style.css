@@ -257,9 +257,10 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 #belowthefold .section_heading { text-align:center;}
 #belowthefold > div { border-left:1px solid #eee; border-right:1px solid #eee; border-bottom:1px solid #eee;}
 #welcome { padding-top:0; padding-bottom:30px; border-left:1px solid #eee; border-right:1px solid #eee; border-bottom:1px solid #eee; }
-#welcome .section_heading { text-align:center; padding:0px .5em .5em; }
+#welcome .section_heading { text-align:center; padding:0px .5em .5em; font-size:1.6em; }
 #welcome .section { border-top:1px solid #eee; padding-top:1em; }
 #welcome .section:first-child { border-top:none;}
+#welcome .section:first-child .section_heading { font-size:2.4em; }
 #welcome .section:first-child { border-top:none;}
 #top_welcome { background:#f4f4f4; margin-bottom:0; text-align:center; }
 #top_welcome h1 { padding:.5em 2em; margin-top:0; border-bottom:none; }
@@ -300,7 +301,7 @@ a.coverall_link, .coverall_link { position:absolute; top:0; left:0; width:100%; 
 #publications_page .table_head > .pub_filters { font-weight:normal; font-size:14px; }
 #publications_page .pub_filters > div { margin-bottom:2px; }
 #publications_page .table_head > .pub_date { }
-#publications_page .publication_item { border-top:none; border-bottom: 1px solid rgba(0,0,0,.2); overflow:hidden; }
+#publications_page .publication_item { padding:.5em; border-top:none; border-bottom: 1px solid rgba(0,0,0,.2); overflow:hidden; }
 #publications_page .publication_item .row > div { margin-bottom:2px; }
 #publications_page .publication_item:nth-child(odd) { background:rgba(127,127,127,.08); }
 #publications_page .publication_item:nth-child(even) { background:rgba(127,127,127,.04); }
@@ -360,7 +361,7 @@ ul li { margin-bottom:.5em; }
  }
 #pagenav_mobile { border-bottom: 1px solid #ddd; padding: .5em 0; background: rgba(255,255,255,.5); }
 #news_col, #events_col, #spotlight { border-bottom:1px solid #eee; }
-#news_col > .section_heading, #events_col > .section_heading, #spotlight > .section_heading { line-height:31px; }
+#news_col > .section_heading, #events_col > .section_heading, #spotlight > .section_heading { font-size:2em; line-height:31px; }
 #news_col p, #events_col p { text-align:left; }
 .match_height { position:relative; height:auto; overflow:hidden; transition:height .5s ease; padding-bottom:30px; }
 .match_height_button { border:none; position:absolute; bottom:0; cursor:pointer; background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%); /* FF3.6+ */
