@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bamad
 Tags: custom post type, custom, post, post type, types, tax, taxonomy, taxonomies, cpt-onomy, cpt-onomies, cptonomies, custom post type taxonomies, custom post type as taxonomy, custom post types as taxonomies, relationships, relate, multisite
 Requires at least: 3.1
 Tested up to: 4.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,11 @@ If FAQ didn't cover your problem, refer to the following resources:
 
 == Changelog ==
 
+= 1.3.3 = 
+* Fixed bug that was causing issues for multiple tax queries.
+* Optimized queries to help with memory problems.
+* Fixed PHP Parse error in cpt-onomy.php file for those who are running PHP < 5.3.0.
+
 = 1.3.2 =
 * Fixed a few WordPress 4.1 bugs.
 * Brought register_cpt_onomy() outside the manager class for ease of use.
@@ -225,6 +230,11 @@ If FAQ didn't cover your problem, refer to the following resources:
 * Plugin launch!
 
 == Upgrade Notice ==
+
+= 1.3.3 = 
+* Fixed bug that was causing issues for multiple tax queries.
+* Optimized queries to help with memory problems.
+* Fixed PHP Parse error in cpt-onomy.php file for those who are running PHP < 5.3.0.
 
 = 1.3.2 =
 * Fixed a few WordPress 4.1 bugs.

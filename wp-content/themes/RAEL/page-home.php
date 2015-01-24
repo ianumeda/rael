@@ -90,7 +90,7 @@ $feature_buttons.='</div>';
                 <?php 
               } elseif($i==$query->found_posts){
                   $the_last_bit_of_content_on_the_home_page='<div id="last_section" class="col-xs-12"><div class="section content">
-            		  <h2 class="section_heading">'. get_the_title($post->ID) .'</h2>'. get_the_content($post->ID) .'</div></div>';
+            		  <h2 class="section_heading">'. get_the_title($post->ID) .'</h2><p>'. get_the_content($post->ID) .'</p></div></div>';
                 } else {
                 ?>
                 <div class="section content">

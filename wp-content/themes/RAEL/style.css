@@ -49,8 +49,8 @@ body 				{ background:#fff; font-family:"helvetica neue", Helvetica, sans-serif;
 ::-moz-selection 	{ background:#ff0; color:#333; }
 ::selection 		{ background:#ff0; color:#333; }
 
-a { color:#2a6496; /*#779DBD; */}
-
+a { color:#507F2F; /*#779DBD; */}
+a:hover { color:#507F2F; }
 /* ---------------------------------------------------------------------------------------------------------- 
 02 Typography -----------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------- */
@@ -263,6 +263,7 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 #welcome .section:first-child .section_heading { font-size:2.4em; }
 #welcome .section:first-child { border-top:none;}
 #last_section { padding-bottom:30px; }
+#last_section .section_heading { font-weight: 500; font-size: 1.6em; line-height: 1.4em; }
 #top_welcome { background:#f4f4f4; margin-bottom:0; text-align:center; }
 #top_welcome h1 { padding:.5em 2em; margin-top:0; border-bottom:none; }
 #page { width:100%; margin-bottom:120px;}
@@ -271,15 +272,6 @@ header #logo .tagline.visible-xs { float:left; width:150px; font-size: 18px; pad
 #page_head #branding { background:none; height:100%; }
 
 .navbar-header .navbar-brand { padding:12px 6px; font-size:20px;}
-/*.navbar-nav > li > a { display:inline-block; }*/
-#topnav .current-menu-item > a { background:rgba(119, 157, 189, .5); color:#fff; }
-#topnav .current-menu-parent > a { background:#eee; color:inherit; }
-#topnav a:hover { background:#779dbd; background:rgba(119, 157, 189, .8); color:#fff; }
-/*body.logged-in.admin-bar > header > nav { top:30px; }*/
-/*#topnav  current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor*/
-#pagenav { margin-top:20px; padding-left:15px; }
-#pagenav .current-menu-item > a { font-weight:700; }
-/*.person_page #person_meta .section_heading { padding:0 .5em 1em; }*/
 #person_title .titles { display: block;
   font-size: .8em;
   margin-top: .5em;
@@ -364,7 +356,10 @@ ul li { margin-bottom:.5em; }
 #pagenav_mobile { border-bottom: 1px solid #ddd; padding: .5em 0; background: rgba(255,255,255,.5); }
 #news_col > div, #events_col > div, #spotlight { border-bottom:1px solid #eee; }
 #news_col > div > .section_heading, #events_col > div > .section_heading, #spotlight > .section_heading { font-size:2em; line-height:31px; }
-#news_col p, #events_col p { text-align:left; }
+#news_col .post_title, #events_col .post_title { font-size: 1.1em; font-weight: 300; line-height: 1.3em; text-align: justify; }
+#news_col p, #events_col p, #last_section p { text-align:justify; }
+#events_col .event_date .date-start, #events_col .event_date .date-end { line-height:1.4em; }
+#welcome .section:first-child p { font-size:1.2em; }
 .match_height { position:relative; height:auto; overflow:hidden; transition:height .5s ease; padding-bottom:30px; }
 .match_height_button { border:none; position:absolute; bottom:0; cursor:pointer; background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(50%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
@@ -388,8 +383,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 body.home .post.category-news p, .tribe_events p { font-size:14px; }
 .tribe_events .event_date, .event_date { padding:0; font-size:12px; line-height:1em; font-weight:700; }
 .event_date .fa-calendar-o { float: left;
-font-size: 3em;
+font-size: 2.6em;
 margin-right: 8px; }
+.event_now .fa-calendar-o:after { content: "NOW"; position: absolute; font-size: 9px; top: 14px; left: 4px; font-weight: 700; }
+.event_today .fa-calendar-o:after { content: "TODAY"; position: absolute; font-size: 9px; top: 14px; left: 4px; font-weight: 700; }
 .post_preview { margin-bottom:1em; }
 .news_item .btn-block, .event_item .btn-block, .spotlight_item .btn-block { background:none; }
 .post_preview > .post_title { border-bottom: 1px solid rgba(127,127,127,.1);
