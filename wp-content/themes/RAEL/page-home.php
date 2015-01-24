@@ -221,4 +221,8 @@ $(document).ready(function(){
   // the following removes news items from the news column until the height of the news column matches the layout
   home_page_layout();
 });
+$( window ).resize(function() {
+  home_page_layout();
+}); 
+
 </script>

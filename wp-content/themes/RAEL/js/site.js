@@ -1,10 +1,27 @@
 function home_page_layout(){
-  if($('#events_col').hasClass('col-sm-3')){ height_to_match=($("#events_col").height() > $("#welcome").height() ? $("#events_col").height() : $("#welcome").height() ); }
-  else height_to_match= $("#welcome").height() - $("#events_col").height() ;
-  var last_news_item=$('#news_col > div > .news_item:last-child');
-  while(last_news_item && $('#news_col').height()-last_news_item.height()>height_to_match){
-    last_news_item.hide();
-    last_news_item=last_news_item.prev();
+  height_to_match=$("#welcome").height();
+  // height_to_match=($("#events_col").height() > $("#welcome").height() ? $("#events_col").height() : $("#welcome").height() );
+  // first the news column
+  if($('#events_col').hasClass('col-sm-6')){  
+    // events stacked on top of news so don't need to adjust events
+    height_to_match-= $("#events_col").height() ; 
+    var last_news_item=$('#news_col > div > .news_item:last-child');
+    while(last_news_item && $('#news_col').height()-last_news_item.height()>height_to_match){
+      last_news_item.hide();
+      last_news_item=last_news_item.prev();
+    }
+  } else {
+    // otherwise adjust both news and events
+    var last_news_item=$('#news_col > div > .news_item:last-child');
+    while(last_news_item && $('#news_col').height()-last_news_item.height()>height_to_match){
+      last_news_item.hide();
+      last_news_item=last_news_item.prev();
+    }
+    var last_events_item=$('#events_col > div > .event_item:last-child');
+    while(last_events_item && $('#events_col').height()-last_events_item.height()>height_to_match){
+      last_events_item.hide();
+      last_events_item=last_events_item.prev();
+    }
   }
   // now increase spacer divs so all columns match
   if($('#events_col').hasClass('col-sm-3')){
@@ -70,7 +87,6 @@ function on_resize(go_immediately) {
     throttle_id=null;
     makesquares();
     set_carousel_height();
-    match_height(true);
   }
 };
 
