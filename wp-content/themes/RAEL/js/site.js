@@ -1,4 +1,5 @@
 function home_page_layout(){
+  set_carousel_height();
   height_to_match=$("#welcome").height();
   // height_to_match=($("#events_col").height() > $("#welcome").height() ? $("#events_col").height() : $("#welcome").height() );
   // first the news column
@@ -33,7 +34,6 @@ function home_page_layout(){
     $('#news_col .spacer').height($('#welcome').height()-$('#events_col').height()-$('#news_col').height()-$('#news_col .spacer').height());
   }
 }
-
 function set_footer_position(){
   var page_position=$('#page').position();
   var page_bottom=page_position.top+$('#page').outerHeight(true);
@@ -101,7 +101,8 @@ function set_carousel_height(){
   if(ideal_h>max_h) { var set_height=max_h; } 
   else if(ideal_h<min_h) { var set_height=min_h; }
   else { var set_height=ideal_h; }
-  $(".carousel_bottom").css({"margin-top":set_height+"px"});
+  $("#feature_box").height(set_height);
+  $("#feature_box .carousel-control").css({"line-height":set_height+"px"});
 }
 $( window ).resize(function() {
   on_resize(false);
