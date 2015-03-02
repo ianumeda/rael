@@ -65,10 +65,6 @@ function makesquares(){
   });
 }
 
-$('.coverall_link').each(function(){
-  $(this).css("line-height",$(this).parent().height()+"px");
-});
-
 var throttle_id=null;
 function throttle_on_resize(thedelayamount){
   // this function sets a timer function that calls on_resize after thedelayamount. when called during that delay a new delay is set. 
@@ -121,6 +117,10 @@ jQuery(document).ready(function($) {
     } else {
       $(this).addClass("active");
     }
+  });
+  $(".link_to_home").on("click",function(){ window.location = homeurl; return false; });
+  $('.coverall_link').each(function(){
+    $(this).css("line-height",$(this).parent().height()+"px");
   });
 
 });

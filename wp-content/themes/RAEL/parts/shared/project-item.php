@@ -5,8 +5,7 @@ $term_string="";
 if(!empty($terms)){
   $term_list.='<ul class="topics">';
   foreach( $terms as $term ){
-    $term_list.='<li class="topic btn btn-link btn-xs click-search-filter" title="filter using this topic" data-search-query="'.strtolower($term->name).'">';
-    $term_list.= $term->name; 
+    $term_list.='<li class="topic btn btn-link btn-xs " title="search site for this topic" data-search-query="'.strtolower($term->name).'"><a href="'.esc_url( home_url( '/' )).'?s='.$term->name.'">'.$term->name.'</a>'; 
     // $term_list.= ($term->count > 1) ? ('<a href="'. get_term_link($term) .'">'. $term->name .'</a>') : $term->name; // this needs to change to filter the publications list by this topic key
     $term_list.='</li>';
     $term_string.=$term->name."|";
@@ -19,7 +18,7 @@ $people_string='';
 if($people){
   $people_list.='<ul class="people">';
   foreach( $people as $author ){
-    $people_list.='<li class="btn btn-link btn-xs person click-search-filter" title="filter using this name" data-search-query="'.strtolower(get_the_title($person)).'">';
+    $people_list.='<li class="person " title="'.get_the_title($person).'">';
     $people_list.=get_the_title($author);
     $people_list.='</li>';
     $people_string.=get_the_title($author)."|";
@@ -27,7 +26,7 @@ if($people){
   if(!empty(get_field('additional_authors',$post->ID))){
     $add_authors=explode("\n", get_field('additional_authors',$post->ID));
     foreach($add_authors as $author){
-      $authors_list.='<li class="btn btn-link btn-xs author click-search-filter" title="filter using this name" data-search-query="'.strtolower($author).'">';
+      $authors_list.='<li class="author" title="'.($author).'" data-search-query="'.strtolower($author).'">';
       $authors_list.=$author;
       $authors_list.='</li>';
       $authors_string.=$author."|";
@@ -39,9 +38,9 @@ $projects=get_posts_associated_posts_of_type($post->ID,'publications');
 $projects_list='';
 $projects_string='';
 if($projects){
-  $projects_list.='<ul class="projects">';
+  $projects_list.='<ul class="publications">';
   foreach( $projects as $project ){
-    $projects_list.='<li class="btn btn-link btn-xs author click-search-filter" title="filter for this project" data-search-query="'.strtolower(get_the_title($project)).'">';
+    $projects_list.='<li class="publication">';
     $projects_list.=get_the_title($project);
     $projects_list.='</li>';
     $projects_string.=get_the_title($project)."|";

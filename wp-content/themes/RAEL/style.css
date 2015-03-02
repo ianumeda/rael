@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Metrophobic);
+@import url(//fonts.googleapis.com/css?family=Metrophobic);
 /*
 Theme Name: 	RAEL2014
 Theme URI: 		http://viewportindustries.com/products/starkers
@@ -209,10 +209,12 @@ text-shadow: none;
 left: 0;
 right: 0;
 text-align: center; }
-#feature_box .carousel-caption .carousel-item-title { font-size: 18px; font-weight: 500; text-align: center; text-transform: uppercase; }
+#feature_box .carousel-caption .carousel-item-title { font-size: 16px; font-weight: 700; text-align: center; text-transform: uppercase; }
+#feature_box .carousel-caption .carousel-item-caption { font-weight:100; letter-spacing:.5px; }
+#feature_box .carousel-caption .carousel-item-caption:before { content:" : ";}
 #feature_box .carousel-caption > div { display:inline-block; }
 #feature_box .carousel-caption a { color:inherit; }
-#feature_box .carousel-caption .read_more_link { position:absolute; right:10px; opacity:0; transition:opacity .3s ease; }
+#feature_box .carousel-caption .read_more_link { position:relative; opacity:0; transition:opacity .3s ease; font-size:9px; text-transform:uppercase; letter-spacing:1px; }
 #feature_box .carousel-caption:hover .read_more_link { opacity:.7; }
 #feature_box .carousel-caption .read_more_link:hover { opacity:1; }
 #feature_box .carousel-indicators { bottom:0; }
@@ -685,3 +687,7 @@ padding: .25em 0; }
 .shiftnav-inner .branding .tagline { border:none; margin:0; padding:0; }
 .shiftnav-open-right #shiftnav-toggle-main:before, #shiftnav-toggle-main.shiftnav-toggle-edge-right:before { content:"menu \f0c9"; }
 .shiftnav-open-left #shiftnav-toggle-main.shiftnav-toggle-edge-right:before { display:none; }
+
+.btn-link { color:#507F2F; }
+.btn-link:hover { color:#507F2F; }
+.link_to_home { cursor:pointer; }

@@ -27,7 +27,7 @@ if ( $query->have_posts() ) {
       <div class="swiper-slide" style="background-image:url(<?php echo $imgurl; ?>); height:100%; background-position:center; background-repeat:no-repeat; background-size:cover;">
         <div class="carousel-caption ">
           <div class="carousel-item-title"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_title($post->ID); ?> </a></div>
-          <div class="hidden-xs"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_content($post->ID); ?></a></div>
+          <div class="hidden-xs carousel-item-caption"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_content($post->ID); ?></a></div>
           <span class="read_more_link"><a href="<?php echo get_permalink($post->ID); ?>">Read more <span class="glyphicon glyphicon-arrow-right"></span></a></span>
         </div>
       </div>
