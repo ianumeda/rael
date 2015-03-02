@@ -13,7 +13,8 @@
 		<link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon.ico"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="<?php bloginfo('template_url'); ?>/css/idangerous.swiper.css" rel="stylesheet">
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href='//fonts.googleapis.com/css?family=Metrophobic' rel='stylesheet' type='text/css'>		
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/bootstrap/js/bootstrap.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/js/idangerous.swiper.js"></script>
 		<?php wp_head(); ?>
